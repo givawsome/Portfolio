@@ -1,0 +1,586 @@
+{
+  "fields": [
+    {
+      "group": "general",
+      "key": "brandName",
+      "label": "Brand name",
+      "selector": ".brand-name > span:first-child",
+      "type": "text",
+      "max": 2000,
+      "default": "Rajneesh"
+    },
+    {
+      "group": "general",
+      "key": "brandSubtitle",
+      "label": "Brand subtitle",
+      "selector": ".brand-name small",
+      "type": "text",
+      "max": 2000,
+      "default": "VAISHNAV / VISUAL DESIGNER"
+    },
+    {
+      "group": "general",
+      "key": "availability",
+      "label": "Availability label",
+      "selector": ".availability > span:first-child",
+      "type": "text",
+      "max": 2000,
+      "default": "Available for select freelance projects"
+    },
+    {
+      "group": "homepage",
+      "key": "heroTitle",
+      "label": "Large headline",
+      "selector": ".studio-outline",
+      "type": "text",
+      "max": 18,
+      "default": "CREATE"
+    },
+    {
+      "group": "homepage",
+      "key": "heroNote",
+      "label": "Handwritten note",
+      "selector": ".studio-note",
+      "type": "textarea",
+      "max": 100,
+      "default": "Good ideas\nlive here."
+    },
+    {
+      "group": "homepage",
+      "key": "heroTopline",
+      "label": "Location / practice",
+      "selector": ".studio-topline span:first-child",
+      "type": "text",
+      "max": 2000,
+      "default": "INDEPENDENT VISUAL PRACTICE / JAIPUR, INDIA"
+    },
+    {
+      "group": "homepage",
+      "key": "heroDisciplines",
+      "label": "Disciplines",
+      "selector": ".studio-topline span:last-child",
+      "type": "text",
+      "max": 2000,
+      "default": "DESIGN · PHOTOGRAPHY · AI ART"
+    },
+    {
+      "group": "homepage",
+      "key": "heroSticker",
+      "label": "Sticker text",
+      "selector": ".studio-sticker",
+      "type": "textarea",
+      "max": 120,
+      "default": "Design\nPhotography\nAI Art"
+    },
+    {
+      "group": "homepage",
+      "key": "heroIndex",
+      "label": "Artwork caption",
+      "selector": ".studio-index",
+      "type": "text",
+      "max": 2000,
+      "default": "01 — MANY WAYS TO SEE."
+    },
+    {
+      "group": "homepage",
+      "key": "heroTagline",
+      "label": "Intro tagline",
+      "selector": ".studio-bottom p",
+      "type": "textarea",
+      "max": 2000,
+      "default": "A photographer’s eye.\nA designer’s imagination."
+    },
+    {
+      "group": "homepage",
+      "key": "heroLocation",
+      "label": "Name and availability",
+      "selector": ".studio-location",
+      "type": "textarea",
+      "max": 2000,
+      "default": "RAJNEESH VAISHNAV\nAVAILABLE FOR SELECT FREELANCE WORK"
+    },
+    {
+      "group": "homepage",
+      "key": "signature",
+      "label": "Signature",
+      "selector": ".personal-signature > span:first-child",
+      "type": "text",
+      "max": 2000,
+      "default": "Rajneesh"
+    },
+    {
+      "group": "homepage",
+      "key": "signatureSubtitle",
+      "label": "Signature subtitle",
+      "selector": ".personal-signature small",
+      "type": "text",
+      "max": 2000,
+      "default": "DESIGN / PHOTO / IMAGINATION"
+    },
+    {
+      "group": "homepage",
+      "key": "workEyebrow",
+      "label": "Work section label",
+      "selector": ".work-intro .eyebrow",
+      "type": "text",
+      "max": 2000,
+      "default": "01 / A COLLECTION OF PERSPECTIVES"
+    },
+    {
+      "group": "homepage",
+      "key": "workHeading",
+      "label": "Work heading",
+      "selector": ".work-intro h2 > span:first-child",
+      "type": "text",
+      "max": 2000,
+      "default": "A little of everything."
+    },
+    {
+      "group": "homepage",
+      "key": "workEmphasis",
+      "label": "Work heading emphasis",
+      "selector": ".work-intro h2 em",
+      "type": "text",
+      "max": 2000,
+      "default": "All with intention."
+    },
+    {
+      "group": "homepage",
+      "key": "workDescription",
+      "label": "Work introduction",
+      "selector": ".work-intro>p",
+      "type": "textarea",
+      "max": 2000,
+      "default": "Slide through a selection.See more. Look closer."
+    },
+    {
+      "group": "services",
+      "key": "servicesEyebrow",
+      "label": "Section label",
+      "selector": ".services-layout .eyebrow",
+      "type": "text",
+      "max": 2000,
+      "default": "02 / WHAT WE CAN MAKE"
+    },
+    {
+      "group": "services",
+      "key": "servicesHeading",
+      "label": "Heading",
+      "selector": ".services-layout h2 > span:first-child",
+      "type": "text",
+      "max": 2000,
+      "default": "From a spark."
+    },
+    {
+      "group": "services",
+      "key": "servicesEmphasis",
+      "label": "Heading emphasis",
+      "selector": ".services-layout h2 em",
+      "type": "text",
+      "max": 2000,
+      "default": "To something real."
+    },
+    {
+      "group": "services",
+      "key": "servicesIntro",
+      "label": "Introduction",
+      "selector": ".services-layout>div>p",
+      "type": "textarea",
+      "max": 2000,
+      "default": "One project, or a connected visual world for your brand."
+    },
+    {
+      "group": "profile",
+      "key": "aboutEyebrow",
+      "label": "Section label",
+      "selector": ".about-copy>.eyebrow",
+      "type": "text",
+      "max": 2000,
+      "default": "03 / THE PERSON BEHIND THE WORK"
+    },
+    {
+      "group": "profile",
+      "key": "aboutHeading",
+      "label": "Greeting",
+      "selector": ".about-copy>h2 > span:first-child",
+      "type": "text",
+      "max": 2000,
+      "default": "Hi, I’m"
+    },
+    {
+      "group": "profile",
+      "key": "aboutName",
+      "label": "Name in heading",
+      "selector": ".about-copy>h2 em",
+      "type": "text",
+      "max": 2000,
+      "default": "Rajneesh."
+    },
+    {
+      "group": "profile",
+      "key": "intro",
+      "label": "Short introduction",
+      "selector": ".about-copy>.lead",
+      "type": "textarea",
+      "max": 2000,
+      "default": "A visual designer with a photographer’s eye and a curiosity for what comes next."
+    },
+    {
+      "group": "profile",
+      "key": "about",
+      "label": "Biography paragraph 1",
+      "selector": ".about-copy>p:not(.lead)",
+      "type": "textarea",
+      "max": 6000,
+      "default": "I began in photography and photo editing in 2017. My practice grew through graphic design, running a customized gifting business, and creating imagery for e-commerce."
+    },
+    {
+      "group": "profile",
+      "key": "aboutCurrent",
+      "label": "Biography paragraph 2",
+      "selector": ".about-copy>p:nth-of-type(3)",
+      "type": "textarea",
+      "max": 6000,
+      "default": "Today, I work in pharmaceutical e-commerce, bringing together product photography, creative design and UI work. Alongside my role, I take on select freelance projects."
+    },
+    {
+      "group": "profile",
+      "key": "aboutMoreLabel",
+      "label": "Expand button",
+      "selector": ".more-label",
+      "type": "text",
+      "max": 2000,
+      "default": "See more about me"
+    },
+    {
+      "group": "profile",
+      "key": "aboutLessLabel",
+      "label": "Collapse button",
+      "selector": ".less-label",
+      "type": "text",
+      "max": 2000,
+      "default": "Show less"
+    },
+    {
+      "group": "profile",
+      "key": "aboutTools",
+      "label": "Tools and skills",
+      "selector": ".tool-line",
+      "type": "textarea",
+      "max": 2000,
+      "default": "PHOTOSHOP / LIGHTROOM / FIGMA / CANVA / AI-ASSISTED WORKFLOWS"
+    },
+    {
+      "group": "profile",
+      "key": "aboutImageCaption",
+      "label": "Image caption",
+      "selector": ".about-art-caption",
+      "type": "textarea",
+      "max": 2000,
+      "default": "A PHOTOGRAPHER’S EYE.\nA DESIGNER’S CURIOSITY."
+    },
+    {
+      "group": "profile",
+      "key": "aboutArtLabel",
+      "label": "Fallback artwork label",
+      "selector": ".personal-art-label",
+      "type": "text",
+      "max": 2000,
+      "default": "MY CREATIVE POINT OF VIEW"
+    },
+    {
+      "group": "profile",
+      "key": "aboutArtText",
+      "label": "Fallback artwork text",
+      "selector": ".personal-art strong",
+      "type": "textarea",
+      "max": 2000,
+      "default": "Look.\nFeel.\nCreate."
+    },
+    {
+      "group": "profile",
+      "key": "aboutImage",
+      "label": "About image",
+      "type": "asset",
+      "max": 2000,
+      "default": ""
+    },
+    {
+      "group": "profile",
+      "key": "aboutImageAlt",
+      "label": "About image description",
+      "type": "text",
+      "max": 300,
+      "default": "Rajneesh’s creative work"
+    },
+    {
+      "group": "process",
+      "key": "processEyebrow",
+      "label": "Section label",
+      "selector": ".process-section>.eyebrow",
+      "type": "text",
+      "max": 2000,
+      "default": "04 / A CLEAR WAY FORWARD"
+    },
+    {
+      "group": "contact",
+      "key": "contactEyebrow",
+      "label": "Contact heading label",
+      "selector": ".contact-top>.eyebrow",
+      "type": "text",
+      "max": 2000,
+      "default": "HAVE A PROJECT IN MIND?"
+    },
+    {
+      "group": "contact",
+      "key": "contactAvailability",
+      "label": "Contact availability",
+      "selector": ".contact-availability > span:first-child",
+      "type": "text",
+      "max": 2000,
+      "default": "SELECT FREELANCE AVAILABILITY"
+    },
+    {
+      "group": "contact",
+      "key": "contactHeading",
+      "label": "Contact heading",
+      "selector": ".contact-section h2 > span:first-child",
+      "type": "text",
+      "max": 2000,
+      "default": "Let’s make"
+    },
+    {
+      "group": "contact",
+      "key": "contactEmphasis",
+      "label": "Contact heading emphasis",
+      "selector": ".contact-section h2 em",
+      "type": "text",
+      "max": 2000,
+      "default": "something matter."
+    },
+    {
+      "group": "contact",
+      "key": "contactDescription",
+      "label": "Contact description",
+      "selector": ".contact-bottom>p",
+      "type": "textarea",
+      "max": 2000,
+      "default": "Tell me what you’re building.Let’s find the right visual direction."
+    },
+    {
+      "group": "contact",
+      "key": "contactButton",
+      "label": "Enquiry button",
+      "selector": "#start-project",
+      "type": "text",
+      "max": 2000,
+      "default": "Start a project"
+    },
+    {
+      "group": "contact",
+      "key": "email",
+      "label": "Email",
+      "type": "email",
+      "max": 2000,
+      "default": "vaishnavr506@gmail.com"
+    },
+    {
+      "group": "contact",
+      "key": "phone",
+      "label": "Phone",
+      "type": "text",
+      "max": 2000,
+      "default": "+918005549405"
+    },
+    {
+      "group": "contact",
+      "key": "instagram",
+      "label": "Instagram URL",
+      "type": "url",
+      "max": 2000,
+      "default": "https://www.instagram.com/rajnishvaishnav1/"
+    },
+    {
+      "group": "contact",
+      "key": "facebook",
+      "label": "Facebook URL",
+      "type": "url",
+      "max": 2000,
+      "default": "https://m.facebook.com/100069239835960/"
+    },
+    {
+      "group": "contact",
+      "key": "linkedin",
+      "label": "LinkedIn URL",
+      "type": "url",
+      "max": 2000,
+      "default": "https://www.linkedin.com/in/rajneesh-vaishnav-32a569378"
+    },
+    {
+      "group": "welcome",
+      "key": "welcomeTitle",
+      "label": "Welcome heading",
+      "selector": "#welcome-title",
+      "type": "text",
+      "max": 2000,
+      "default": "Good tosee you here."
+    },
+    {
+      "group": "welcome",
+      "key": "welcomeMessage",
+      "label": "Welcome message",
+      "selector": "#welcome-popup>p",
+      "type": "textarea",
+      "max": 500,
+      "default": "Explore my world of design, photography and AI art. Have an idea? Let’s make it happen."
+    },
+    {
+      "group": "welcome",
+      "key": "welcomeEyebrow",
+      "label": "Welcome label",
+      "selector": "#welcome-popup>.eyebrow",
+      "type": "text",
+      "max": 2000,
+      "default": "WELCOME TO MY CREATIVE WORLD"
+    },
+    {
+      "group": "welcome",
+      "key": "welcomeEnabled",
+      "label": "Show welcome message",
+      "type": "boolean",
+      "default": true
+    },
+    {
+      "group": "welcome",
+      "key": "welcomeDelay",
+      "label": "Delay before showing (seconds)",
+      "type": "number",
+      "min": 0,
+      "max": 120,
+      "default": 5
+    },
+    {
+      "group": "welcome",
+      "key": "welcomeDuration",
+      "label": "Visible duration (seconds)",
+      "type": "number",
+      "min": 3,
+      "max": 120,
+      "default": 15
+    },
+    {
+      "group": "general",
+      "key": "pageTitle",
+      "label": "Browser / search title",
+      "type": "text",
+      "max": 150,
+      "default": "Rajneesh Vaishnav — Design, Photography & AI"
+    },
+    {
+      "group": "general",
+      "key": "metaDescription",
+      "label": "Search description",
+      "type": "textarea",
+      "max": 500,
+      "default": "Rajneesh Vaishnav — visual designer, photographer and AI creative in Jaipur. Design, product photography, website work and AI-assisted projects."
+    }
+  ],
+  "lists": [
+    {
+      "group": "services",
+      "key": "services",
+      "label": "Services",
+      "columns": {
+        "title": "Service title",
+        "body": "Description"
+      },
+      "default": [
+        {
+          "title": "Brand & visual design",
+          "body": "Logo exploration, visual identity, campaign creatives and social design. Considered visuals that connect across your brand."
+        },
+        {
+          "title": "Photography & retouching",
+          "body": "Product photography, colour correction, image cleanup and retouching, prepared for e-commerce and digital use."
+        },
+        {
+          "title": "E-commerce & digital",
+          "body": "Website banners, product-detail artwork, category visuals, Figma UI designs and wireframes."
+        },
+        {
+          "title": "AI-assisted creative",
+          "body": "Visual concepts, campaign imagery and character exploration, guided by art direction and refined through design."
+        }
+      ]
+    },
+    {
+      "group": "process",
+      "key": "processSteps",
+      "label": "Process steps",
+      "columns": {
+        "label": "Step label",
+        "title": "Title",
+        "body": "Description"
+      },
+      "default": [
+        {
+          "label": "01 — DISCOVER",
+          "title": "Start with the why.",
+          "body": "We discuss your audience, goals, references and deliverables before making anything."
+        },
+        {
+          "label": "02 — EXPLORE",
+          "title": "Find the direction.",
+          "body": "I develop a visual approach, share it with you, and refine it through focused feedback."
+        },
+        {
+          "label": "03 — MAKE",
+          "title": "Bring it into focus.",
+          "body": "The chosen direction becomes a considered set of final assets, ready for their intended use."
+        }
+      ]
+    },
+    {
+      "group": "profile",
+      "key": "aboutFacts",
+      "label": "Experience and location facts",
+      "columns": {
+        "title": "Value",
+        "body": "Caption"
+      },
+      "default": [
+        {
+          "title": "8+ years",
+          "body": "Across photography & design"
+        },
+        {
+          "title": "Jaipur, India",
+          "body": "Open to remote collaboration"
+        }
+      ]
+    },
+    {
+      "group": "profile",
+      "key": "aboutSections",
+      "label": "Expanded biography",
+      "columns": {
+        "title": "Heading",
+        "body": "Paragraphs (separate with a blank line)"
+      },
+      "default": [
+        {
+          "title": "Photography first. A broader practice since.",
+          "body": "My journey began at Apex Studio in Jaipur in 2017, photographing events and refining images in Photoshop and Lightroom. At Wow Graphics in Jodhpur, I brought that experience into customized products, print artwork, school photography and catalog design.\n\nFrom 2021 to 2024, I ran Rudra Customized Gifting. Working directly with customers meant taking ideas from the first conversation through artwork, photography, listings and production—including selling through Amazon, Flipkart and Meesho."
+        },
+        {
+          "title": "From social stories to e-commerce.",
+          "body": "At DKM Diagnostics, I created social content and managed Instagram, Facebook and X. Since September 2025, my role at Asle Pharmaceuticals has brought together product photography, retouching, banners, catalogs and Figma UI design, wireframing and website testing.\n\nMy CV records more than 22,689 product images prepared for e-commerce and creative work across around eight to nine website projects. That experience connects the small details of an image with the wider experience of a page."
+        },
+        {
+          "title": "What I bring to a freelance project.",
+          "body": "I can help with product imagery, visual identity, campaign and social creatives, and website visuals. AI-assisted concepts and character work sit alongside my photography and design practice, with each approach clearly identified in the galleries.\n\nI’m based in Jaipur and take on select freelance projects alongside my current role. A clear brief, thoughtful visual direction and careful finishing guide how I work."
+        }
+      ]
+    }
+  ]
+}

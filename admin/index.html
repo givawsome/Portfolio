@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Rajneesh · Portfolio Manager</title>
+    <link rel="stylesheet" href="/admin/style.css" />
+  </head>
+  <body>
+    <header>
+      <strong>Rajneesh<span>.</span> <small>Portfolio manager</small></strong
+      ><a href="/" target="_blank">View portfolio</a><button id="logout" hidden>Sign out</button>
+    </header>
+    <main>
+      <p id="status" role="status"></p>
+      <form id="login">
+        <h1>Your creative control room.</h1>
+        <label>Admin ID<input type="text" name="email" autocomplete="username" required /></label
+        ><label
+          >Password<input
+            type="password"
+            name="password"
+            autocomplete="current-password"
+            required /></label
+        ><button>Sign in</button>
+      </form>
+      <section id="workspace" hidden>
+        <aside class="sidebar">
+          <p class="nav-label">WORKSPACE</p>
+          <nav aria-label="Admin navigation">
+            <a href="#dashboard">Overview</a>
+            <a href="#categories">Categories</a>
+            <a href="#collections">Collections</a>
+            <a href="#media">Media library</a>
+            <p class="nav-label">WEBSITE</p>
+            <a href="#homepage">Homepage copy</a>
+            <a href="#hero">Homepage artwork</a>
+            <a href="#services">Services</a>
+            <a href="#profile">About & profile</a>
+            <a href="#process">Working process</a>
+            <a href="#general">Brand & SEO</a>
+            <a href="#contact">Contact & social links</a>
+            <a href="#welcome">Welcome message</a>
+            <p class="nav-label">COMMUNICATION</p>
+            <a href="#inquiries">Enquiries</a>
+          </nav>
+          <p class="sidebar-note">Your work. Your space.<br />Manage every detail.</p>
+        </aside>
+        <div class="content">
+          <div class="page-heading">
+            <div>
+              <p class="eyebrow">PORTFOLIO MANAGEMENT</p>
+              <h1 id="page-title">Overview</h1>
+            </div>
+            <span class="badge">Owner workspace</span>
+          </div>
+          <div id="management-view"></div>
+          <div id="media-view">
+            <div class="toolbar">
+              <label>Collection<select id="collection"></select></label
+              ><button id="add-image">Add image</button>
+            </div>
+            <div class="toolbar">
+              <label
+                >Search images<input
+                  id="media-search"
+                  type="search"
+                  placeholder="Search by title or filename" /></label
+              ><label
+                >Visibility<select id="media-status">
+                  <option value="">All images</option>
+                  <option value="published">Published</option>
+                  <option value="draft">Drafts</option>
+                </select></label
+              ><button id="search-media">Search</button>
+            </div>
+            <p id="count"></p>
+            <div id="grid"></div>
+            <div class="toolbar">
+              <button id="previous">Previous</button><span id="page"></span
+              ><button id="next">Next</button>
+            </div>
+          </div>
+          <div id="editor-view" hidden>
+            <h1 id="editor-title"></h1>
+            <p id="editor-help"></p>
+            <form id="editor"></form>
+          </div>
+          <div id="inquiries-view" hidden></div>
+        </div>
+      </section>
+    </main>
+    <dialog id="image-dialog">
+      <button id="close-dialog" type="button">Close</button>
+      <p id="image-status" role="status"></p>
+      <form id="image-form">
+        <h2>Edit image</h2>
+        <label
+          >Upload a new image<input
+            type="file"
+            id="upload"
+            accept="image/jpeg,image/png,image/webp,image/avif"
+        /></label>
+        <p>Uploads go directly to your Cloudinary account. Maximum 15 MB.</p>
+        <label>Title<input name="title" required maxlength="200" /></label
+        ><label>Filename<input name="name" required /></label
+        ><label>Image URL<input name="src" required /></label
+        ><label>Preview URL<input name="thumb" /></label>
+        <div class="toolbar">
+          <label>Width<input name="width" type="number" min="1" required /></label
+          ><label>Height<input name="height" type="number" min="1" required /></label
+          ><label>Sort order<input name="order" type="number" min="0" required /></label>
+        </div>
+        <label><input name="published" type="checkbox" /> Visible on website</label
+        ><button>Save image</button
+        ><label
+          >Use this published image in the homepage hero<select id="hero-slot">
+            <option value="">Select a position</option>
+            <option value="product">Product</option>
+            <option value="painting">Painting</option>
+            <option value="character">AI character</option>
+          </select></label
+        ><button type="button" id="set-hero">Set hero image</button
+        ><button type="button" id="delete-image" class="danger">Remove image</button>
+      </form>
+    </dialog>
+    <script src="/admin/admin.js" defer></script>
+    <script src="/admin/content-editor.js" defer></script>
+    <script src="/admin/management.js" defer></script>
+  </body>
+</html>

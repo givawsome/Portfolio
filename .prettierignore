@@ -1,0 +1,8 @@
+node_modules/
+public/media/
+seed/
+package-lock.json
+.env
+.env.*
+.vercel/
+coverage/
