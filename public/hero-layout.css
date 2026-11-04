@@ -1,0 +1,199 @@
+/* Balanced collage: existing art, colours and frame character are retained. */
+.studio-stage {
+  height: 600px;
+  position: relative;
+  isolation: isolate;
+}
+.hero .studio-outline {
+  top: 64px;
+  left: 0;
+  right: auto;
+  width: 35%;
+  font: 600 clamp(64px, 6vw, 80px)/1.05 var(--display-font);
+  letter-spacing: 0.015em;
+  white-space: nowrap;
+}
+.studio-note {
+  top: 208px;
+  left: 2%;
+  width: 30%;
+  max-width: 30%;
+  font: 500 clamp(40px, 4vw, 54px)/1.04 var(--display-font);
+  background: none;
+}
+.studio-main {
+  top: 28px;
+  left: 40%;
+  right: auto;
+  width: 26%;
+  height: 470px;
+  padding: 18px;
+  transform: rotate(-3deg);
+}
+.studio-product {
+  top: 310px;
+  left: 16%;
+  right: auto;
+  width: 20%;
+  max-width: 20%;
+  height: auto;
+  aspect-ratio: 1;
+  padding: 15px;
+  transform: rotate(4deg);
+}
+.studio-character {
+  top: 320px;
+  right: 0;
+  left: auto;
+  width: 27%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  padding: 13px;
+  transform: rotate(3deg);
+}
+.studio-main img,
+.studio-product img,
+.studio-character img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain !important;
+}
+.studio-sticker {
+  top: 202px;
+  right: 5%;
+  left: auto;
+  width: 18%;
+  padding: 18px;
+  font: 500 clamp(24px, 2.3vw, 32px)/1 var(--display-font);
+  transform: rotate(11deg);
+}
+.personal-signature {
+  top: 44px;
+  right: 0;
+  left: auto;
+  width: 25%;
+}
+.personal-signature > span {
+  font: italic 500 42px/1.1 var(--display-font);
+}
+.personal-signature small {
+  font: 500 11px/1.5 var(--body-font);
+  letter-spacing: 1.5px;
+}
+.tape-one {
+  top: 18px;
+  left: 39%;
+}
+.tape-two {
+  top: 468px;
+  left: 63%;
+}
+.studio-index {
+  bottom: 18px;
+  left: 40%;
+}
+@media (min-width: 761px) and (max-width: 1050px) {
+  .studio-stage {
+    height: 550px;
+  }
+  .studio-main {
+    height: 410px;
+  }
+  .studio-character {
+    width: 29%;
+    top: 315px;
+  }
+  .studio-sticker {
+    font-size: clamp(22px, 2.5vw, 27px);
+    width: 24%;
+    padding: 14px;
+  }
+  .studio-note {
+    font-size: 42px;
+  }
+  .tape-two {
+    top: 409px;
+  }
+}
+@media (max-width: 760px) {
+  .studio-topline {
+    flex-wrap: wrap;
+    gap: 8px 24px;
+  }
+  .studio-topline > span:last-child {
+    display: block;
+  }
+  .studio-stage {
+    height: 810px;
+  }
+  .hero .studio-outline {
+    top: 22px;
+    left: 0;
+    width: auto;
+    font-size: 48px;
+  }
+  .studio-note {
+    top: 98px;
+    left: 0;
+    width: 49%;
+    max-width: 49%;
+    font-size: 36px;
+  }
+  .studio-main {
+    top: 120px;
+    left: auto;
+    right: 2%;
+    width: 45%;
+    height: 310px;
+    padding: 10px;
+  }
+  .studio-product {
+    top: 285px;
+    left: 2%;
+    width: 38%;
+    max-width: 38%;
+    padding: 10px;
+  }
+  .personal-signature {
+    top: 16px;
+    right: 0;
+    width: 45%;
+  }
+  .personal-signature > span {
+    font-size: 30px;
+  }
+  .personal-signature small {
+    font-size: 9px;
+    letter-spacing: 1px;
+  }
+  .studio-sticker {
+    top: 505px;
+    left: 3%;
+    right: auto;
+    width: 46%;
+    padding: 12px;
+    font-size: clamp(20px, 5.5vw, 24px);
+  }
+  .studio-character {
+    top: 565px;
+    right: 2%;
+    width: 54%;
+    padding: 9px;
+  }
+  .tape-one {
+    top: 112px;
+    left: 51%;
+    width: 64px;
+  }
+  .tape-two {
+    top: 408px;
+    left: auto;
+    right: 1%;
+    width: 64px;
+  }
+  .studio-index {
+    bottom: 18px;
+    left: 2%;
+  }
+}

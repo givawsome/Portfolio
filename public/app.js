@@ -188,6 +188,7 @@
       const section = document.createElement('section');
       section.className = 'slider-section';
       section.dataset.section = s.id;
+      section.dataset.method = c.method;
       section.setAttribute('aria-label', s.title + ' slider');
       section.innerHTML = `<div class="slider-heading"><div><h3>${esc(s.title)}</h3><p>${esc(s.subtitle)}</p></div><div class="slider-tools"><a class="see-more" href="${galleryURL(s.id, isCharacters(s) ? undefined : c.id)}" data-section="${s.id}" data-collection="${isCharacters(s) ? '' : c.id}" aria-label="See more ${esc(s.title)}">See More</a><button class="slider-arrow" data-direction="-1" aria-label="Previous ${esc(s.title)} images">${icons['chevron-left']}</button><button class="slider-arrow" data-direction="1" aria-label="Next ${esc(s.title)} images">${icons['chevron-right']}</button></div></div>`;
       const rail = document.createElement('div');

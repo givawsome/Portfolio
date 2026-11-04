@@ -1,0 +1,119 @@
+/* Approved portfolio typography: presentation changes only. */
+:root,
+html[data-typography='current'],
+html[data-typography='cormorant'] {
+  --display-font: 'Cormorant Garamond', Georgia, serif;
+  --body-font: 'DM Sans', sans-serif;
+}
+body {
+  font-family: var(--body-font);
+  font-size: 17px;
+  line-height: 1.6;
+}
+p,
+.about-copy > p,
+.work-intro > p,
+#gallery-subtitle,
+.gallery-subtitle {
+  font-family: var(--body-font);
+  font-size: 17px;
+  line-height: 1.6;
+}
+h1,
+h2,
+h3,
+h4,
+h1 span,
+h1 em,
+h2 span,
+h2 em,
+h3 span,
+.gallery-title,
+.slider-heading h3 {
+  font-family: var(--display-font) !important;
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+}
+h2,
+.work-intro h2,
+.about-section h2,
+.contact-section h2,
+.slider-heading h3 {
+  font-size: clamp(42px, 4vw, 56px);
+}
+h1,
+.gallery-title {
+  font-size: clamp(64px, 6vw, 80px);
+  font-weight: 600;
+  line-height: 1.05;
+}
+nav,
+nav a,
+.category-nav a,
+button,
+input,
+select,
+textarea,
+.see-more,
+.small-button,
+.studio-explore {
+  font-family: var(--body-font);
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.5;
+}
+.eyebrow,
+.studio-topline,
+.studio-location,
+.studio-index,
+.rail-footer,
+.collection-method {
+  font-family: var(--body-font);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.5;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+@media (max-width: 760px) {
+  body,
+  p,
+  .about-copy > p,
+  .work-intro > p,
+  #gallery-subtitle,
+  .gallery-subtitle {
+    font-size: 16px;
+  }
+  h1,
+  .gallery-title {
+    font-size: clamp(40px, 9vw, 48px);
+  }
+  h2,
+  .work-intro h2,
+  .about-section h2,
+  .contact-section h2,
+  .slider-heading h3 {
+    font-size: clamp(32px, 7vw, 38px);
+  }
+  nav,
+  nav a,
+  .category-nav a {
+    font-size: 14px;
+  }
+  button,
+  .see-more,
+  .small-button {
+    font-size: 14px;
+  }
+}
+
+.main-nav a {
+  white-space: nowrap;
+}
+
+.logo-caption,
+.brand-name small,
+.studio-sticker span {
+  font-family: inherit;
+}

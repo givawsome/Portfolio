@@ -188,7 +188,7 @@ The browser test requires local MongoDB. It creates a uniquely named temporary d
 
 ## Creative categories, image metadata and photography journal
 
-The empty starter structure is in `shared/creative-categories.json`: AI Campaigns, Imagined Worlds, Character Stories, Brand Identities, Product Stories, Photography, Digital Experiences and Art Studies. Categories and their collections can be renamed, expanded or reordered in the admin.
+The empty starter structure is in `shared/creative-categories.json`: AI Campaigns, Imagined Worlds, Character Stories, Brand Identities, Product Stories, Photography, Digital Experiences, Art Studies and SNS / Photoshop. Categories and their collections can be renamed, expanded or reordered in the admin.
 
 Use **Categories → View uploads** to see all images across a category's collections. The media library filters by category, collection and publication status. Choose a collection before adding an image. Edit titles, comma-separated tags/keywords and descriptive alt text, or delete entries directly from the cards. Search includes tags and keywords. Original seed files and bundled media are retained solely as reference/recovery material; cleared entries no longer appear in the galleries.
 
@@ -206,7 +206,7 @@ In **Character folders**, create one folder per character, upload multiple image
 
 **Files & uploads** accepts JPG, PNG, WebP, AVIF and PDF files up to 15 MB each. Uploaded file URLs can be copied for reuse. Removing a file record does not delete the original Cloudinary asset. **Contact & social links** includes upload/choose/remove controls for each custom social icon; an empty field restores the built-in icon. SVG uploads are not accepted.
 
-Homepage rails automatically scroll back and forth, pause on hover/focus, and provide a Pause/Play control. Automatic movement respects the visitor’s reduced-motion setting. The display type uses Syne with local fallback fonts. Deploy the updated application to Vercel to publish the code changes; no database reset or re-seeding is needed.
+Homepage rails automatically scroll back and forth, pause on hover/focus, and provide a Pause/Play control. Automatic movement respects the visitor’s reduced-motion setting. The earlier display type used Syne with local fallback fonts. Deploy the updated application to Vercel to publish the code changes; no database reset or re-seeding is needed.
 
 ### Logo, typography and character folders
 
@@ -217,3 +217,11 @@ Admin → Character folders creates one collection per character. Upload multipl
 Admin → Contact manages custom social/email icons (recommended 96 × 96 px transparent PNG/WebP, displayed at 24 × 24 px). Admin → Files & uploads accepts JPG, PNG, WebP, AVIF and PDF up to 15 MB per file. Save settings after selecting a logo or icon to publish the change.
 
 Home gallery rows automatically move when visible, pause on hover or keyboard focus, and provide a manual Pause/Play button. They respect the visitor's reduced-motion preference. These code changes require a Vercel redeployment; gallery data is preserved.
+
+### Approved hero and typography (November 4)
+
+The public portfolio and journal use Cormorant Garamond for display headings and DM Sans for navigation, body copy and controls, with responsive sizes in `public/typography.css`. The balanced collage in `public/hero-layout.css` keeps the painting portrait, the product square, and the character frame landscape with uncropped images. Hero image selection remains manageable in Admin → Hero.
+
+**SNS / Photoshop** is a separate category for manually designed social posts. Upload original work through Admin → Media, choosing the SNS / Photoshop collection; edit titles, tags, keywords and alt text there. No previously removed images are restored. About → Tools lists Photoshop, Lightroom, Figma and Canva alongside AI workflows.
+
+For another existing database, run `node --env-file=.env scripts/add-photoshop-category.js` after configuring its MongoDB connection. It backs up the current manifest, adds the category only if missing, and sets the approved typography and About tools. Existing media is preserved. The production database has already received this update; deploy the changed public files to publish the hero and typography styling.

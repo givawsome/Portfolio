@@ -345,8 +345,23 @@ try {
   await publicPage.goto(origin + '/');
   await publicPage.evaluate(() => document.fonts.ready);
   await publicPage.waitForTimeout(500);
+  assert.match(
+    await publicPage.locator('.studio-outline').evaluate((el) => getComputedStyle(el).fontFamily),
+    /Cormorant Garamond/,
+  );
+  assert.equal(
+    await publicPage
+      .locator('.studio-character img')
+      .evaluate((el) => getComputedStyle(el).objectFit),
+    'contain',
+  );
+  const characterFrame = await publicPage.locator('.studio-character').boundingBox();
+  assert(characterFrame.width > characterFrame.height, 'Hero character frame must be landscape');
   await publicPage.screenshot({ path: '/tmp/portfolio-review/hero-desktop-new.png' });
   await publicPage.setViewportSize({ width: 390, height: 844 });
+  const heroTools = publicPage.locator('[data-content=heroDisciplines]');
+  assert(await heroTools.isVisible(), 'Creative tools must be visible on mobile');
+  assert.match(await heroTools.innerText(), /PHOTOSHOP.*FIGMA.*CANVA/);
   await publicPage.screenshot({ path: '/tmp/portfolio-review/hero-mobile-new.png' });
   assert(await publicPage.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1));
   const emptyTemplate = JSON.parse(
@@ -358,7 +373,12 @@ try {
     .updateOne({ _id: 'manifest' }, { $set: { value: emptyTemplate } });
   await publicPage.goto(origin + '/');
   await publicPage.locator('.empty-message').first().waitFor();
-  assert.equal(await publicPage.locator('#home-sliders .empty-message').count(), 8);
+  assert.equal(
+    await publicPage.locator('#home-sliders .empty-message').count(),
+    emptyTemplate.sections.length,
+  );
+  await publicPage.getByRole('link', { name: 'SNS / Photoshop', exact: true }).first().click();
+  await publicPage.locator('#gallery-title').filter({ hasText: 'SNS / Photoshop' }).waitFor();
   assert(await publicPage.locator('#hero-painting').isHidden());
   await navigate('profile');
   await mkdir('/tmp/portfolio-review', { recursive: true });

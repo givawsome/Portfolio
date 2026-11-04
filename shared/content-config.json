@@ -57,11 +57,11 @@
     {
       "group": "homepage",
       "key": "heroDisciplines",
-      "label": "Disciplines",
+      "label": "Hero tools / disciplines",
       "selector": ".studio-topline span:last-child",
       "type": "text",
       "max": 2000,
-      "default": "DESIGN \u00b7 PHOTOGRAPHY \u00b7 AI ART"
+      "default": "PHOTOSHOP \u00b7 FIGMA \u00b7 CANVA"
     },
     {
       "group": "homepage",
@@ -557,10 +557,11 @@
         "current": "Current portfolio fonts",
         "expressive": "Expressive \u2014 Syne headings",
         "editorial": "Editorial \u2014 Georgia headings",
-        "geometric": "Geometric \u2014 Manrope"
+        "geometric": "Geometric \u2014 Manrope",
+        "cormorant": "Approved \u2014 Cormorant Garamond + DM Sans"
       },
-      "default": "current",
-      "help": "Keep Current until your font references are chosen. Changes affect typography only."
+      "default": "cormorant",
+      "help": "Approved pairing: Cormorant Garamond for headings, DM Sans for navigation, body, buttons and labels."
     }
   ],
   "lists": [

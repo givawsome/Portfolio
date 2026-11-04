@@ -55,6 +55,13 @@
       "subtitle": "Paintings, illustration and personal explorations.",
       "collections": ["art-studies"],
       "featured": "art-studies"
+    },
+    {
+      "id": "sns-photoshop",
+      "title": "SNS / Photoshop",
+      "subtitle": "Designed by hand: social creatives, retouching and typography in Photoshop.",
+      "collections": ["sns-photoshop"],
+      "featured": "sns-photoshop"
     }
   ],
   "collections": {
@@ -145,6 +152,17 @@
       "count": 0,
       "preview": [],
       "data": "/api/collections/art-studies"
+    },
+    "sns-photoshop": {
+      "id": "sns-photoshop",
+      "title": "SNS / Photoshop",
+      "frame": "natural",
+      "method": "Photoshop",
+      "folder": "SNS / Photoshop",
+      "note": "Social media design, retouching and crafted layouts. Photoshop work, curated separately from AI-generated concepts.",
+      "preview": [],
+      "count": 0,
+      "data": "/api/collections/sns-photoshop"
     }
   },
   "hero": {},
