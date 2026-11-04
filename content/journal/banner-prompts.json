@@ -1,0 +1,65 @@
+[
+  {
+    "id": "photography-one-light",
+    "prompt": "Use case: ads-marketing. Asset type: original landscape 16:9 editorial blog cover for Rajneesh Vaishnav, visual designer and photographer. A striking editorial banner about shaping light with one window: an unbranded sculptural cobalt-blue glass bottle on a warm ivory tabletop, a single enormous diagonal blade of amber sunlight and deep blue shadow, folded white bounce card and black flag at edges subtly visible. Sophisticated still-life photography, believable glass refraction, graphic composition, not a flat stock photograph. Art direction: premium experimental creative portfolio, cream/cobalt/coral palette, cinematic detail and crafted composition, clean visual hierarchy. Wide landscape composition with generous breathing room. No text, no letters, no logos, no watermarks. Generate one finished banner, not a website mockup or collage of alternate designs.",
+    "source": "/Users/user/.codex/generated_images/01a187ec-af26-70d3-9ae2-b65dda2c887c/exec-eadb537c-5677-48f8-b670-cb3d13a83b11.png",
+    "output": "public/media/journal-photography-one-light.jpg",
+    "method": "Built-in image_gen"
+  },
+  {
+    "id": "photography-glass",
+    "prompt": "Use case: ads-marketing. Asset type: original landscape 16:9 editorial blog cover for Rajneesh Vaishnav, visual designer and photographer. An extraordinary editorial still life about photographing transparent glass: three clear sculptural drinking vessels, one tall fluted, one spherical and one faceted, defined by luminous blue edges against a gradient from midnight cobalt to cream. A narrow coral strip reflected through glass, exquisite caustics on a stone plinth, precise high-end advertising lighting, tactile realism. Art direction: premium experimental creative portfolio, cream/cobalt/coral palette, cinematic detail and crafted composition, clean visual hierarchy. Wide landscape composition with generous breathing room. No text, no letters, no logos, no watermarks. Generate one finished banner, not a website mockup or collage of alternate designs.",
+    "source": "/Users/user/.codex/generated_images/01a187ec-af26-70d3-9ae2-b65dda2c887c/exec-f53ad464-3523-4820-a428-d10135219889.png",
+    "output": "public/media/journal-photography-glass.jpg",
+    "method": "Built-in image_gen"
+  },
+  {
+    "id": "photography-shot-list",
+    "prompt": "Use case: ads-marketing. Asset type: original landscape 16:9 editorial blog cover for Rajneesh Vaishnav, visual designer and photographer. An inventive overhead photography planning still life: nine small unbranded product photographs arranged as a loose contact sheet across ivory paper, showing a single warm terracotta ceramic vessel from nine clearly different perspectives, detail, rim, hand holding, silhouette, overhead, context. A cobalt grease-pencil loop, a coral paper tab, rich tabletop shadows. Every tiny photo coherent and well composed. Art direction: premium experimental creative portfolio, cream/cobalt/coral palette, cinematic detail and crafted composition, clean visual hierarchy. Wide landscape composition with generous breathing room. No text, no letters, no logos, no watermarks. Generate one finished banner, not a website mockup or collage of alternate designs.",
+    "source": "/Users/user/.codex/generated_images/01a187ec-af26-70d3-9ae2-b65dda2c887c/exec-d756eccc-75ee-48ed-8c34-47ff69d3bd03.png",
+    "output": "public/media/journal-photography-shot-list.jpg",
+    "method": "Built-in image_gen"
+  },
+  {
+    "id": "design-hierarchy",
+    "prompt": "Use case: ads-marketing. Asset type: original landscape 16:9 editorial blog cover for Rajneesh Vaishnav, visual designer and photographer. A dramatic editorial still life about visual hierarchy: monumental cobalt sculptural letter A, a small coral circle and a sequence of descending cream typographic blocks arranged in architectural perspective on warm paper, a single fine blue alignment line as a physical string, tactile embossing and directional shadows. Evoke an exceptional typographic designer's desk, no clutter, not a screenshot. Match a creative cream, cobalt and coral portfolio aesthetic. Museum-quality art direction, image fills wide landscape canvas, no border. No words, no brand logos, no watermark. Generate one finished banner, not a website screenshot or alternatives board.",
+    "source": "/Users/user/.codex/generated_images/01a187ec-af26-70d3-9ae2-b65dda2c887c/exec-6c488412-3194-4904-94ed-029a62b1ff06.png",
+    "output": "public/media/journal-design-hierarchy.jpg",
+    "method": "Built-in image_gen"
+  },
+  {
+    "id": "design-adaptations",
+    "prompt": "Use case: ads-marketing. Asset type: original landscape 16:9 editorial blog cover for Rajneesh Vaishnav, visual designer and photographer. A premium design systems still life: three suspended tactile paper formats, a tall portrait poster, square social card and wide landscape banner, each carrying a coherent original abstract cobalt ribbon and coral disc composition that is visibly rearranged to suit its format. Warm ivory background, beautiful offset-print textures, crisp soft shadows, daring asymmetric editorial balance. Match a creative cream, cobalt and coral portfolio aesthetic. Museum-quality art direction, image fills wide landscape canvas, no border. No words, no brand logos, no watermark. Generate one finished banner, not a website screenshot or alternatives board.",
+    "source": "/Users/user/.codex/generated_images/01a187ec-af26-70d3-9ae2-b65dda2c887c/exec-a41c5808-7338-4d39-b680-bb4055963f95.png",
+    "output": "public/media/journal-design-adaptations.jpg",
+    "method": "Built-in image_gen"
+  },
+  {
+    "id": "design-identity",
+    "prompt": "Use case: ads-marketing. Asset type: original landscape 16:9 editorial blog cover for Rajneesh Vaishnav, visual designer and photographer. A striking conceptual brand identity presentation: a richly sculpted original coral folded-ribbon symbol shaped like an abstract rising bird, applied consistently as small debossing on an ivory box, cobalt packaging sleeve and warm white business card, no company names or lettering. One large floating sculptural symbol connects the applications, sophisticated product photography, real paper fibers and elegant depth. Match a creative cream, cobalt and coral portfolio aesthetic. Museum-quality art direction, image fills wide landscape canvas, no border. No words, no brand logos, no watermark. Generate one finished banner, not a website screenshot or alternatives board.",
+    "source": "/Users/user/.codex/generated_images/01a187ec-af26-70d3-9ae2-b65dda2c887c/exec-989a4454-e1ce-473c-8724-4379e1a5065f.png",
+    "output": "public/media/journal-design-identity.jpg",
+    "method": "Built-in image_gen"
+  },
+  {
+    "id": "ai-direction",
+    "prompt": "Use case: ads-marketing. Asset type: one original landscape 16:9 editorial blog banner for a designer / photographer / AI art director portfolio. An extraordinary surreal advertising art-direction scene: a single peeled mandarin-orange sphere suspended above a folded cobalt architectural wave, citrus peel becoming a precisely sculpted orbital path, warm cream set with coral light, tiny material swatches at the bottom as creative direction clues. Strong silhouette, physically rich surfaces, immaculate tactile 3D editorial photograph, bold yet controlled. Wide canvas, striking art direction consistent with a cream/cobalt/coral creative portfolio. Subject is a clearly fictional visual concept. No text, no lettering, no logo, no watermark. Not a UI screenshot or comparison grid.",
+    "source": "/Users/user/.codex/generated_images/01a187ec-af26-70d3-9ae2-b65dda2c887c/exec-6174b67b-c345-4898-bf7c-c1ecda6f8a03.png",
+    "output": "public/media/journal-ai-direction.jpg",
+    "method": "Built-in image_gen"
+  },
+  {
+    "id": "ai-characters",
+    "prompt": "Use case: ads-marketing. Asset type: one original landscape 16:9 editorial blog banner for a designer / photographer / AI art director portfolio. An exquisite landscape editorial character-design reference board showing the SAME fictional adult Indian woman age 28 in three views: front, three-quarter and profile, plus one smaller full-length pose, consistent short wavy black hair, cobalt utility jacket and ivory trousers, coral earring. Sophisticated warm hand-drawn anime-editorial style, visible pencil construction and rich painted texture, warm ivory paper, coherent proportions, no labels or text. Wide canvas, striking art direction consistent with a cream/cobalt/coral creative portfolio. Subject is a clearly fictional visual concept. No text, no lettering, no logo, no watermark. Not a UI screenshot or comparison grid.",
+    "source": "/Users/user/.codex/generated_images/01a187ec-af26-70d3-9ae2-b65dda2c887c/exec-7dc23371-9c79-4de8-82b7-30ed157f3781.png",
+    "output": "public/media/journal-ai-characters.jpg",
+    "method": "Built-in image_gen"
+  },
+  {
+    "id": "ai-materials",
+    "prompt": "Use case: ads-marketing. Asset type: one original landscape 16:9 editorial blog banner for a designer / photographer / AI art director portfolio. A dramatic macro-product editorial composition about inspecting AI imagery: a fictional brushed stainless steel kettle with coherent handle and spout on a cobalt plinth, a magnifying glass at front revealing true fine metal texture, a small copper swatch and clear glass prism, a warm cream backdrop with a single coral ribbon of light. Impeccable structure, believable reflection, beautiful advertising photography, surreal editorial staging. Wide canvas, striking art direction consistent with a cream/cobalt/coral creative portfolio. Subject is a clearly fictional visual concept. No text, no lettering, no logo, no watermark. Not a UI screenshot or comparison grid.",
+    "source": "/Users/user/.codex/generated_images/01a187ec-af26-70d3-9ae2-b65dda2c887c/exec-4e773943-e891-40c1-abda-e9e5b7785d4f.png",
+    "output": "public/media/journal-ai-materials.jpg",
+    "method": "Built-in image_gen"
+  }
+]

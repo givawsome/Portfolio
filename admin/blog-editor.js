@@ -6,18 +6,23 @@ async function renderBlogAdmin() {
   root.replaceChildren(
     element(
       'p',
-      'Photography stories, techniques, and behind-the-scenes notes. Drafts stay private.',
+      'Photography, graphic design and AI design articles. Drafts stay private.',
       'muted',
     ),
     action('New article', () => editPost()),
   );
   if (!result.items.length)
-    root.append(element('p', 'No articles yet. Write your first photography story.', 'empty'));
+    root.append(element('p', 'No articles yet. Write your first story.', 'empty'));
   root.append(
     table(
-      ['Title', 'Status', 'Updated', 'Actions'],
+      ['Title', 'Topic', 'Status', 'Updated', 'Actions'],
       result.items.map((post) => [
         post.title,
+        {
+          photography: 'Photography',
+          'graphic-design': 'Graphic design',
+          'ai-design': 'AI design',
+        }[post.category || 'photography'],
         post.published ? 'Published' : 'Draft',
         new Date(post.updatedAt).toLocaleDateString(),
         buttons(
@@ -74,10 +79,11 @@ function renderPostBody(container, body) {
 }
 function editPost(post = {}) {
   const form = formScreen(
-    post.id ? 'Edit article' : 'New photography article',
+    post.id ? 'Edit article' : 'New article',
     'Use blank lines for paragraphs and # / ## for headings. HTML is displayed as text.',
     async (values) => {
       const body = {
+        category: values.category,
         title: values.title,
         slug: values.slug,
         excerpt: values.excerpt,
@@ -85,6 +91,7 @@ function editPost(post = {}) {
         author: values.author,
         cover: values.cover,
         coverAlt: values.coverAlt,
+        coverCredit: values.coverCredit,
         tags: parseTerms(values.tags),
         published: form.elements.published.checked,
       };
@@ -102,6 +109,7 @@ function editPost(post = {}) {
     excerpt: 'Short description',
     cover: 'Cover image URL',
     coverAlt: 'Cover description',
+    coverCredit: 'Cover credit / AI disclosure (optional)',
     tags: 'Tags (comma separated)',
     body: 'Article content',
   })) {
@@ -122,6 +130,17 @@ function editPost(post = {}) {
     }
     form.elements[key].required = ['title', 'slug', 'author', 'body'].includes(key);
   }
+  const categoryInput = field(form, 'category', 'Topic');
+  const categorySelect = element('select');
+  categorySelect.name = 'category';
+  for (const [value, label] of Object.entries({
+    photography: 'Photography',
+    'graphic-design': 'Graphic design',
+    'ai-design': 'AI design',
+  }))
+    categorySelect.append(new Option(label, value));
+  categorySelect.value = post.category || 'photography';
+  categoryInput.replaceWith(categorySelect);
   form.elements.slug.pattern = '[a-z0-9]+(-[a-z0-9]+)*';
   let slugEdited = !!post.id;
   form.elements.slug.addEventListener('input', () => {

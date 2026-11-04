@@ -3,8 +3,10 @@ import { randomUUID } from 'node:crypto';
 import { z } from 'zod';
 import { db } from './db.js';
 import { asset, id } from './schemas.js';
+import { topics } from '../shared/journal-topics.js';
 export const postSchema = z
   .object({
+    category: z.enum(Object.keys(topics)).default('photography'),
     title: z.string().trim().min(1).max(180),
     slug: z
       .string()
@@ -15,6 +17,7 @@ export const postSchema = z
     author: z.string().trim().min(1).max(100),
     cover: z.union([asset, z.literal('')]).default(''),
     coverAlt: z.string().max(300).default(''),
+    coverCredit: z.string().max(300).default(''),
     tags: z.array(z.string().trim().min(1).max(60)).max(30).default([]),
     published: z.boolean().default(false),
   })
@@ -29,7 +32,13 @@ publicBlog.get('/', async (req, res) => {
     .max(100000)
     .parse(req.query.page || 1);
   const database = await db();
-  const filter = { published: true };
+  const category = req.query.category ? z.enum(Object.keys(topics)).parse(req.query.category) : '';
+  const filter = {
+    published: true,
+    ...(category && {
+      category: category === 'photography' ? { $in: ['photography', null] } : category,
+    }),
+  };
   const rows = await database
     .collection('posts')
     .find(filter, { projection: { body: 0 } })

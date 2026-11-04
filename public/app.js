@@ -155,7 +155,7 @@
   }
   function folderCard(c) {
     const button = document.createElement('button');
-    button.className = 'rail-item portrait character-folder';
+    button.className = 'rail-item landscape character-folder';
     const cover = c.cover || c.preview[0];
     button.innerHTML = `<div class="rail-media">${cover ? imageMarkup(cover) : '<span class="folder-placeholder">Character study</span>'}</div><div class="image-caption"><span>${esc(c.title)}</span><small>${c.count || 0} images · Open story</small></div>`;
     button.onclick = () =>

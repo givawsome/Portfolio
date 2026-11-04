@@ -3,7 +3,7 @@ const screenTitles = {
   dashboard: 'Overview',
   characters: 'Character folders',
   files: 'Files & uploads',
-  blog: 'Photography journal',
+  blog: 'Journal',
   homepage: 'Homepage copy',
   general: 'Brand & SEO',
   services: 'Services',

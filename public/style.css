@@ -3232,3 +3232,37 @@ html[data-typography='editorial'] .studio-outline {
     font-size: 7px;
   }
 }
+
+/* Character folders present wide reference sheets without portrait letterboxing. */
+.image-rail .character-folder {
+  flex: 0 0 clamp(300px, 36vw, 520px);
+  width: clamp(300px, 36vw, 520px);
+}
+.character-folder .rail-media {
+  aspect-ratio: 16 / 9;
+  height: auto;
+  min-height: 0;
+  padding: 12px;
+}
+.character-folder .rail-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.character-folder-grid {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+}
+.character-folder-grid .rail-item {
+  max-width: none;
+}
+@media (max-width: 760px) {
+  .image-rail .character-folder {
+    flex-basis: 84vw;
+    width: 84vw;
+  }
+}
+
+.character-folder .folder-placeholder {
+  min-height: 0;
+  aspect-ratio: 16 / 9;
+}

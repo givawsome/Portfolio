@@ -1,5 +1,6 @@
 import express from 'express';
 import { publicBlog, adminBlog } from './blog.js';
+import { journal } from './journal.js';
 import helmet from 'helmet';
 import cookieParser from 'cookie-parser';
 import { randomUUID, createHash } from 'node:crypto';
@@ -470,9 +471,8 @@ app.use('/admin', (_req, res, next) => {
   next();
 });
 app.use('/admin', express.static(path.join(root, 'admin')));
-app.get(['/blog', '/blog/:slug'], (_req, res) =>
-  res.sendFile(path.join(root, 'public/blog.html'), { dotfiles: 'allow' }),
-);
+app.get('/blog.html', (_req, res) => res.redirect(301, '/blog'));
+app.use(journal);
 app.use(express.static(path.join(root, 'public'), { index: 'index.html' }));
 app.use((err, req, res, next) => {
   if (res.headersSent) return next(err);

@@ -184,6 +184,8 @@ try {
   await page.getByRole('button', { name: 'New article', exact: true }).click();
   await page.locator('#management-view [name=title]').fill('A photography story');
   await page.locator('#management-view [name=slug]').fill('a-photography-story');
+  await page.locator('#management-view [name=category]').selectOption('graphic-design');
+  await page.locator('#management-view [name=coverCredit]').fill('Editorial test cover');
   await page
     .locator('#management-view [name=body]')
     .fill('# Light and form\n\nA practical photography story.');
@@ -198,7 +200,10 @@ try {
   await page.locator('#management-view [type=submit]').click();
   const savedPost = await publishedResponse;
   assert.equal(savedPost.status(), 200);
-  assert.equal((await savedPost.json()).slug, 'a-photography-story');
+  const savedArticle = await savedPost.json();
+  assert.equal(savedArticle.slug, 'a-photography-story');
+  assert.equal(savedArticle.category, 'graphic-design');
+  assert.equal(savedArticle.coverCredit, 'Editorial test cover');
   await page.getByRole('button', { name: 'New article', exact: true }).waitFor();
   const publishedCheck = await context.request.get(origin + '/api/blog/a-photography-story');
   assert.equal(publishedCheck.status(), 200, await publishedCheck.text());
@@ -207,7 +212,7 @@ try {
   console.log('Blog rendered:', await publicPage.locator('main').innerText(), 'Errors:', failures);
   await publicPage.getByRole('heading', { name: 'A photography story', exact: true }).waitFor();
   assert.equal(
-    await publicPage.locator('.article-body p').textContent(),
+    await publicPage.locator('.article-body > p').first().textContent(),
     'A practical photography story.',
   );
   page.once('dialog', (dialog) => dialog.accept());
@@ -217,6 +222,65 @@ try {
     .click();
   await page.locator('#management-view .empty').waitFor();
   assert.equal((await context.request.get(origin + '/api/blog/a-photography-story')).status(), 404);
+  const journalSource = JSON.parse(
+    await readFile(new URL('../content/journal/posts.json', import.meta.url), 'utf8'),
+  );
+  await database.collection('posts').insertMany(
+    journalSource.map((post) => ({
+      ...post,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      publishedAt: new Date(),
+    })),
+  );
+  await publicPage.goto(origin + '/blog');
+  assert.equal(await publicPage.locator('.post-card').count(), 9);
+  await publicPage.evaluate(() => document.fonts.ready);
+  await publicPage.locator('.post-card img').evaluateAll(async (images) => {
+    for (const image of images) image.loading = 'eager';
+    await Promise.all(images.map((image) => image.decode()));
+  });
+  await publicPage.screenshot({
+    path: '/tmp/portfolio-review/journal-desktop.png',
+    fullPage: true,
+  });
+  for (const category of ['photography', 'graphic-design', 'ai-design']) {
+    await publicPage.goto(origin + '/blog?category=' + category);
+    assert.equal(await publicPage.locator('.post-card').count(), 3);
+    const response = await context.request.get(origin + '/api/blog?category=' + category);
+    assert.equal((await response.json()).total, 3);
+  }
+  for (const post of journalSource) {
+    const response = await context.request.get(origin + '/blog/' + post.slug);
+    assert.equal(response.status(), 200);
+    assert((await response.text()).includes(post.title));
+    assert.equal((await context.request.get(origin + '/' + post.cover)).status(), 200);
+  }
+  assert.equal((await context.request.get(origin + '/blog/not-a-real-story')).status(), 404);
+  assert(
+    (await (await context.request.get(origin + '/sitemap.xml')).text()).includes(
+      journalSource[0].slug,
+    ),
+  );
+  await publicPage.goto(origin + '/blog/' + journalSource[0].slug);
+  await publicPage.screenshot({
+    path: '/tmp/portfolio-review/journal-article.png',
+    fullPage: true,
+  });
+  await publicPage.setViewportSize({ width: 390, height: 844 });
+  assert(await publicPage.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1));
+  await publicPage.screenshot({
+    path: '/tmp/portfolio-review/journal-article-mobile.png',
+    fullPage: true,
+  });
+  await publicPage.goto(origin + '/blog');
+  assert(await publicPage.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1));
+  await publicPage.locator('.post-card img').evaluateAll(async (images) => {
+    for (const image of images) image.loading = 'eager';
+    await Promise.all(images.map((image) => image.decode()));
+  });
+  await publicPage.screenshot({ path: '/tmp/portfolio-review/journal-mobile.png', fullPage: true });
+  await publicPage.setViewportSize({ width: 1440, height: 1000 });
   await navigate('characters');
   await page.locator('#management-view [name=title]').fill('Aster');
   await page.getByRole('button', { name: 'Create character folder' }).click();
@@ -265,6 +329,12 @@ try {
   assert.equal(publicManifest.collections[folder.id].cover.id, 'aster-cover');
   const section = current.sections.find((s) => s.collections.includes(folder.id));
   await publicPage.goto(origin + '/?work=' + section.id);
+  const characterCard = publicPage
+    .locator('.character-folder-grid .character-folder .rail-media')
+    .first();
+  const characterSize = await characterCard.boundingBox();
+  assert(characterSize.width > characterSize.height, 'Character folder card should be landscape');
+  await publicPage.screenshot({ path: '/tmp/portfolio-review/character-landscape.png' });
   await publicPage.locator('.character-folder-grid').getByRole('button', { name: /Aster/ }).click();
   await publicPage.locator('.gallery-grid').waitFor();
   assert(publicPage.url().includes(folder.id));
