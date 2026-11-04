@@ -48,14 +48,20 @@ test('admin sidebar destinations and form workflows render independently', async
                 ? { items: [], total: 0 }
                 : url.includes('/stats')
                   ? { published: 3, drafts: 1, inquiries: 0 }
-                  : url.includes('/inquiries')
+                  : url.includes('/inquiries') || url.includes('/admin/files')
                     ? []
                     : {},
   });
   w.HTMLDialogElement.prototype.showModal = function () {
     this.open = true;
   };
-  for (const file of ['admin.js', 'content-editor.js', 'management.js'])
+  for (const file of [
+    'admin.js',
+    'content-editor.js',
+    'blog-editor.js',
+    'characters-files.js',
+    'management.js',
+  ])
     runInContext(
       await readFile(new URL('../admin/' + file, import.meta.url), 'utf8'),
       dom.getInternalVMContext(),
@@ -67,6 +73,8 @@ test('admin sidebar destinations and form workflows render independently', async
       'dashboard',
       'categories',
       'collections',
+      'characters',
+      'files',
       'media',
       'hero',
       'profile',

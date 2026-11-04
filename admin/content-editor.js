@@ -1,8 +1,14 @@
 // Content screens use the same field definitions and defaults as the public renderer.
-async function uploadAsset(file) {
+async function uploadAsset(file, allowDocument = false) {
   if (
     !file ||
-    !['image/jpeg', 'image/png', 'image/webp', 'image/avif'].includes(file.type) ||
+    ![
+      'image/jpeg',
+      'image/png',
+      'image/webp',
+      'image/avif',
+      ...(allowDocument ? ['application/pdf'] : []),
+    ].includes(file.type) ||
     file.size > 15 * 1024 * 1024
   )
     throw Error('Choose a JPG, PNG, WebP or AVIF under 15 MB.');
@@ -13,19 +19,23 @@ async function uploadAsset(file) {
   body.append('signature', signed.signature);
   for (const [key, value] of Object.entries(signed.params)) body.append(key, value);
   const response = await fetch(
-    'https://api.cloudinary.com/v1_1/' + signed.cloudName + '/image/upload',
+    'https://api.cloudinary.com/v1_1/' + signed.cloudName + '/auto/upload',
     { method: 'POST', body },
   );
   const result = await response.json();
   if (!response.ok) throw Error(result.error?.message || 'Upload failed');
   return result;
 }
-async function selectLibraryImage(onChoose) {
+async function selectLibraryImage(onChoose, collectionId) {
   const dialog = element('dialog');
   dialog.className = 'asset-picker';
   const heading = element('h2', 'Choose an existing image');
   const collection = document.createElement('select');
   for (const c of Object.values(manifest.collections)) collection.add(new Option(c.title, c.id));
+  if (collectionId) {
+    collection.value = collectionId;
+    collection.disabled = true;
+  }
   const search = document.createElement('input');
   search.type = 'search';
   search.placeholder = 'Search image title';
@@ -160,6 +170,19 @@ async function renderContentEditor(view) {
       text.value = settings[spec.key] ?? spec.default;
       input.replaceWith(text);
     }
+    if (spec.type === 'select') {
+      const select = document.createElement('select');
+      select.name = spec.key;
+      for (const [value, label] of Object.entries(spec.options)) {
+        const option = document.createElement('option');
+        option.value = value;
+        option.textContent = label;
+        select.append(option);
+      }
+      select.value = settings[spec.key] ?? spec.default;
+      input.replaceWith(select);
+    }
+    if (spec.help) form.append(element('p', spec.help, 'muted'));
     const target = form.elements[spec.key];
     if (spec.type === 'boolean') {
       target.type = 'checkbox';
@@ -187,7 +210,7 @@ async function renderContentEditor(view) {
       const upload = document.createElement('input');
       upload.type = 'file';
       upload.accept = 'image/jpeg,image/png,image/webp,image/avif';
-      upload.setAttribute('aria-label', 'Upload About image');
+      upload.setAttribute('aria-label', 'Upload ' + spec.label);
       upload.onchange = run(async () => {
         const submit = form.querySelector('[type=submit]');
         submit.disabled = true;
@@ -210,7 +233,7 @@ async function renderContentEditor(view) {
               refresh();
             }),
           ),
-          action('Remove image / use artwork', () => {
+          action('Remove image / use default', () => {
             target.value = '';
             form.dataset.dirty = 'true';
             refresh();
@@ -219,7 +242,7 @@ async function renderContentEditor(view) {
         upload,
         element(
           'p',
-          'Choose an existing portfolio image, paste an HTTPS URL, or upload through Cloudinary. Removing the image restores the illustrated panel.',
+          'Choose a library image, paste an HTTPS URL, or upload a file. Save changes to publish; removing it restores the default.',
           'muted',
         ),
       );

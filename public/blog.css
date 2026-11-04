@@ -1,0 +1,146 @@
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  background: #fcfbf8;
+  color: #20211f;
+  font:
+    16px/1.7 system-ui,
+    sans-serif;
+}
+header,
+footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 25px 6%;
+  border-bottom: 1px solid #e1e2dc;
+}
+header nav {
+  display: flex;
+  gap: 24px;
+}
+a {
+  color: inherit;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+.brand {
+  font: italic 30px Georgia;
+}
+.brand span {
+  color: #2055ed;
+}
+main {
+  max-width: 1260px;
+  margin: auto;
+  padding: 65px 30px;
+}
+.eyebrow {
+  letter-spacing: 3px;
+  font-size: 11px;
+  color: #2055ed;
+}
+h1 {
+  font-size: clamp(40px, 6vw, 78px);
+  line-height: 1.08;
+  letter-spacing: -3px;
+  margin: 20px 0;
+}
+h1 em {
+  font-family: Georgia;
+  font-weight: 400;
+  color: #2055ed;
+}
+#journal-heading {
+  margin-bottom: 65px;
+}
+.post-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 35px;
+}
+.post-card img,
+.cover-placeholder {
+  width: 100%;
+  height: 250px;
+  object-fit: contain;
+  background: #edf0f8;
+  border-radius: 3%;
+  margin-bottom: 15px;
+}
+.cover-placeholder {
+  display: grid;
+  place-items: center;
+  background: linear-gradient(135deg, #e3d8ec, #dce7f6, #f9e5bc);
+  font: italic 30px Georgia;
+}
+.post-card h2 {
+  font-size: 25px;
+  line-height: 1.2;
+}
+.post-card small {
+  color: #707782;
+}
+.post-card span {
+  color: #2055ed;
+}
+#blog-pagination {
+  display: flex;
+  gap: 30px;
+  margin-top: 50px;
+}
+.article {
+  max-width: 850px;
+  margin: auto;
+}
+.article > img {
+  width: 100%;
+  max-height: 650px;
+  object-fit: contain;
+  border-radius: 3%;
+  margin: 30px 0;
+}
+.article-body {
+  font-size: 18px;
+  line-height: 1.85;
+  white-space: pre-line;
+}
+.article h1 {
+  font-size: clamp(36px, 5vw, 65px);
+}
+footer {
+  margin-top: 40px;
+  border-top: 1px solid #e1e2dc;
+  font-size: 13px;
+}
+[hidden] {
+  display: none !important;
+}
+@media (max-width: 850px) {
+  .post-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 550px) {
+  .post-grid {
+    grid-template-columns: 1fr;
+  }
+  main {
+    padding: 35px 20px;
+  }
+  header {
+    padding: 20px;
+    gap: 15px;
+  }
+  header nav {
+    gap: 12px;
+    font-size: 12px;
+  }
+  h1 {
+    letter-spacing: -1px;
+  }
+}

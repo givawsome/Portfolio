@@ -1,0 +1,10 @@
+.env
+.env.*
+.git
+backups
+node_modules
+test
+scripts
+coverage
+*.log
+.DS_Store

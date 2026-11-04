@@ -72,6 +72,13 @@ test('admin and frontend both served', async () => {
 test('new management endpoints require authentication', async () => {
   for (const [method, path] of [
     ['get', '/api/admin/stats'],
+    ['get', '/api/admin/files'],
+    ['post', '/api/admin/files'],
+    ['delete', '/api/admin/files/example'],
+    ['put', '/api/admin/collections/example/cover'],
+    ['get', '/api/admin/posts'],
+    ['post', '/api/admin/posts'],
+    ['delete', '/api/admin/posts/example'],
     ['patch', '/api/admin/settings'],
     ['delete', '/api/admin/hero/product'],
     ['delete', '/api/admin/inquiries/012345678901234567890123'],

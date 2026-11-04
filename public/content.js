@@ -14,7 +14,36 @@
     return fragment;
   }
   function apply(settings) {
+    if (settings.brandSubtitle === 'VAISHNAV / VISUAL DESIGNER')
+      settings.brandSubtitle += ' + PHOTOGRAPHER';
     window.portfolioSettings = settings;
+    document.documentElement.dataset.typography = settings.typographyStyle || 'current';
+    for (const link of document.querySelectorAll('.wordmark')) {
+      const src = (link.closest('.site-footer') ? settings.footerLogo : '') || settings.headerLogo;
+      let logo = link.querySelector('.portfolio-logo');
+      let caption = link.querySelector('.logo-caption');
+      link.classList.toggle('has-logo', !!src);
+      link.querySelector('.brand-name').hidden = !!src;
+      if (src) {
+        if (!logo) {
+          logo = node('img');
+          logo.className = 'portfolio-logo';
+          link.prepend(logo);
+        }
+        logo.src = src.startsWith('https://') ? src : '/' + src;
+        logo.alt = settings.logoAlt || 'Rajneesh Vaishnav';
+        if (!caption) {
+          caption = node('small');
+          caption.className = 'logo-caption';
+          link.append(caption);
+        }
+        caption.textContent = settings.brandSubtitle || 'VISUAL DESIGNER + PHOTOGRAPHER';
+      } else {
+        logo?.remove();
+        caption?.remove();
+      }
+    }
+
     for (const el of document.querySelectorAll('[data-content]')) {
       const key = el.dataset.content;
       if (typeof settings[key] === 'string') {
@@ -26,6 +55,20 @@
           });
         } else el.textContent = settings[key];
       }
+    }
+    for (const link of document.querySelectorAll('[data-contact]')) {
+      const src = settings[link.dataset.contact + 'Icon'];
+      let icon = link.querySelector('.custom-social-icon');
+      if (src) {
+        if (!icon) {
+          icon = node('img');
+          icon.className = 'custom-social-icon';
+          icon.alt = '';
+          link.prepend(icon);
+        }
+        icon.src = src.startsWith('https://') ? src : '/' + src;
+      } else icon?.remove();
+      link.querySelectorAll('svg').forEach((svg) => (svg.style.display = src ? 'none' : ''));
     }
     if (settings.pageTitle) document.title = settings.pageTitle;
     if (settings.metaDescription !== undefined)

@@ -1,0 +1,152 @@
+{
+  "sections": [
+    {
+      "id": "ai-campaigns",
+      "title": "AI Campaigns",
+      "subtitle": "Art-directed campaigns and commercial concepts.",
+      "collections": ["ai-campaigns"],
+      "featured": "ai-campaigns"
+    },
+    {
+      "id": "imagined-worlds",
+      "title": "Imagined Worlds",
+      "subtitle": "Cinematic scenes, surreal environments and visual storytelling.",
+      "collections": ["imagined-worlds"],
+      "featured": "imagined-worlds"
+    },
+    {
+      "id": "character-stories",
+      "title": "Character Stories",
+      "subtitle": "Distinct characters and the worlds they inhabit.",
+      "collections": ["character-stories"],
+      "featured": "character-stories"
+    },
+    {
+      "id": "brand-identities",
+      "title": "Brand Identities",
+      "subtitle": "Logos, visual systems and meaningful brand expressions.",
+      "collections": ["brand-identities"],
+      "featured": "brand-identities"
+    },
+    {
+      "id": "product-stories",
+      "title": "Product Stories",
+      "subtitle": "Product photography, advertising and crafted details.",
+      "collections": ["product-stories"],
+      "featured": "product-stories"
+    },
+    {
+      "id": "photography",
+      "title": "Photography",
+      "subtitle": "Portraits, places and observations through my lens.",
+      "collections": ["photography"],
+      "featured": "photography"
+    },
+    {
+      "id": "digital-experiences",
+      "title": "Digital Experiences",
+      "subtitle": "Web concepts, interfaces and thoughtful digital design.",
+      "collections": ["digital-experiences"],
+      "featured": "digital-experiences"
+    },
+    {
+      "id": "art-studies",
+      "title": "Art Studies",
+      "subtitle": "Paintings, illustration and personal explorations.",
+      "collections": ["art-studies"],
+      "featured": "art-studies"
+    }
+  ],
+  "collections": {
+    "ai-campaigns": {
+      "id": "ai-campaigns",
+      "title": "AI Campaigns",
+      "note": "Art-directed campaigns and commercial concepts.",
+      "method": "AI-assisted",
+      "frame": "natural",
+      "folder": "",
+      "count": 0,
+      "preview": [],
+      "data": "/api/collections/ai-campaigns"
+    },
+    "imagined-worlds": {
+      "id": "imagined-worlds",
+      "title": "Imagined Worlds",
+      "note": "Cinematic scenes, surreal environments and visual storytelling.",
+      "method": "AI-assisted",
+      "frame": "natural",
+      "folder": "",
+      "count": 0,
+      "preview": [],
+      "data": "/api/collections/imagined-worlds"
+    },
+    "character-stories": {
+      "id": "character-stories",
+      "title": "Character Stories",
+      "note": "Distinct characters and the worlds they inhabit.",
+      "method": "AI-assisted",
+      "frame": "portrait",
+      "folder": "",
+      "count": 0,
+      "preview": [],
+      "data": "/api/collections/character-stories"
+    },
+    "brand-identities": {
+      "id": "brand-identities",
+      "title": "Brand Identities",
+      "note": "Logos, visual systems and meaningful brand expressions.",
+      "method": "Design",
+      "frame": "square",
+      "folder": "",
+      "count": 0,
+      "preview": [],
+      "data": "/api/collections/brand-identities"
+    },
+    "product-stories": {
+      "id": "product-stories",
+      "title": "Product Stories",
+      "note": "Product photography, advertising and crafted details.",
+      "method": "Photography / Design",
+      "frame": "square",
+      "folder": "",
+      "count": 0,
+      "preview": [],
+      "data": "/api/collections/product-stories"
+    },
+    "photography": {
+      "id": "photography",
+      "title": "Photography",
+      "note": "Portraits, places and observations through my lens.",
+      "method": "Photography",
+      "frame": "natural",
+      "folder": "",
+      "count": 0,
+      "preview": [],
+      "data": "/api/collections/photography"
+    },
+    "digital-experiences": {
+      "id": "digital-experiences",
+      "title": "Digital Experiences",
+      "note": "Web concepts, interfaces and thoughtful digital design.",
+      "method": "UI / Web design",
+      "frame": "web",
+      "folder": "",
+      "count": 0,
+      "preview": [],
+      "data": "/api/collections/digital-experiences"
+    },
+    "art-studies": {
+      "id": "art-studies",
+      "title": "Art Studies",
+      "note": "Paintings, illustration and personal explorations.",
+      "method": "Art",
+      "frame": "natural",
+      "folder": "",
+      "count": 0,
+      "preview": [],
+      "data": "/api/collections/art-studies"
+    }
+  },
+  "hero": {},
+  "total": 0
+}

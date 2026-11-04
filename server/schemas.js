@@ -19,6 +19,9 @@ export const media = z
     id,
     collectionId: id,
     title: z.string().min(1).max(200),
+    tags: z.array(z.string().trim().min(1).max(60)).max(30).default([]),
+    keywords: z.array(z.string().trim().min(1).max(80)).max(50).default([]),
+    alt: z.string().max(500).default(''),
     name: z.string().max(200),
     src: asset.optional(),
     thumb: asset.optional(),
@@ -42,6 +45,8 @@ export const media = z
     'An image source is required',
   );
 export const collection = z.object({
+  character: z.boolean().optional(),
+  coverId: id.optional(),
   id,
   title: z.string().min(1).max(150),
   folder: z.string().max(200).default(''),
@@ -61,6 +66,7 @@ const contentShape = {};
 for (const field of config.fields) {
   let rule = z.string().max(field.max || 2000);
   if (field.type === 'asset') rule = z.union([asset, z.literal('')]);
+  if (field.type === 'select') rule = z.enum(Object.keys(field.options));
   if (field.type === 'email') rule = z.email();
   if (field.type === 'url')
     rule = z.union([

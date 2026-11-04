@@ -78,12 +78,14 @@ async function start() {
 let mediaLoadVersion = 0;
 async function load() {
   const loadVersion = ++mediaLoadVersion;
-  if (!$('#collection').value) {
+  if (!Object.keys(manifest.collections).length) {
     $('#grid').textContent = 'Create a collection first.';
     return;
   }
   const result = await api(
-    '/admin/media?collectionId=' +
+    '/admin/media?categoryId=' +
+      encodeURIComponent($('#media-category').value) +
+      '&collectionId=' +
       encodeURIComponent($('#collection').value) +
       '&page=' +
       page +
@@ -137,7 +139,18 @@ async function load() {
       await load();
     });
     if (item.type === 'archive') img.alt = 'Archive contact sheet · ' + item.title;
-    card.append(img, title, status, edit, toggle);
+    const terms = document.createElement('p');
+    terms.textContent = (item.tags || []).join(' · ');
+    card.append(img, title, status, terms, edit, toggle);
+    const remove = document.createElement('button');
+    remove.textContent = 'Delete';
+    remove.className = 'danger';
+    remove.onclick = run(async () => {
+      if (!confirm('Delete ' + item.title + ' from the portfolio?')) return;
+      await api('/admin/media/' + item.collectionId + '/' + item.id, { method: 'DELETE' });
+      await load();
+    });
+    card.append(remove);
     $('#grid').append(card);
   }
   $('#count').textContent = result.total + ' images';
@@ -158,6 +171,10 @@ $('#next').onclick = run(async () => {
   await load();
 });
 function openImage(item) {
+  if (!item && !$('#collection').value) {
+    message('Choose a collection before adding an image.');
+    return;
+  }
   currentItem = item || {
     id: crypto.randomUUID(),
     collectionId: $('#collection').value,
@@ -177,6 +194,9 @@ function openImage(item) {
   for (const key of ['title', 'name', 'src', 'thumb', 'width', 'height', 'order'])
     form.elements[key].value =
       currentItem[key] ?? (key === 'width' || key === 'height' ? 1000 : '');
+  for (const key of ['tags', 'keywords'])
+    form.elements[key].value = (currentItem[key] || []).join(', ');
+  form.elements.alt.value = currentItem.alt || '';
   form.elements.published.checked = currentItem.published;
   form.elements.src.required = currentItem.type !== 'archive';
   form.elements.src.disabled = currentItem.type === 'archive';
@@ -191,6 +211,9 @@ $('#image-form').onsubmit = run(async () => {
   const body = {
     ...currentItem,
     ...Object.fromEntries(['title', 'name', 'src', 'thumb'].map((k) => [k, values[k]])),
+    tags: parseTerms(values.tags),
+    keywords: parseTerms(values.keywords),
+    alt: values.alt,
     width: Number(values.width),
     height: Number(values.height),
     order: Number(values.order),
@@ -244,4 +267,39 @@ $('#set-hero').onclick = run(async () => {
     body: JSON.stringify({ id: currentItem.id, collectionId: currentItem.collectionId }),
   });
   message('Hero updated.');
+});
+
+function parseTerms(text) {
+  return [
+    ...new Set(
+      String(text || '')
+        .split(',')
+        .map((x) => x.trim())
+        .filter(Boolean),
+    ),
+  ];
+}
+function syncCategoryFilter() {
+  const selected = $('#media-category').value,
+    collection = $('#collection').value;
+  $('#media-category').replaceChildren(
+    new Option('All categories', ''),
+    ...manifest.sections.map((s) => new Option(s.title, s.id)),
+  );
+  $('#media-category').value = selected;
+  const category = manifest.sections.find((s) => s.id === selected);
+  const available = category
+    ? category.collections.map((id) => manifest.collections[id]).filter(Boolean)
+    : Object.values(manifest.collections);
+  $('#collection').replaceChildren(
+    new Option('All collections', ''),
+    ...available.map((c) => new Option(c.title, c.id)),
+  );
+  if (available.some((c) => c.id === collection)) $('#collection').value = collection;
+}
+$('#media-category').onchange = run(async () => {
+  page = 1;
+  $('#collection').value = '';
+  syncCategoryFilter();
+  await load();
 });

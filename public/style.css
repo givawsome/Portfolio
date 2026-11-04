@@ -2899,3 +2899,336 @@ textarea {
 .about-expanded p {
   white-space: pre-line;
 }
+
+/* Crafted contours: fixed, asymmetric radii stay consistent at every aspect ratio. */
+:root {
+  --media-corner: 28px 10px 28px 10px;
+  --display-font: 'Syne', 'Manrope', sans-serif;
+}
+.slider-section,
+.gallery-page,
+.about-art,
+.image-viewer,
+.brief-dialog,
+.welcome-popup {
+  border-radius: 40px 14px 40px 14px !important;
+  clip-path: none !important;
+}
+.rail-media,
+.gallery-media,
+.studio-main,
+.studio-product,
+.studio-character,
+.studio-sticker {
+  border-radius: var(--media-corner) !important;
+  clip-path: none !important;
+  overflow: hidden;
+}
+.rail-media img,
+.gallery-media img {
+  border-radius: 0 !important;
+  object-fit: contain !important;
+}
+.image-rail {
+  scroll-snap-type: none;
+  padding: 8px 4px 16px;
+}
+.slider-tools {
+  flex-wrap: wrap;
+}
+.slider-pause {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: transparent;
+  padding: 8px 12px;
+  font-size: 12px;
+}
+.character-folder-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 24px;
+}
+.character-folder-grid .rail-item {
+  width: 100%;
+  max-width: 430px;
+}
+.character-folder .image-caption {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  text-align: left;
+}
+.character-folder small {
+  color: var(--muted);
+  font-size: 12px;
+}
+.folder-placeholder {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  min-height: 240px;
+}
+h1,
+h2,
+h3,
+.slider-heading h3,
+.gallery-title,
+.studio-outline {
+  font-family: var(--display-font) !important;
+  letter-spacing: -0.045em;
+}
+.wordmark .brand-name,
+.site-footer .wordmark .brand-name {
+  display: block;
+  font: 800 clamp(28px, 3vw, 42px)/1.05 var(--display-font);
+  letter-spacing: -0.065em;
+  position: relative;
+}
+.wordmark .brand-name > span:first-child {
+  display: inline-block;
+  transform: skew(-7deg);
+}
+.wordmark .brand-name .wordmark-dot {
+  color: var(--orange);
+}
+.brand-name small,
+.site-footer .brand-name small {
+  display: block;
+  font: 600 9px/1.6 var(--display-font);
+  letter-spacing: 0.1em;
+  margin-top: 9px;
+  white-space: normal;
+  max-width: 300px;
+}
+.wordmark {
+  overflow: visible;
+  padding: 5px 0 9px;
+}
+.brand-name::after {
+  content: '';
+  position: absolute;
+  width: 36px;
+  height: 3px;
+  background: var(--blue);
+  top: -7px;
+  right: 10px;
+  transform: rotate(-10deg);
+}
+.studio-note {
+  top: 225px;
+  left: 3%;
+  width: 28%;
+  max-width: 28%;
+  z-index: 6;
+  padding: 6px 0;
+  background: transparent;
+  font-size: clamp(26px, 3.4vw, 46px);
+}
+.studio-product {
+  top: 365px;
+  left: 14%;
+}
+.studio-stage {
+  height: 650px;
+}
+.custom-social-icon {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  flex: none;
+}
+.social-links a,
+.site-footer a {
+  min-height: 28px;
+  overflow: visible;
+}
+.social-links svg {
+  width: 24px;
+  height: 24px;
+  padding: 2px;
+  box-sizing: content-box;
+  overflow: visible;
+}
+@media (max-width: 700px) {
+  .studio-stage {
+    height: 580px;
+  }
+  .studio-note {
+    top: 210px;
+    left: 2%;
+    max-width: 43%;
+    width: 43%;
+    font-size: clamp(24px, 5vw, 34px);
+  }
+  .studio-product {
+    top: 365px;
+    left: 6%;
+    width: 30%;
+    max-width: 30%;
+  }
+  .brand-name small {
+    font-size: 7px;
+    max-width: 205px;
+  }
+  .slider-section,
+  .gallery-page {
+    border-radius: 26px 10px 26px 10px !important;
+  }
+  .character-folder-grid {
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  }
+}
+
+/* Override older aspect-ratio-specific percentage contours. */
+.rail-item.natural .rail-media,
+.gallery-grid.landscape .gallery-media,
+.gallery-grid.wide .gallery-media {
+  border-radius: var(--media-corner) !important;
+}
+@media (min-width: 761px) {
+  .studio-note {
+    top: 310px;
+  }
+  .studio-product {
+    top: 460px;
+  }
+  .studio-stage {
+    height: 740px;
+  }
+}
+/* Reset legacy nested-span sizing so the signature remains a real wordmark. */
+.wordmark .brand-name > span {
+  font: inherit !important;
+  letter-spacing: inherit;
+  margin: 0;
+  vertical-align: baseline;
+  color: var(--ink);
+}
+.wordmark .brand-name > .wordmark-dot {
+  color: var(--orange);
+}
+.hero .studio-outline {
+  font-size: clamp(50px, 16vw, 218px);
+}
+@media (max-width: 760px) {
+  .wordmark .brand-name,
+  .site-footer .wordmark .brand-name {
+    font-size: 27px;
+  }
+  .brand-name small {
+    max-width: 170px;
+    font-size: 7px;
+  }
+  .studio-stage {
+    height: 650px;
+  }
+  .studio-note {
+    top: 100px;
+    left: 2%;
+    width: 90%;
+    max-width: 90%;
+    font-size: 28px;
+  }
+  .studio-main {
+    left: auto;
+    right: 2%;
+    top: 190px;
+    width: 62%;
+    height: 330px;
+  }
+  .studio-product {
+    left: 0;
+    top: 420px;
+    width: 30%;
+    max-width: 30%;
+  }
+  .studio-character {
+    right: 0;
+    top: 550px;
+    width: 48%;
+  }
+  .studio-sticker {
+    left: 0;
+    right: auto;
+    top: 285px;
+    width: 29%;
+    padding: 12px;
+    font-size: 16px;
+  }
+}
+.hero .studio-outline {
+  font-size: clamp(40px, 13.4vw, 188px);
+}
+.brand-name::after {
+  top: auto;
+  bottom: 23px;
+  right: 0;
+  width: 24px;
+}
+@media (max-width: 760px) {
+  .brand-name::after {
+    bottom: 30px;
+  }
+}
+
+/* CMS logo slots preserve the existing header and footer composition. */
+.wordmark.has-logo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+}
+.wordmark .portfolio-logo {
+  display: block;
+  width: clamp(140px, 18vw, 240px);
+  height: 80px;
+  object-fit: contain;
+  object-position: left center;
+  border-radius: 0;
+}
+.wordmark [hidden] {
+  display: none !important;
+}
+.logo-caption {
+  font:
+    600 9px/1.5 'Manrope',
+    sans-serif;
+  letter-spacing: 0.09em;
+  max-width: 260px;
+}
+html[data-typography='expressive'] {
+  --display-font: 'Syne', 'Manrope', sans-serif;
+}
+html[data-typography='editorial'] {
+  --display-font: Georgia, 'Times New Roman', serif;
+}
+html[data-typography='geometric'] {
+  --display-font: 'Manrope', sans-serif;
+}
+html[data-typography='editorial'] .studio-outline {
+  letter-spacing: -0.05em;
+}
+[data-contact] {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+[data-contact] > svg {
+  width: 24px;
+  height: 24px;
+  min-width: 24px;
+  flex-shrink: 0;
+  overflow: visible;
+}
+@media (max-width: 760px) {
+  .wordmark .portfolio-logo {
+    width: 160px;
+    height: 54px;
+  }
+  .logo-caption {
+    max-width: 180px;
+    font-size: 7px;
+  }
+}

@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Rajneesh · Portfolio Manager</title>
-    <link rel="stylesheet" href="/admin/style.css" />
+    <link rel="stylesheet" href="/admin/style.css?v=portfolio-controls-20261103" />
   </head>
   <body>
     <header>
@@ -31,7 +31,10 @@
             <a href="#dashboard">Overview</a>
             <a href="#categories">Categories</a>
             <a href="#collections">Collections</a>
+            <a href="#characters">Character folders</a>
+            <a href="#files">Files & uploads</a>
             <a href="#media">Media library</a>
+            <a href="#blog">Photography journal</a>
             <p class="nav-label">WEBSITE</p>
             <a href="#homepage">Homepage copy</a>
             <a href="#hero">Homepage artwork</a>
@@ -57,7 +60,11 @@
           <div id="management-view"></div>
           <div id="media-view">
             <div class="toolbar">
-              <label>Collection<select id="collection"></select></label
+              <label
+                >Category<select id="media-category">
+                  <option value="">All categories</option>
+                </select></label
+              ><label>Collection<select id="collection"></select></label
               ><button id="add-image">Add image</button>
             </div>
             <div class="toolbar">
@@ -65,7 +72,7 @@
                 >Search images<input
                   id="media-search"
                   type="search"
-                  placeholder="Search by title or filename" /></label
+                  placeholder="Search titles, tags or keywords" /></label
               ><label
                 >Visibility<select id="media-status">
                   <option value="">All images</option>
@@ -103,6 +110,12 @@
         /></label>
         <p>Uploads go directly to your Cloudinary account. Maximum 15 MB.</p>
         <label>Title<input name="title" required maxlength="200" /></label
+        ><label
+          >Tags (comma separated)<input
+            name="tags"
+            placeholder="portrait, cinematic, studio" /></label
+        ><label>Keywords (comma separated)<input name="keywords" /></label
+        ><label>Image description / alt text<input name="alt" maxlength="500" /></label
         ><label>Filename<input name="name" required /></label
         ><label>Image URL<input name="src" required /></label
         ><label>Preview URL<input name="thumb" /></label>
@@ -124,8 +137,10 @@
         ><button type="button" id="delete-image" class="danger">Remove image</button>
       </form>
     </dialog>
-    <script src="/admin/admin.js" defer></script>
-    <script src="/admin/content-editor.js" defer></script>
-    <script src="/admin/management.js" defer></script>
+    <script src="/admin/admin.js?v=portfolio-controls-20261103" defer></script>
+    <script src="/admin/content-editor.js?v=portfolio-controls-20261103" defer></script>
+    <script src="/admin/blog-editor.js?v=portfolio-controls-20261103" defer></script>
+    <script src="/admin/characters-files.js?v=portfolio-controls-20261103" defer></script>
+    <script src="/admin/management.js?v=portfolio-controls-20261103" defer></script>
   </body>
 </html>

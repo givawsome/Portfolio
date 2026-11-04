@@ -9,6 +9,7 @@ test('every content default validates and unknown/unsafe fields are rejected', (
   assert(settings.safeParse(contentDefaults).success);
   assert(!settings.safeParse({ aboutImage: 'javascript:alert(1)' }).success);
   assert(!settings.safeParse({ linkedin: 'javascript:alert(1)' }).success);
+  assert(!settings.safeParse({ typographyStyle: 'unsafe-font' }).success);
   assert(!settings.safeParse({ unknownSetting: 'silently discarded' }).success);
   assert(!settings.safeParse({ welcomeDelay: -1 }).success);
   assert(settings.safeParse({ aboutImage: '', aboutSections: [], instagram: '' }).success);
@@ -55,11 +56,56 @@ test('public content renders complete About, lists, images and clearing values s
     assert.equal(w.document.querySelectorAll('.process-grid article').length, 0);
     assert(w.document.querySelector('[data-contact=instagram]').hidden);
     assert.equal(w.document.querySelector('.studio-note script'), null);
-    w.applyPortfolioContent({ ...changed, aboutImage: '', aboutSections: [] });
+    w.applyPortfolioContent({
+      ...changed,
+      headerLogo: 'media/logo.png',
+      footerLogo: 'media/footer.png',
+      logoAlt: 'Custom logo',
+      typographyStyle: 'editorial',
+    });
+    assert.equal(
+      w.document.querySelector('.site-header .portfolio-logo')?.getAttribute('src') ||
+        w.document.querySelector('header .portfolio-logo')?.getAttribute('src'),
+      '/media/logo.png',
+    );
+    assert.equal(
+      w.document.querySelector('.site-footer .portfolio-logo').getAttribute('src'),
+      '/media/footer.png',
+    );
+    assert.equal(w.document.querySelector('.portfolio-logo').alt, 'Custom logo');
+    assert.equal(w.document.documentElement.dataset.typography, 'editorial');
+    w.applyPortfolioContent({ ...changed, headerLogo: 'media/logo.png', footerLogo: '' });
+    assert.equal(
+      w.document.querySelector('.site-footer .portfolio-logo').getAttribute('src'),
+      '/media/logo.png',
+    );
+    w.applyPortfolioContent({
+      ...changed,
+      aboutImage: '',
+      aboutSections: [],
+      headerLogo: '',
+      footerLogo: '',
+    });
+    assert.equal(w.document.querySelectorAll('.portfolio-logo').length, 0);
+
     assert(w.document.querySelector('#about-image').hidden);
     assert.equal(w.document.querySelector('.personal-art').hidden, false);
     assert(w.document.querySelector('.about-more').hidden);
   } finally {
     w.close();
   }
+});
+
+test('blog content validates slugs and does not accept unsafe covers', async () => {
+  const { postSchema } = await import('../server/blog.js');
+  const post = {
+    title: 'Photography story',
+    slug: 'photography-story',
+    excerpt: '',
+    body: 'My story',
+    author: 'Rajneesh',
+  };
+  assert(postSchema.safeParse(post).success);
+  assert(!postSchema.safeParse({ ...post, slug: '../admin' }).success);
+  assert(!postSchema.safeParse({ ...post, cover: 'javascript:alert(1)' }).success);
 });

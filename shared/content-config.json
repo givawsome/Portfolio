@@ -16,7 +16,7 @@
       "selector": ".brand-name small",
       "type": "text",
       "max": 2000,
-      "default": "VAISHNAV / VISUAL DESIGNER"
+      "default": "VAISHNAV / VISUAL DESIGNER + PHOTOGRAPHER"
     },
     {
       "group": "general",
@@ -61,7 +61,7 @@
       "selector": ".studio-topline span:last-child",
       "type": "text",
       "max": 2000,
-      "default": "DESIGN · PHOTOGRAPHY · AI ART"
+      "default": "DESIGN \u00b7 PHOTOGRAPHY \u00b7 AI ART"
     },
     {
       "group": "homepage",
@@ -79,7 +79,7 @@
       "selector": ".studio-index",
       "type": "text",
       "max": 2000,
-      "default": "01 — MANY WAYS TO SEE."
+      "default": "01 \u2014 MANY WAYS TO SEE."
     },
     {
       "group": "homepage",
@@ -88,7 +88,7 @@
       "selector": ".studio-bottom p",
       "type": "textarea",
       "max": 2000,
-      "default": "A photographer’s eye.\nA designer’s imagination."
+      "default": "A photographer\u2019s eye.\nA designer\u2019s imagination."
     },
     {
       "group": "homepage",
@@ -205,7 +205,7 @@
       "selector": ".about-copy>h2 > span:first-child",
       "type": "text",
       "max": 2000,
-      "default": "Hi, I’m"
+      "default": "Hi, I\u2019m"
     },
     {
       "group": "profile",
@@ -223,7 +223,7 @@
       "selector": ".about-copy>.lead",
       "type": "textarea",
       "max": 2000,
-      "default": "A visual designer with a photographer’s eye and a curiosity for what comes next."
+      "default": "A visual designer with a photographer\u2019s eye and a curiosity for what comes next."
     },
     {
       "group": "profile",
@@ -277,7 +277,7 @@
       "selector": ".about-art-caption",
       "type": "textarea",
       "max": 2000,
-      "default": "A PHOTOGRAPHER’S EYE.\nA DESIGNER’S CURIOSITY."
+      "default": "A PHOTOGRAPHER\u2019S EYE.\nA DESIGNER\u2019S CURIOSITY."
     },
     {
       "group": "profile",
@@ -311,7 +311,7 @@
       "label": "About image description",
       "type": "text",
       "max": 300,
-      "default": "Rajneesh’s creative work"
+      "default": "Rajneesh\u2019s creative work"
     },
     {
       "group": "process",
@@ -347,7 +347,7 @@
       "selector": ".contact-section h2 > span:first-child",
       "type": "text",
       "max": 2000,
-      "default": "Let’s make"
+      "default": "Let\u2019s make"
     },
     {
       "group": "contact",
@@ -365,7 +365,7 @@
       "selector": ".contact-bottom>p",
       "type": "textarea",
       "max": 2000,
-      "default": "Tell me what you’re building.Let’s find the right visual direction."
+      "default": "Tell me what you\u2019re building.Let\u2019s find the right visual direction."
     },
     {
       "group": "contact",
@@ -432,7 +432,7 @@
       "selector": "#welcome-popup>p",
       "type": "textarea",
       "max": 500,
-      "default": "Explore my world of design, photography and AI art. Have an idea? Let’s make it happen."
+      "default": "Explore my world of design, photography and AI art. Have an idea? Let\u2019s make it happen."
     },
     {
       "group": "welcome",
@@ -474,7 +474,7 @@
       "label": "Browser / search title",
       "type": "text",
       "max": 150,
-      "default": "Rajneesh Vaishnav — Design, Photography & AI"
+      "default": "Rajneesh Vaishnav \u2014 Design, Photography & AI"
     },
     {
       "group": "general",
@@ -482,7 +482,85 @@
       "label": "Search description",
       "type": "textarea",
       "max": 500,
-      "default": "Rajneesh Vaishnav — visual designer, photographer and AI creative in Jaipur. Design, product photography, website work and AI-assisted projects."
+      "default": "Rajneesh Vaishnav \u2014 visual designer, photographer and AI creative in Jaipur. Design, product photography, website work and AI-assisted projects."
+    },
+    {
+      "group": "contact",
+      "key": "emailIcon",
+      "label": "Gmail / email custom icon",
+      "type": "asset",
+      "max": 2000,
+      "default": ""
+    },
+    {
+      "group": "contact",
+      "key": "phoneIcon",
+      "label": "Phone custom icon",
+      "type": "asset",
+      "max": 2000,
+      "default": ""
+    },
+    {
+      "group": "contact",
+      "key": "instagramIcon",
+      "label": "Instagram custom icon",
+      "type": "asset",
+      "max": 2000,
+      "default": ""
+    },
+    {
+      "group": "contact",
+      "key": "facebookIcon",
+      "label": "Facebook custom icon",
+      "type": "asset",
+      "max": 2000,
+      "default": ""
+    },
+    {
+      "group": "contact",
+      "key": "linkedinIcon",
+      "label": "LinkedIn custom icon",
+      "type": "asset",
+      "max": 2000,
+      "default": ""
+    },
+    {
+      "group": "general",
+      "key": "headerLogo",
+      "label": "Header logo",
+      "type": "asset",
+      "default": "",
+      "help": "Recommended: transparent PNG or WebP, 960 \u00d7 320 px (3:1). Displayed within 240 \u00d7 80 px; artwork is never cropped."
+    },
+    {
+      "group": "general",
+      "key": "footerLogo",
+      "label": "Footer logo (optional override)",
+      "type": "asset",
+      "default": "",
+      "help": "Recommended: transparent PNG or WebP, 960 \u00d7 320 px. Leave empty to reuse the header logo."
+    },
+    {
+      "group": "general",
+      "key": "logoAlt",
+      "label": "Logo description",
+      "type": "text",
+      "max": 200,
+      "default": "Rajneesh Vaishnav \u2014 Visual Designer & Photographer"
+    },
+    {
+      "group": "general",
+      "key": "typographyStyle",
+      "label": "Typography direction",
+      "type": "select",
+      "options": {
+        "current": "Current portfolio fonts",
+        "expressive": "Expressive \u2014 Syne headings",
+        "editorial": "Editorial \u2014 Georgia headings",
+        "geometric": "Geometric \u2014 Manrope"
+      },
+      "default": "current",
+      "help": "Keep Current until your font references are chosen. Changes affect typography only."
     }
   ],
   "lists": [
@@ -524,17 +602,17 @@
       },
       "default": [
         {
-          "label": "01 — DISCOVER",
+          "label": "01 \u2014 DISCOVER",
           "title": "Start with the why.",
           "body": "We discuss your audience, goals, references and deliverables before making anything."
         },
         {
-          "label": "02 — EXPLORE",
+          "label": "02 \u2014 EXPLORE",
           "title": "Find the direction.",
           "body": "I develop a visual approach, share it with you, and refine it through focused feedback."
         },
         {
-          "label": "03 — MAKE",
+          "label": "03 \u2014 MAKE",
           "title": "Bring it into focus.",
           "body": "The chosen direction becomes a considered set of final assets, ready for their intended use."
         }
@@ -570,7 +648,7 @@
       "default": [
         {
           "title": "Photography first. A broader practice since.",
-          "body": "My journey began at Apex Studio in Jaipur in 2017, photographing events and refining images in Photoshop and Lightroom. At Wow Graphics in Jodhpur, I brought that experience into customized products, print artwork, school photography and catalog design.\n\nFrom 2021 to 2024, I ran Rudra Customized Gifting. Working directly with customers meant taking ideas from the first conversation through artwork, photography, listings and production—including selling through Amazon, Flipkart and Meesho."
+          "body": "My journey began at Apex Studio in Jaipur in 2017, photographing events and refining images in Photoshop and Lightroom. At Wow Graphics in Jodhpur, I brought that experience into customized products, print artwork, school photography and catalog design.\n\nFrom 2021 to 2024, I ran Rudra Customized Gifting. Working directly with customers meant taking ideas from the first conversation through artwork, photography, listings and production\u2014including selling through Amazon, Flipkart and Meesho."
         },
         {
           "title": "From social stories to e-commerce.",
@@ -578,7 +656,7 @@
         },
         {
           "title": "What I bring to a freelance project.",
-          "body": "I can help with product imagery, visual identity, campaign and social creatives, and website visuals. AI-assisted concepts and character work sit alongside my photography and design practice, with each approach clearly identified in the galleries.\n\nI’m based in Jaipur and take on select freelance projects alongside my current role. A clear brief, thoughtful visual direction and careful finishing guide how I work."
+          "body": "I can help with product imagery, visual identity, campaign and social creatives, and website visuals. AI-assisted concepts and character work sit alongside my photography and design practice, with each approach clearly identified in the galleries.\n\nI\u2019m based in Jaipur and take on select freelance projects alongside my current role. A clear brief, thoughtful visual direction and careful finishing guide how I work."
         }
       ]
     }

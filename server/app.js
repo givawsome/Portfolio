@@ -1,4 +1,5 @@
 import express from 'express';
+import { publicBlog, adminBlog } from './blog.js';
 import helmet from 'helmet';
 import cookieParser from 'cookie-parser';
 import { randomUUID, createHash } from 'node:crypto';
@@ -68,6 +69,12 @@ async function manifest() {
           .limit(8)
           .toArray()
       ).map(publicItem);
+      if (c.coverId) {
+        const cover = await d
+          .collection('media')
+          .findOne({ collectionId: c.id, id: c.coverId, published: true, type: 'image' });
+        c.cover = cover ? publicItem(cover) : c.preview[0];
+      } else c.cover = c.preview[0];
       c.data = '/api/collections/' + c.id;
     }),
   );
@@ -87,7 +94,11 @@ async function manifest() {
 app.get('/api/health', async (req, res) => {
   if (!process.env.MONGODB_URI) return res.status(503).json({ database: 'not configured' });
   await (await db()).command({ ping: 1 });
-  res.json({ database: 'connected', version: 'content-admin-v2' });
+  res.json({
+    database: 'connected',
+    version: 'content-admin-v2',
+    release: 'character-admin-20261103',
+  });
 });
 app.get(['/api/portfolio', '/portfolio.json'], async (req, res) => {
   if (!process.env.MONGODB_URI && process.env.NODE_ENV !== 'production')
@@ -165,7 +176,9 @@ app.post('/api/auth/logout', sameOrigin, (req, res) =>
   res.clearCookie('session', { path: '/' }).json({ ok: true }),
 );
 app.get('/api/auth/me', authenticate, (req, res) => res.json({ email: req.admin.email }));
+app.use('/api/blog', publicBlog);
 app.use('/api/admin', sameOrigin, authenticate);
+app.use('/api/admin/posts', adminBlog);
 app.get('/api/admin/manifest', async (_req, res) => {
   const record = await (await db()).collection('content').findOne({ _id: 'manifest' });
   if (!record)
@@ -175,6 +188,11 @@ app.get('/api/admin/manifest', async (_req, res) => {
 app.put('/api/admin/collections/:id', async (req, res) => {
   const c = schemas.collection.parse({ ...req.body, id: req.params.id });
   const d = await db();
+  const previous = await d.collection('content').findOne({ _id: 'manifest' });
+  const existing = previous?.value.collections[c.id];
+  for (const key of ['character', 'coverId'])
+    if (c[key] === undefined && existing?.[key] !== undefined) c[key] = existing[key];
+
   await d.collection('content').updateOne(
     { _id: 'manifest' },
     {
@@ -189,6 +207,56 @@ app.put('/api/admin/collections/:id', async (req, res) => {
     },
   );
   res.json(c);
+});
+app.put('/api/admin/collections/:id/cover', async (req, res) => {
+  const cid = schemas.id.parse(req.params.id),
+    coverId = schemas.id.parse(req.body.coverId);
+  const d = await db();
+  const item = await d
+    .collection('media')
+    .findOne({ collectionId: cid, id: coverId, published: true, type: 'image' });
+  if (!item)
+    return res.status(400).json({ error: 'Choose a published image from this character folder' });
+  const result = await d
+    .collection('content')
+    .updateOne(
+      { _id: 'manifest', ['value.collections.' + cid]: { $exists: true } },
+      { $set: { ['value.collections.' + cid + '.coverId']: coverId } },
+    );
+  if (!result.matchedCount) return res.status(404).json({ error: 'Folder not found' });
+  res.json({ ok: true });
+});
+const fileSchema = z.object({
+  title: z.string().min(1).max(200),
+  url: schemas.asset,
+  mime: z.enum(['image/jpeg', 'image/png', 'image/webp', 'image/avif', 'application/pdf']),
+  size: z
+    .number()
+    .int()
+    .positive()
+    .max(15 * 1024 * 1024),
+});
+app.get('/api/admin/files', async (_req, res) =>
+  res.json(
+    await (
+      await db()
+    )
+      .collection('files')
+      .find({}, { projection: { _id: 0 } })
+      .sort({ createdAt: -1 })
+      .limit(500)
+      .toArray(),
+  ),
+);
+app.post('/api/admin/files', async (req, res) => {
+  const data = fileSchema.parse(req.body),
+    item = { ...data, id: randomUUID(), createdAt: new Date() };
+  await (await db()).collection('files').insertOne({ ...item });
+  res.status(201).json(item);
+});
+app.delete('/api/admin/files/:id', async (req, res) => {
+  await (await db()).collection('files').deleteOne({ id: schemas.id.parse(req.params.id) });
+  res.json({ ok: true });
 });
 app.delete('/api/admin/collections/:id', async (req, res) => {
   const id = schemas.id.parse(req.params.id),
@@ -222,10 +290,18 @@ app.put('/api/admin/sections', async (req, res) => {
   res.json({ ok: true });
 });
 app.get('/api/admin/media', async (req, res) => {
-  const cid = schemas.id.parse(req.query.collectionId),
+  const cid = req.query.collectionId ? schemas.id.parse(req.query.collectionId) : null,
     page = Math.max(1, parseInt(req.query.page) || 1);
   const d = await db(),
-    filter = { collectionId: cid };
+    filter = cid ? { collectionId: cid } : {};
+  if (req.query.categoryId) {
+    const categoryId = schemas.id.parse(req.query.categoryId);
+    const m = await d.collection('content').findOne({ _id: 'manifest' });
+    const category = m?.value.sections.find((s) => s.id === categoryId);
+    if (!category) return res.status(404).json({ error: 'Category not found' });
+    filter.collectionId =
+      cid && category.collections.includes(cid) ? cid : { $in: cid ? [] : category.collections };
+  }
   if (req.query.status === 'published') filter.published = true;
   if (req.query.status === 'draft') filter.published = false;
   const query = z
@@ -237,6 +313,8 @@ app.get('/api/admin/media', async (req, res) => {
     filter.$or = [
       { title: { $regex: escaped, $options: 'i' } },
       { name: { $regex: escaped, $options: 'i' } },
+      { tags: { $regex: escaped, $options: 'i' } },
+      { keywords: { $regex: escaped, $options: 'i' } },
     ];
   }
   res.json({
@@ -392,6 +470,9 @@ app.use('/admin', (_req, res, next) => {
   next();
 });
 app.use('/admin', express.static(path.join(root, 'admin')));
+app.get(['/blog', '/blog/:slug'], (_req, res) =>
+  res.sendFile(path.join(root, 'public/blog.html'), { dotfiles: 'allow' }),
+);
 app.use(express.static(path.join(root, 'public'), { index: 'index.html' }));
 app.use((err, req, res, next) => {
   if (res.headersSent) return next(err);

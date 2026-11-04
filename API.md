@@ -39,3 +39,12 @@ Responses are JSON. Validation errors return 400, unauthenticated access 401, in
 - `DELETE /api/admin/inquiries/:id`: delete a single enquiry; 404 if absent.
 
 All routes require an authenticated session; all mutations require matching `APP_ORIGIN`.
+
+## Journal and category media
+
+- `GET /api/admin/media?categoryId=<id>&collectionId=<id>&q=<terms>&status=draft&page=1`: category/collection filters; search titles, filenames, tags and keywords. Collection is optional for browsing.
+- Media PUT accepts `tags` (up to 30), `keywords` (up to 50), and `alt` in addition to existing image fields.
+- `GET /api/blog?page=1`: published article summaries, 12 per page.
+- `GET /api/blog/:slug`: published article; drafts/missing articles return 404.
+- `GET /api/admin/posts?page=1`: private article list, 30 per page.
+- `POST /api/admin/posts`, `PUT /api/admin/posts/:id`, `DELETE /api/admin/posts/:id`: authenticated journal CRUD. Slugs are unique; duplicate slug writes return 409.

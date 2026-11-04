@@ -1,6 +1,9 @@
 // Each sidebar destination has its own URL, screen, and editing workflow.
 const screenTitles = {
   dashboard: 'Overview',
+  characters: 'Character folders',
+  files: 'Files & uploads',
+  blog: 'Photography journal',
   homepage: 'Homepage copy',
   general: 'Brand & SEO',
   services: 'Services',
@@ -126,6 +129,7 @@ async function route() {
   const root = $('#management-view');
   root.replaceChildren();
   if (view === 'media') {
+    syncCategoryFilter();
     await load();
     return;
   }
@@ -138,6 +142,18 @@ async function route() {
   );
   if (manifest.collections[selected]) $('#collection').value = selected;
   root.replaceChildren();
+  if (view === 'characters') {
+    await renderCharactersAdmin();
+    return;
+  }
+  if (view === 'files') {
+    await renderFilesAdmin();
+    return;
+  }
+  if (view === 'blog') {
+    await renderBlogAdmin();
+    return;
+  }
   if (view === 'dashboard') {
     const stats = await api('/admin/stats');
     if (version !== routeVersion) return;
@@ -191,6 +207,7 @@ async function route() {
           c.method,
           buttons(
             action('View images', () => {
+              $('#media-category').value = '';
               $('#collection').value = c.id;
               page = 1;
               location.hash = 'media';
@@ -233,6 +250,13 @@ async function route() {
           s.title,
           String(s.collections.length),
           buttons(
+            action('View uploads', () => {
+              $('#media-category').replaceChildren(new Option(s.title, s.id));
+              $('#media-category').value = s.id;
+              $('#collection').value = '';
+              page = 1;
+              location.hash = 'media';
+            }),
             action('Edit', () => categoryForm(s)),
             action('Move up', async () => {
               if (!i) return;

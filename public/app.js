@@ -46,7 +46,7 @@
   function imageMarkup(item, { full = false, eager = false } = {}) {
     if (item.type === 'archive')
       return `<div class="archive-preview" role="img" aria-label="${esc(imageTitle(item))}" style="${spriteStyle(item)}"></div>`;
-    return `<img src="${esc(full || item.hd ? item.src : item.thumb || item.src)}" alt="${esc(imageTitle(item))}" ${eager ? 'fetchpriority="high"' : 'loading="lazy"'} decoding="async">`;
+    return `<img src="${esc(full || item.hd ? item.src : item.thumb || item.src)}" alt="${esc(item.alt || imageTitle(item))}" ${eager ? 'fetchpriority="high"' : 'loading="lazy"'} decoding="async">`;
   }
   function frameFor(item, c) {
     if (c.frame === 'square')
@@ -119,11 +119,61 @@
         $(selector).innerHTML = imageMarkup(manifest.hero?.[key], { eager: true });
     });
   }
+  const movingRails = [];
+  let lastSlideTime = 0;
+  function animateRails(time) {
+    if (time - lastSlideTime >= 30) {
+      const distance = Math.min((time - lastSlideTime) * 0.04, 3);
+      lastSlideTime = time;
+      if (!reduceMotion() && !document.hidden)
+        for (const state of movingRails) {
+          const { rail, section } = state;
+          if (
+            !rail.isConnected ||
+            section.matches(':hover, :focus-within') ||
+            state.paused ||
+            Date.now() < state.until
+          )
+            continue;
+          const box = rail.getBoundingClientRect();
+          if (box.bottom < 0 || box.top > innerHeight || !box.width) continue;
+          const max = rail.scrollWidth - rail.clientWidth;
+          if (max <= 1) continue;
+          if (rail.scrollLeft >= max - 2) state.direction = -1;
+          else if (rail.scrollLeft <= 1) state.direction = 1;
+          rail.scrollLeft += distance * state.direction;
+        }
+    }
+    requestAnimationFrame(animateRails);
+  }
+  requestAnimationFrame(animateRails);
+  const isCharacters = (s) => ['character-stories', 'manga'].includes(s.id);
+  function characterFolders(s) {
+    return s.collections
+      .map((id) => manifest.collections[id])
+      .filter((c) => c && (c.character || c.id.startsWith('manga-')));
+  }
+  function folderCard(c) {
+    const button = document.createElement('button');
+    button.className = 'rail-item portrait character-folder';
+    const cover = c.cover || c.preview[0];
+    button.innerHTML = `<div class="rail-media">${cover ? imageMarkup(cover) : '<span class="folder-placeholder">Character study</span>'}</div><div class="image-caption"><span>${esc(c.title)}</span><small>${c.count || 0} images · Open story</small></div>`;
+    button.onclick = () =>
+      navigate(
+        activeSection?.id && isCharacters(activeSection)
+          ? activeSection.id
+          : manifest.sections.find((s) => s.collections.includes(c.id)).id,
+        c.id,
+      );
+    return button;
+  }
   function renderHome() {
+    movingRails.length = 0;
     const container = $('#home-sliders');
     container.innerHTML = '';
     manifest.sections.forEach((s) => {
       const c = manifest.collections[s.featured];
+      if (!c) return;
       let previews = c.preview.map((item) => ({ item, collection: c }));
       if (s.id === 'identity' || s.id === 'manga') {
         previews = s.collections
@@ -139,10 +189,15 @@
       section.className = 'slider-section';
       section.dataset.section = s.id;
       section.setAttribute('aria-label', s.title + ' slider');
-      section.innerHTML = `<div class="slider-heading"><div><h3>${esc(s.title)}</h3><p>${esc(s.subtitle)}</p></div><div class="slider-tools"><a class="see-more" href="${galleryURL(s.id, c.id)}" data-section="${s.id}" data-collection="${c.id}" aria-label="See more ${esc(s.title)}">See More</a><button class="slider-arrow" data-direction="-1" aria-label="Previous ${esc(s.title)} images">${icons['chevron-left']}</button><button class="slider-arrow" data-direction="1" aria-label="Next ${esc(s.title)} images">${icons['chevron-right']}</button></div></div>`;
+      section.innerHTML = `<div class="slider-heading"><div><h3>${esc(s.title)}</h3><p>${esc(s.subtitle)}</p></div><div class="slider-tools"><a class="see-more" href="${galleryURL(s.id, isCharacters(s) ? undefined : c.id)}" data-section="${s.id}" data-collection="${isCharacters(s) ? '' : c.id}" aria-label="See more ${esc(s.title)}">See More</a><button class="slider-arrow" data-direction="-1" aria-label="Previous ${esc(s.title)} images">${icons['chevron-left']}</button><button class="slider-arrow" data-direction="1" aria-label="Next ${esc(s.title)} images">${icons['chevron-right']}</button></div></div>`;
       const rail = document.createElement('div');
       rail.className = 'image-rail';
       rail.setAttribute('aria-label', s.title + ' selected images');
+      const folders = isCharacters(s) ? characterFolders(s) : [];
+      if (isCharacters(s)) {
+        previews = [];
+        folders.forEach((c) => rail.append(folderCard(c)));
+      }
       previews.forEach(({ item, collection }) => {
         const button = document.createElement('button');
         button.className =
@@ -165,6 +220,12 @@
         };
         rail.appendChild(button);
       });
+      if (!previews.length && !folders.length) {
+        const empty = document.createElement('p');
+        empty.className = 'empty-message';
+        empty.textContent = 'New work coming soon.';
+        section.append(empty);
+      }
       section.appendChild(rail);
       const count = s.collections.reduce((n, id) => n + manifest.collections[id].count, 0);
       const footer = document.createElement('div');
@@ -188,6 +249,21 @@
             });
           }),
       );
+      const state = { rail, section, direction: 1, paused: false, until: 0 };
+      movingRails.push(state);
+      const pause = document.createElement('button');
+      pause.className = 'slider-pause';
+      pause.textContent = 'Pause';
+      pause.setAttribute('aria-label', 'Pause automatic scrolling for ' + s.title);
+      pause.setAttribute('aria-pressed', 'false');
+      pause.onclick = () => {
+        state.paused = !state.paused;
+        pause.textContent = state.paused ? 'Play' : 'Pause';
+        pause.setAttribute('aria-pressed', String(state.paused));
+      };
+      section.querySelector('.slider-tools').append(pause);
+      for (const event of ['pointerdown', 'wheel', 'keydown'])
+        rail.addEventListener(event, () => (state.until = Date.now() + 4000), { passive: true });
       rail.addEventListener('scroll', sync, { passive: true });
       new ResizeObserver(sync).observe(rail);
       requestAnimationFrame(sync);
@@ -245,7 +321,8 @@
     $('#gallery-search').value = '';
     $('#home-view').hidden = true;
     $('#gallery-view').hidden = false;
-    $('#gallery-title').textContent = s.title;
+    $('#gallery-title').textContent =
+      isCharacters(s) && p.get('collection') ? activeCollection.title : s.title;
     $('#gallery-subtitle').textContent = s.subtitle;
     document.title = s.title + ' — ' + (window.portfolioSettings?.brandName || 'Rajneesh Vaishnav');
     $('#breadcrumbs').innerHTML =
@@ -253,6 +330,16 @@
     renderCollectionPicker();
     $('#collection-method').textContent = activeCollection.method;
     $('#collection-note').textContent = activeCollection.note;
+    if (isCharacters(s) && !p.get('collection')) {
+      const grid = document.createElement('div');
+      grid.className = 'character-folder-grid';
+      characterFolders(s).forEach((c) => grid.append(folderCard(c)));
+      if (!grid.children.length) grid.textContent = 'Character stories are coming soon.';
+      $('#gallery-content').replaceChildren(grid);
+      $('#pagination').replaceChildren();
+      $('#gallery-count').textContent = characterFolders(s).length + ' character folders';
+      return;
+    }
     $('#gallery-content').innerHTML =
       '<p class="loading-message" role="status">Opening the collection…</p>';
     $('#pagination').innerHTML = '';
@@ -270,6 +357,18 @@
   }
   function renderCollectionPicker() {
     const el = $('#collection-picker');
+    if (isCharacters(activeSection)) {
+      const back = document.createElement('a');
+      back.href = galleryURL(activeSection.id);
+      back.textContent = 'All characters';
+      back.onclick = (e) => {
+        e.preventDefault();
+        navigate(activeSection.id);
+      };
+      el.replaceChildren(back);
+      return;
+    }
+
     el.innerHTML = '';
     if (activeSection.collections.length < 2) return;
     if (activeSection.collections.length > 6) {
@@ -310,7 +409,19 @@
     filteredItems = collectionItems.filter(
       (x) =>
         !query ||
-        (imageTitle(x) + ' ' + x.name + ' ' + x.path + ' ' + x.group)
+        (
+          imageTitle(x) +
+          ' ' +
+          x.name +
+          ' ' +
+          x.path +
+          ' ' +
+          x.group +
+          ' ' +
+          (x.tags || []).join(' ') +
+          ' ' +
+          (x.keywords || []).join(' ')
+        )
           .toLowerCase()
           .includes(query.toLowerCase()),
     );
@@ -426,7 +537,7 @@
     media.innerHTML =
       item.type === 'archive'
         ? `<div class="viewer-archive" role="img" aria-label="${esc(imageTitle(item))}" style="${spriteStyle(item)}"></div>`
-        : `<img class="full-image" src="${esc(item.src)}" alt="${esc(imageTitle(item))}">`;
+        : `<img class="full-image" src="${esc(item.src)}" alt="${esc(item.alt || imageTitle(item))}">`;
     $('#viewer-caption').textContent =
       (item.type === 'archive' ? 'Optimized archive preview · ' : '') +
       item.name +
@@ -499,6 +610,14 @@
   });
   $('#gallery-search').addEventListener('input', (e) => {
     query = e.target.value;
+    if (isCharacters(activeSection) && !new URLSearchParams(location.search).get('collection')) {
+      document
+        .querySelectorAll('.character-folder-grid .character-folder')
+        .forEach(
+          (card) => (card.hidden = !card.textContent.toLowerCase().includes(query.toLowerCase())),
+        );
+      return;
+    }
     page = 1;
     renderGallery();
   });

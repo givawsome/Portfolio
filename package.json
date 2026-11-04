@@ -16,7 +16,8 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "migrate": "node --env-file-if-exists=.env scripts/migrate.js",
-    "test:browser": "node --env-file-if-exists=.env scripts/browser-check.js"
+    "test:browser": "node --env-file-if-exists=.env scripts/browser-check.js",
+    "gallery:reset": "node --env-file-if-exists=.env scripts/reset-gallery.js"
   },
   "dependencies": {
     "cookie-parser": "^1.4.7",

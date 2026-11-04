@@ -185,3 +185,35 @@ npm run test:browser
 ```
 
 The browser test requires local MongoDB. It creates a uniquely named temporary database, tests sign-in, navigation, About image and biography persistence, public rendering, contact/services/welcome/homepage updates, media CRUD and mobile overflow, then deletes only that test database. Screenshots are saved under `/tmp/portfolio-review/`. It never uses your configured portfolio database for test edits. Cloudinary uploads still require your provider credentials and are not covered by this local browser test.
+
+## Creative categories, image metadata and photography journal
+
+The empty starter structure is in `shared/creative-categories.json`: AI Campaigns, Imagined Worlds, Character Stories, Brand Identities, Product Stories, Photography, Digital Experiences and Art Studies. Categories and their collections can be renamed, expanded or reordered in the admin.
+
+Use **Categories → View uploads** to see all images across a category's collections. The media library filters by category, collection and publication status. Choose a collection before adding an image. Edit titles, comma-separated tags/keywords and descriptive alt text, or delete entries directly from the cards. Search includes tags and keywords. Original seed files and bundled media are retained solely as reference/recovery material; cleared entries no longer appear in the galleries.
+
+Use **Photography journal → New article** to write a draft, edit its title, URL slug, author, excerpt, cover image, alt text, tags and body, then publish. Blank lines separate paragraphs; `#`, `##` and `###` introduce headings. Preview supports unsaved text. Public posts are available at `/blog` and `/blog/<slug>`; drafts return 404 publicly. Article HTML is treated as text. Uploading new covers requires Cloudinary, while the image library picker uses existing published images. This initial journal is client-rendered, matching the portfolio architecture.
+
+Gallery recovery copies are in ignored `backups/*.ejson` files with restricted permissions. They contain only gallery entries, the manifest and profile settings—not account passwords. Retain these files privately. The reset script requires the explicit `RESET_GALLERY=CLEAR_IMPORTED_GALLERY` flag and creates/verifies a backup before deleting captured entries. Do not rerun it after adding new work unless you intend to clear that work too. Do not rerun the original seed to upload content; use the admin.
+
+Database changes take effect immediately; new admin controls and blog routes require deploying this updated project to Vercel. The earlier Chrome Safe Browsing warning is a separate issue and is not resolved by these content changes.
+
+On November 2, 2026, the requested cleanup removed 4,261 production gallery entries. The configured development database had no gallery entries and was initialized with the same eight empty categories. Recovery snapshots were verified before each reset. Accounts and enquiries were not deleted.
+
+### Character folders, files and icons
+
+In **Character folders**, create one folder per character, upload multiple images directly, and use **Choose folder cover** to select a published image from that folder. The public Character Stories category opens a folder grid; selecting a folder opens that character’s gallery. Deleting a folder requires moving or removing its images first.
+
+**Files & uploads** accepts JPG, PNG, WebP, AVIF and PDF files up to 15 MB each. Uploaded file URLs can be copied for reuse. Removing a file record does not delete the original Cloudinary asset. **Contact & social links** includes upload/choose/remove controls for each custom social icon; an empty field restores the built-in icon. SVG uploads are not accepted.
+
+Homepage rails automatically scroll back and forth, pause on hover/focus, and provide a Pause/Play control. Automatic movement respects the visitor’s reduced-motion setting. The display type uses Syne with local fallback fonts. Deploy the updated application to Vercel to publish the code changes; no database reset or re-seeding is needed.
+
+### Logo, typography and character folders
+
+In Admin → General, upload a header logo and optional footer override. Use a transparent PNG/WebP at **960 × 320 px (3:1)**, with tight artwork bounds and internal clear space. The desktop slot is at most **240 × 80 px** and the mobile slot **160 × 54 px**; artwork uses `contain` and is never cropped. An empty footer field reuses the header logo. Removing both restores the text signature. Typography direction is selectable; keep Current until the final font references are selected.
+
+Admin → Character folders creates one collection per character. Upload multiple images to a folder, then choose any published image in that folder as its cover. Manage images edits titles, tags, keywords and publication status. Covers fall back to the first published image if their image is removed or unpublished.
+
+Admin → Contact manages custom social/email icons (recommended 96 × 96 px transparent PNG/WebP, displayed at 24 × 24 px). Admin → Files & uploads accepts JPG, PNG, WebP, AVIF and PDF up to 15 MB per file. Save settings after selecting a logo or icon to publish the change.
+
+Home gallery rows automatically move when visible, pause on hover or keyboard focus, and provide a manual Pause/Play button. They respect the visitor's reduced-motion preference. These code changes require a Vercel redeployment; gallery data is preserved.

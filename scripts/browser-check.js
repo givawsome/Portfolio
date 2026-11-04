@@ -153,12 +153,14 @@ try {
   await page.getByRole('button', { name: 'Add image', exact: true }).click();
   await page.locator('#image-form [name=title]').fill('Browser test image');
   await page.locator('#image-form [name=name]').fill('review.avif');
+  await page.locator('#image-form [name=tags]').fill('cinematic, portrait');
+  await page.locator('#image-form [name=keywords]').fill('studio lighting, editorial');
   const source = manifest.hero.product.src;
   await page.locator('#image-form [name=src]').fill(source);
   await page.locator('#image-form [name=published]').check();
   await page.getByRole('button', { name: 'Save image', exact: true }).click();
   await page.locator('#image-dialog').waitFor({ state: 'hidden' });
-  await page.locator('#media-search').fill('Browser test image');
+  await page.locator('#media-search').fill('studio lighting');
   await page.getByRole('button', { name: 'Search', exact: true }).click();
   await page
     .locator('#grid article')
@@ -178,6 +180,186 @@ try {
   page.once('dialog', (dialog) => dialog.accept());
   await page.getByRole('button', { name: 'Remove image', exact: true }).click();
   await page.locator('#image-dialog').waitFor({ state: 'hidden' });
+  await navigate('blog');
+  await page.getByRole('button', { name: 'New article', exact: true }).click();
+  await page.locator('#management-view [name=title]').fill('A photography story');
+  await page.locator('#management-view [name=slug]').fill('a-photography-story');
+  await page
+    .locator('#management-view [name=body]')
+    .fill('# Light and form\n\nA practical photography story.');
+  await page.locator('#management-view [type=submit]').click();
+  await page.getByRole('button', { name: 'New article', exact: true }).waitFor();
+  assert.equal((await context.request.get(origin + '/api/blog/a-photography-story')).status(), 404);
+  await page.locator('#management-view').getByRole('button', { name: 'Edit', exact: true }).click();
+  await page.locator('#management-view [name=published]').check();
+  const publishedResponse = page.waitForResponse(
+    (r) => r.url().includes('/api/admin/posts/') && r.request().method() === 'PUT',
+  );
+  await page.locator('#management-view [type=submit]').click();
+  const savedPost = await publishedResponse;
+  assert.equal(savedPost.status(), 200);
+  assert.equal((await savedPost.json()).slug, 'a-photography-story');
+  await page.getByRole('button', { name: 'New article', exact: true }).waitFor();
+  const publishedCheck = await context.request.get(origin + '/api/blog/a-photography-story');
+  assert.equal(publishedCheck.status(), 200, await publishedCheck.text());
+  await publicPage.goto(origin + '/blog/a-photography-story');
+  await publicPage.waitForTimeout(1000);
+  console.log('Blog rendered:', await publicPage.locator('main').innerText(), 'Errors:', failures);
+  await publicPage.getByRole('heading', { name: 'A photography story', exact: true }).waitFor();
+  assert.equal(
+    await publicPage.locator('.article-body p').textContent(),
+    'A practical photography story.',
+  );
+  page.once('dialog', (dialog) => dialog.accept());
+  await page
+    .locator('#management-view')
+    .getByRole('button', { name: 'Delete', exact: true })
+    .click();
+  await page.locator('#management-view .empty').waitFor();
+  assert.equal((await context.request.get(origin + '/api/blog/a-photography-story')).status(), 404);
+  await navigate('characters');
+  await page.locator('#management-view [name=title]').fill('Aster');
+  await page.getByRole('button', { name: 'Create character folder' }).click();
+  await page.getByRole('heading', { name: 'Aster', exact: true }).waitFor();
+  const current = await (await context.request.get(origin + '/api/admin/manifest')).json();
+  const folder = Object.values(current.collections).find((c) => c.title === 'Aster');
+  assert(folder?.character);
+  const imageData = {
+    id: 'aster-cover',
+    collectionId: folder.id,
+    title: 'Aster portrait',
+    name: 'aster.jpg',
+    src: manifest.hero.painting.src,
+    width: 1000,
+    height: 1500,
+    published: true,
+  };
+  assert.equal(
+    (
+      await context.request.put(origin + '/api/admin/media/aster-cover', {
+        headers: { Origin: origin },
+        data: imageData,
+      })
+    ).status(),
+    200,
+  );
+  assert.equal(
+    (
+      await context.request.put(origin + '/api/admin/collections/' + folder.id + '/cover', {
+        headers: { Origin: origin },
+        data: { coverId: 'not-in-folder' },
+      })
+    ).status(),
+    400,
+  );
+  assert.equal(
+    (
+      await context.request.put(origin + '/api/admin/collections/' + folder.id + '/cover', {
+        headers: { Origin: origin },
+        data: { coverId: 'aster-cover' },
+      })
+    ).status(),
+    200,
+  );
+  const publicManifest = await (await context.request.get(origin + '/api/portfolio')).json();
+  assert.equal(publicManifest.collections[folder.id].cover.id, 'aster-cover');
+  const section = current.sections.find((s) => s.collections.includes(folder.id));
+  await publicPage.goto(origin + '/?work=' + section.id);
+  await publicPage.locator('.character-folder-grid').getByRole('button', { name: /Aster/ }).click();
+  await publicPage.locator('.gallery-grid').waitFor();
+  assert(publicPage.url().includes(folder.id));
+  await navigate('files');
+  const file = await context.request.post(origin + '/api/admin/files', {
+    headers: { Origin: origin },
+    data: {
+      title: 'Review PDF',
+      url: 'https://example.com/review.pdf',
+      mime: 'application/pdf',
+      size: 100,
+    },
+  });
+  assert.equal(file.status(), 201);
+  const savedFile = await file.json();
+  assert.equal(
+    (
+      await context.request.delete(origin + '/api/admin/files/' + savedFile.id, {
+        headers: { Origin: origin },
+      })
+    ).status(),
+    200,
+  );
+  await publicPage.goto(origin + '/');
+  await publicPage.locator('.image-rail').first().waitFor();
+  const logoSource = manifest.collections[Object.keys(manifest.collections)[0]].preview[0].src;
+  await context.request.patch(origin + '/api/admin/settings', {
+    headers: { Origin: origin },
+    data: {
+      headerLogo: logoSource,
+      footerLogo: '',
+      logoAlt: 'Review logo',
+      typographyStyle: 'editorial',
+    },
+  });
+  await publicPage.reload();
+  await publicPage.locator('.portfolio-logo').first().waitFor();
+  assert.equal(await publicPage.locator('.portfolio-logo').count(), 2);
+  assert.equal(
+    await publicPage.locator('.portfolio-logo').first().getAttribute('alt'),
+    'Review logo',
+  );
+  assert.equal(await publicPage.locator('html').getAttribute('data-typography'), 'editorial');
+  assert.equal(
+    await publicPage
+      .locator('.portfolio-logo')
+      .first()
+      .evaluate((el) => getComputedStyle(el).objectFit),
+    'contain',
+  );
+  await context.request.patch(origin + '/api/admin/settings', {
+    headers: { Origin: origin },
+    data: { headerLogo: '', footerLogo: '', typographyStyle: 'current' },
+  });
+  await publicPage.reload();
+  const rail = publicPage.locator('.image-rail').first();
+  await rail.scrollIntoViewIfNeeded();
+  await publicPage.mouse.move(0, 0);
+  await publicPage.waitForTimeout(800);
+  const moved = await rail.evaluate((el) => el.scrollLeft);
+  assert(moved > 0, 'Rail should automatically move');
+  await rail.hover();
+  const pausedAt = await rail.evaluate((el) => el.scrollLeft);
+  await publicPage.waitForTimeout(400);
+  assert.equal(
+    await rail.evaluate((el) => el.scrollLeft),
+    pausedAt,
+    'Hover should pause scrolling',
+  );
+  await publicPage.screenshot({
+    path: '/tmp/portfolio-review/updated-desktop.png',
+    fullPage: true,
+  });
+  await context.request.patch(origin + '/api/admin/settings', {
+    headers: { Origin: origin },
+    data: { heroNote: 'Good ideas\nlive here.' },
+  });
+  await publicPage.goto(origin + '/');
+  await publicPage.evaluate(() => document.fonts.ready);
+  await publicPage.waitForTimeout(500);
+  await publicPage.screenshot({ path: '/tmp/portfolio-review/hero-desktop-new.png' });
+  await publicPage.setViewportSize({ width: 390, height: 844 });
+  await publicPage.screenshot({ path: '/tmp/portfolio-review/hero-mobile-new.png' });
+  assert(await publicPage.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1));
+  const emptyTemplate = JSON.parse(
+    await readFile(new URL('../shared/creative-categories.json', import.meta.url), 'utf8'),
+  );
+  await database.collection('media').deleteMany({});
+  await database
+    .collection('content')
+    .updateOne({ _id: 'manifest' }, { $set: { value: emptyTemplate } });
+  await publicPage.goto(origin + '/');
+  await publicPage.locator('.empty-message').first().waitFor();
+  assert.equal(await publicPage.locator('#home-sliders .empty-message').count(), 8);
+  assert(await publicPage.locator('#hero-painting').isHidden());
   await navigate('profile');
   await mkdir('/tmp/portfolio-review', { recursive: true });
   await page.screenshot({ path: '/tmp/portfolio-review/admin-desktop.png', fullPage: true });
