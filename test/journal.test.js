@@ -67,3 +67,38 @@ test('journal filters and pagination retain the topic, and unpublished pages hav
   assert.equal(missing.window.document.querySelector('meta[name=robots]').content, 'noindex');
   missing.window.close();
 });
+
+test('Journal header banner and complete footer use managed branding and contact settings safely', () => {
+  const dom = new JSDOM(
+    journalPage({
+      origin: 'https://portfolio.example',
+      settings: {
+        brandName: 'Rajneesh',
+        headerLogo: 'media/logo.png',
+        footerLogo: 'media/footer.png',
+        journalHeaderBanner: 'media/header.png',
+        email: 'designer@example.com',
+        phone: '+918005549405',
+        instagram: 'https://instagram.com/portfolio',
+        linkedin: 'https://linkedin.com/in/designer',
+        facebook: 'javascript:alert(1)',
+        linkedinIcon: 'media/linkedin.png',
+      },
+    }),
+  );
+  const d = dom.window.document;
+  assert.equal(d.querySelector('.journal-header-art img').getAttribute('src'), '/media/header.png');
+  assert.equal(
+    d.querySelector('.journal-footer .footer-logo').getAttribute('src'),
+    '/media/footer.png',
+  );
+  assert.equal(
+    d.querySelector('.footer-email').getAttribute('href'),
+    'mailto:designer@example.com',
+  );
+  assert(d.querySelector('.footer-socials a[href="https://linkedin.com/in/designer"] img'));
+  assert.equal(d.querySelectorAll('.footer-socials a').length, 2);
+  assert.equal(d.querySelectorAll('.journal-footer a[href^="javascript:"]').length, 0);
+  assert.equal(d.querySelectorAll('.footer-explore nav a').length, 4);
+  dom.window.close();
+});

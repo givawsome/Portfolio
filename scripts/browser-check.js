@@ -235,6 +235,18 @@ try {
   );
   await publicPage.goto(origin + '/blog');
   assert.equal(await publicPage.locator('.post-card').count(), 9);
+  await publicPage.locator('.journal-header-art img').evaluate((image) => image.decode());
+  assert.equal(await publicPage.locator('.footer-explore nav a').count(), 4);
+  assert(await publicPage.locator('.footer-email').isVisible());
+  for (const width of [768, 1024, 1440]) {
+    await publicPage.setViewportSize({ width, height: 1000 });
+    assert(
+      await publicPage.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1),
+      'Journal should fit tablet and desktop',
+    );
+    const headerSize = await publicPage.locator('.journal-header-art').boundingBox();
+    assert(headerSize.width > headerSize.height, 'Journal header artwork must remain landscape');
+  }
   await publicPage.evaluate(() => document.fonts.ready);
   await publicPage.locator('.post-card img').evaluateAll(async (images) => {
     for (const image of images) image.loading = 'eager';
@@ -244,6 +256,9 @@ try {
     path: '/tmp/portfolio-review/journal-desktop.png',
     fullPage: true,
   });
+  await publicPage
+    .locator('.journal-footer')
+    .screenshot({ path: '/tmp/portfolio-review/journal-footer-new.png' });
   for (const category of ['photography', 'graphic-design', 'ai-design']) {
     await publicPage.goto(origin + '/blog?category=' + category);
     assert.equal(await publicPage.locator('.post-card').count(), 3);

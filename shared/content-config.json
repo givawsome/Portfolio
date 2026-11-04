@@ -542,6 +542,22 @@
     },
     {
       "group": "general",
+      "key": "journalHeaderBanner",
+      "label": "Journal header banner",
+      "type": "asset",
+      "default": "media/journal-header-campaign-v2.jpg",
+      "help": "Recommended: 2400 \u00d7 1350 px (16:9). Keep headline and important artwork within safe margins. Displayed without cropping. Clear to restore the campaign banner."
+    },
+    {
+      "group": "general",
+      "key": "journalHeaderBannerAlt",
+      "label": "Journal header banner description",
+      "type": "text",
+      "max": 300,
+      "default": "The Journal: Create a different view \u2014 photography, design and AI campaign banner"
+    },
+    {
+      "group": "general",
       "key": "logoAlt",
       "label": "Logo description",
       "type": "text",

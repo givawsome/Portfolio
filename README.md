@@ -235,3 +235,11 @@ Validate the content with `node scripts/publish-journal.js`. To insert missing a
 Manage articles and covers under **Admin → Journal**, including topic, title, slug, excerpt, body, tags, author, alt text, publication status and image upload. The public `/blog` uses Cormorant Garamond / DM Sans and the portfolio logo from General settings. `/sitemap.xml` lists published articles; `/robots.txt` points to it. Configure `APP_ORIGIN` to the exact HTTPS production origin so canonical and social URLs point to the public domain.
 
 Character folder previews now use wide 16:9 frames on the homepage and folder grid, with full image visibility and the existing per-character cover selector.
+
+### Journal campaign banners and full footer
+
+The launch article covers now use a second set of bold, text-led campaign artwork (`public/media/journal-*-v2.jpg`). The earlier covers remain as reference files. New prompts and output locations are recorded in `content/journal/banner-prompts-v2.json`; the images were generated with the built-in image tool.
+
+Admin → General → Journal header banner manages the landscape introduction image (recommended 2400 × 1350 px). The Journal footer uses the existing header/footer logo, email, phone, social links and custom social icon settings. It appears on the Journal index and article pages.
+
+To apply only the revised covers to an existing database after deploying the new files, run `node --env-file=.env.production scripts/refresh-journal-covers.js --apply` (choose the intended environment file). The script creates a private recovery copy, updates cover/alt/credit fields for the nine launch articles, and preserves their text and publication state.

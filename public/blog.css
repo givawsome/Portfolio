@@ -709,3 +709,176 @@ em {
     transform: none;
   }
 }
+
+/* Campaign imagery in the introduction; the article layout remains unchanged. */
+.journal-intro {
+  display: grid;
+  grid-template-columns: 1fr 1.15fr;
+  gap: 48px;
+}
+.journal-header-art {
+  margin: 0;
+  padding: 12px;
+  background: #e7ebf7;
+  border-radius: 36px 12px;
+  transform: rotate(2deg);
+  box-shadow: 8px 10px 0 #e9e5df;
+}
+.journal-header-art img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: contain;
+  border-radius: 24px 6px;
+}
+.journal-footer {
+  max-width: none;
+  margin: 0;
+  padding: 56px max(5%, calc((100% - 1280px) / 2)) 24px;
+  display: block;
+  background: #f0efea;
+  border-top: 3px solid var(--blue);
+}
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr 0.8fr;
+  gap: 56px;
+}
+.footer-logo {
+  width: 220px;
+  height: 80px;
+  object-fit: contain;
+  object-position: left center;
+}
+.footer-name {
+  font:
+    italic 600 38px/1 'Cormorant Garamond',
+    serif;
+  color: var(--ink) !important;
+}
+.footer-identity p {
+  margin-top: 24px;
+  font-size: 16px;
+  line-height: 1.6;
+}
+.footer-identity .footer-tools {
+  font-size: 10px;
+  letter-spacing: 1px;
+  line-height: 1.8;
+  color: var(--muted);
+}
+.footer-contact h2 {
+  font-size: 42px;
+  line-height: 1.05;
+}
+.footer-contact > a {
+  display: block;
+  width: fit-content;
+  margin: 14px 0;
+  font-size: 15px;
+  overflow-wrap: anywhere;
+}
+.footer-email {
+  border-bottom: 1px solid var(--blue);
+  padding-bottom: 4px;
+}
+.footer-project {
+  color: var(--blue);
+}
+.footer-project span {
+  color: inherit;
+  padding-left: 16px;
+}
+.footer-explore nav,
+.footer-socials {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+}
+.footer-explore nav a {
+  font-size: 14px;
+}
+.footer-socials {
+  margin-top: 28px;
+}
+.footer-socials a {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 13px;
+}
+.footer-socials svg,
+.footer-socials img {
+  flex-shrink: 0;
+  object-fit: contain;
+  overflow: visible;
+}
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 14px 28px;
+  margin-top: 44px;
+  border-top: 1px solid #20211f25;
+  padding-top: 24px;
+  font-size: 12px;
+}
+@media (max-width: 1000px) {
+  .journal-intro {
+    gap: 28px;
+  }
+  .journal-intro h1 {
+    font-size: clamp(48px, 6.4vw, 64px);
+  }
+  .footer-grid {
+    gap: 32px;
+    grid-template-columns: 1fr 1.3fr;
+  }
+  .footer-explore {
+    grid-column: 1 / -1;
+  }
+  .footer-explore nav,
+  .footer-socials {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+}
+@media (max-width: 760px) {
+  .journal-intro {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    padding-bottom: 42px;
+  }
+  .journal-intro h1 {
+    font-size: 48px;
+  }
+  .journal-header-art {
+    transform: rotate(1deg);
+  }
+  .journal-footer {
+    margin: 0;
+    padding-top: 36px;
+  }
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+  .footer-explore {
+    grid-column: auto;
+  }
+  .footer-contact h2 {
+    font-size: 36px;
+  }
+  .footer-identity p {
+    margin-top: 16px;
+  }
+  .footer-bottom {
+    margin-top: 32px;
+  }
+  .journal-footer .footer-bottom span {
+    flex-basis: auto;
+    order: initial;
+  }
+}

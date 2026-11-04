@@ -49,6 +49,43 @@ function image(post, eager = false) {
 function card(post) {
   return `<article class="post-card"><a class="card-image" href="${href(post)}" tabindex="-1" aria-hidden="true">${image(post)}</a><p class="eyebrow">${e(topic(post))} <span> / ${minutes(post)} min read</span></p><h2><a href="${href(post)}">${e(post.title)}</a></h2><p>${e(post.excerpt)}</p><a class="read-story" href="${href(post)}" aria-label="Read ${e(post.title)}">Read story <span aria-hidden="true">↗</span></a></article>`;
 }
+
+function footer(settings, siteName) {
+  const footerLogo = assetURL(settings.footerLogo || settings.headerLogo);
+  const logo = footerLogo
+    ? `<img class="footer-logo" src="${e(footerLogo)}" alt="${e(settings.logoAlt || siteName)}" width="240" height="80" loading="lazy">`
+    : `<span class="footer-name">${e(siteName)}</span>`;
+  const symbols = {
+    instagram:
+      '<rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".8" fill="currentColor" stroke="none"/>',
+    facebook:
+      '<path d="M14 21v-8h3l.5-4H14V7c0-1.2.4-2 2-2h2V1.5A22 22 0 0 0 15 1c-3 0-5 1.8-5 5v3H7v4h3v8"/>',
+    linkedin:
+      '<rect x="3" y="8" width="4" height="13" rx=".6"/><circle cx="5" cy="3.5" r="2"/><path d="M11 21V8h4v2c1-2 6-3 6 3v8h-4v-7c0-3-2-3-2 0v7z"/>',
+  };
+  const social = Object.entries({
+    instagram: 'Instagram',
+    facebook: 'Facebook',
+    linkedin: 'LinkedIn',
+  })
+    .filter(([key]) => assetURL(settings[key]))
+    .map(([key, label]) => {
+      const custom = assetURL(settings[key + 'Icon']);
+      const icon = custom
+        ? `<img src="${e(custom)}" alt="" width="22" height="22" loading="lazy">`
+        : `<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${symbols[key]}</svg>`;
+      return `<a href="${e(settings[key])}" target="_blank" rel="noopener noreferrer">${icon}${label}</a>`;
+    })
+    .join('');
+  const email = settings.email
+    ? `<a class="footer-email" href="mailto:${e(settings.email)}">${e(settings.email)}</a>`
+    : '';
+  const phone = settings.phone
+    ? `<a href="tel:${e(settings.phone.replace(/[^+0-9]/g, ''))}">${e(settings.phone)}</a>`
+    : '';
+  return `<footer class="journal-footer"><div class="footer-grid"><div class="footer-identity"><a href="/" aria-label="${e(siteName)}, home">${logo}</a><p>A photographer’s eye.<br>A designer’s imagination.</p><p class="footer-tools">PHOTOSHOP / FIGMA / CANVA / AI DESIGN</p></div><div class="footer-contact"><p class="eyebrow">LET’S MAKE SOMETHING MATTER</p><h2>Good ideas<br><em>start a conversation.</em></h2>${email}${phone}<a class="footer-project" href="/#contact">Discuss a project <span aria-hidden="true">↗</span></a></div><div class="footer-explore"><p class="eyebrow">EXPLORE</p><nav aria-label="Footer navigation"><a href="/#work">Selected work</a><a href="/blog">Journal</a><a href="/#about">About Rajneesh</a><a href="/#contact">Contact</a></nav><div class="footer-socials" aria-label="Social profiles">${social}</div></div></div><div class="footer-bottom"><span>© ${new Date().getFullYear()} ${e(siteName)}</span><span>Jaipur, India / Available for select freelance work</span><a href="#journal-main">Back to top</a></div></footer>`;
+}
+
 export function journalPage({
   settings = {},
   posts = [],
@@ -79,6 +116,8 @@ export function journalPage({
   const brand = logo
     ? `<img src="${e(logo)}" alt="${e(settings.logoAlt || siteName)}" width="240" height="80">`
     : `<span class="brand-name">${e(siteName)}</span>`;
+  const headerBanner =
+    assetURL(settings.journalHeaderBanner) || '/media/journal-header-campaign-v2.jpg';
   let content;
   if (missing)
     content =
@@ -93,7 +132,7 @@ export function journalPage({
           `<a href="/blog${key ? '?category=' + key : ''}" ${key === category ? 'aria-current="page"' : ''}>${e(label)}</a>`,
       )
       .join('');
-    content = `<section id="journal-heading" class="journal-intro"><div><p class="eyebrow">THE JOURNAL / NOTES FROM A VISUAL PRACTICE</p><h1>Look closer.<br><em>Think differently.</em></h1><p>Photography, design and imagined possibilities.<br>Ideas to take back to your own creative practice.</p></div><div class="journal-stamp" aria-hidden="true"><span>Observe.</span><span>Explore.</span><span>Create.</span></div></section><nav class="topic-filters" aria-label="Journal topics">${filters}</nav>${feature && page === 1 ? `<section class="featured-story"><a class="feature-image" href="${href(feature)}" aria-label="Read ${e(feature.title)}">${image(feature, true)}</a><div class="feature-copy"><p class="eyebrow">EDITOR’S PICK / ${e(topic(feature))}</p><h2><a href="${href(feature)}">${e(feature.title)}</a></h2><p>${e(feature.excerpt)}</p><a class="pill" href="${href(feature)}">Read the story <span aria-hidden="true">↗</span></a></div></section>` : ''}<section class="story-collection"><div class="section-heading"><div><p class="eyebrow">PRACTICAL IDEAS / CONSIDERED PERSPECTIVES</p><h2>${e(category ? topics[category] : 'Fresh from the notebook.')}</h2></div><span class="story-count">${total} ${total === 1 ? 'story' : 'stories'}</span></div><div id="blog-content" class="post-grid">${posts.length ? posts.map(card).join('') : '<p class="journal-empty">New stories are on their way. Check back soon.</p>'}</div></section><nav id="blog-pagination" class="pagination" aria-label="Article pages">${page > 1 ? `<a class="pill" href="/blog?${new URLSearchParams({ page: page - 1, ...(category && { category }) })}">Previous</a>` : ''}${total > 12 ? `<span>Page ${page} of ${Math.ceil(total / 12)}</span>` : ''}${page * 12 < total ? `<a class="pill" href="/blog?${new URLSearchParams({ page: page + 1, ...(category && { category }) })}">Next</a>` : ''}</nav>`;
+    content = `<section id="journal-heading" class="journal-intro"><div><p class="eyebrow">THE JOURNAL / NOTES FROM A VISUAL PRACTICE</p><h1>Look closer.<br><em>Think differently.</em></h1><p>Photography, design and imagined possibilities.<br>Ideas to take back to your own creative practice.</p></div><figure class="journal-header-art"><img src="${e(headerBanner)}" alt="${e(settings.journalHeaderBannerAlt || 'The Journal: Create a different view — photography, design and AI campaign banner')}" width="1600" height="900" fetchpriority="high" decoding="async"></figure></section><nav class="topic-filters" aria-label="Journal topics">${filters}</nav>${feature && page === 1 ? `<section class="featured-story"><a class="feature-image" href="${href(feature)}" aria-label="Read ${e(feature.title)}">${image(feature, true)}</a><div class="feature-copy"><p class="eyebrow">EDITOR’S PICK / ${e(topic(feature))}</p><h2><a href="${href(feature)}">${e(feature.title)}</a></h2><p>${e(feature.excerpt)}</p><a class="pill" href="${href(feature)}">Read the story <span aria-hidden="true">↗</span></a></div></section>` : ''}<section class="story-collection"><div class="section-heading"><div><p class="eyebrow">PRACTICAL IDEAS / CONSIDERED PERSPECTIVES</p><h2>${e(category ? topics[category] : 'Fresh from the notebook.')}</h2></div><span class="story-count">${total} ${total === 1 ? 'story' : 'stories'}</span></div><div id="blog-content" class="post-grid">${posts.length ? posts.map(card).join('') : '<p class="journal-empty">New stories are on their way. Check back soon.</p>'}</div></section><nav id="blog-pagination" class="pagination" aria-label="Article pages">${page > 1 ? `<a class="pill" href="/blog?${new URLSearchParams({ page: page - 1, ...(category && { category }) })}">Previous</a>` : ''}${total > 12 ? `<span>Page ${page} of ${Math.ceil(total / 12)}</span>` : ''}${page * 12 < total ? `<a class="pill" href="/blog?${new URLSearchParams({ page: page + 1, ...(category && { category }) })}">Next</a>` : ''}</nav>`;
   }
   const structured = post
     ? {
@@ -115,7 +154,7 @@ export function journalPage({
         url: canonical,
         description,
       };
-  return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${e(title)}</title><meta name="description" content="${e(description)}">${missing ? '<meta name="robots" content="noindex">' : ''}<link rel="canonical" href="${e(canonical)}"><meta property="og:type" content="${post ? 'article' : 'website'}"><meta property="og:title" content="${e(title)}"><meta property="og:description" content="${e(description)}"><meta property="og:url" content="${e(canonical)}">${post && assetURL(post.cover) ? `<meta property="og:image" content="${e(new URL(assetURL(post.cover), origin).href)}"><meta name="twitter:card" content="summary_large_image">` : ''}<link rel="icon" href="/favicon.svg"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&amp;family=DM+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"><link href="/typography.css?v=20261104" rel="stylesheet"><link href="/blog.css?v=20261104-journal" rel="stylesheet"><script type="application/ld+json">${JSON.stringify(structured).replace(/</g, '\\u003c')}</script></head><body><a class="skip-link" href="#journal-main">Skip to content</a><header class="journal-header"><div class="header-inner"><a class="journal-brand" href="/" aria-label="${e(siteName)}, home">${brand}<small>VISUAL DESIGNER + PHOTOGRAPHER</small></a><span class="availability"><i></i>${e(settings.availability || 'Available for select freelance projects')}</span><nav aria-label="Main navigation"><a href="/blog" aria-current="page">Journal</a><a href="/#work">Work</a><a href="/#about">About</a><a href="/#contact">Let’s talk</a></nav></div></header><main id="journal-main" class="journal-wrap">${content}<section class="journal-cta"><p class="eyebrow">FROM READING TO MAKING</p><h2>Have an idea<br><em>worth exploring?</em></h2><a class="pill" href="/#contact">Let’s make something <span aria-hidden="true">↗</span></a></section></main><footer class="journal-footer"><a href="/">${e(siteName)}</a><span>Design / Photography / Imagination</span><a href="/blog">Back to the Journal</a></footer></body></html>`;
+  return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${e(title)}</title><meta name="description" content="${e(description)}">${missing ? '<meta name="robots" content="noindex">' : ''}<link rel="canonical" href="${e(canonical)}"><meta property="og:type" content="${post ? 'article' : 'website'}"><meta property="og:title" content="${e(title)}"><meta property="og:description" content="${e(description)}"><meta property="og:url" content="${e(canonical)}">${post && assetURL(post.cover) ? `<meta property="og:image" content="${e(new URL(assetURL(post.cover), origin).href)}"><meta name="twitter:card" content="summary_large_image">` : ''}<link rel="icon" href="/favicon.svg"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&amp;family=DM+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"><link href="/typography.css?v=20261104" rel="stylesheet"><link href="/blog.css?v=20261104-campaign-v2" rel="stylesheet"><script type="application/ld+json">${JSON.stringify(structured).replace(/</g, '\\u003c')}</script></head><body><a class="skip-link" href="#journal-main">Skip to content</a><header class="journal-header"><div class="header-inner"><a class="journal-brand" href="/" aria-label="${e(siteName)}, home">${brand}<small>VISUAL DESIGNER + PHOTOGRAPHER</small></a><span class="availability"><i></i>${e(settings.availability || 'Available for select freelance projects')}</span><nav aria-label="Main navigation"><a href="/blog" aria-current="page">Journal</a><a href="/#work">Work</a><a href="/#about">About</a><a href="/#contact">Let’s talk</a></nav></div></header><main id="journal-main" class="journal-wrap">${content}<section class="journal-cta"><p class="eyebrow">FROM READING TO MAKING</p><h2>Have an idea<br><em>worth exploring?</em></h2><a class="pill" href="/#contact">Let’s make something <span aria-hidden="true">↗</span></a></section></main>${footer(settings, siteName)}</body></html>`;
 }
 export const journal = Router();
 function siteOrigin(req) {
