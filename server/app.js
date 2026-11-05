@@ -13,6 +13,9 @@ import { authenticate, sameOrigin, token, verifyPassword, rateLimit } from './se
 import * as schemas from './schemas.js';
 import { config, readSettings } from './content.js';
 import { normalizeMedia } from './media.js';
+import { publicItem, readPortfolio } from './portfolio-data.js';
+import { portfolioPages } from './portfolio-pages.js';
+import { seoRoutes } from './seo-routes.js';
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const app = express();
 app.disable('x-powered-by');
@@ -35,6 +38,7 @@ app.use(express.json({ limit: '1mb' }));
 app.use(cookieParser());
 app.use('/api', (_req, res, next) => {
   res.set('Cache-Control', 'no-store');
+  res.set('X-Robots-Tag', 'noindex, nofollow');
   next();
 });
 const clean = (doc) => {
@@ -42,56 +46,6 @@ const clean = (doc) => {
   const { _id, ...rest } = normalizeMedia(doc);
   return rest;
 };
-const publicItem = (doc) => {
-  const { _id, collectionId, published, order, ...rest } = normalizeMedia(doc);
-  return { ...rest, ratio: rest.width / rest.height };
-};
-async function manifest() {
-  const d = await db(),
-    m = await d.collection('content').findOne({ _id: 'manifest' });
-  if (!m) throw Object.assign(new Error('Import the portfolio first'), { status: 503 });
-  const result = structuredClone(m.value);
-  const counts = await d
-    .collection('media')
-    .aggregate([
-      { $match: { published: true } },
-      { $group: { _id: '$collectionId', count: { $sum: 1 } } },
-    ])
-    .toArray();
-  const countMap = new Map(counts.map((row) => [row._id, row.count]));
-  await Promise.all(
-    Object.values(result.collections).map(async (c) => {
-      c.count = countMap.get(c.id) || 0;
-      c.preview = (
-        await d
-          .collection('media')
-          .find({ collectionId: c.id, published: true })
-          .sort({ order: 1, id: 1 })
-          .limit(8)
-          .toArray()
-      ).map(publicItem);
-      if (c.coverId) {
-        const cover = await d
-          .collection('media')
-          .findOne({ collectionId: c.id, id: c.coverId, published: true, type: 'image' });
-        c.cover = cover ? publicItem(cover) : c.preview[0];
-      } else c.cover = c.preview[0];
-      c.data = '/api/collections/' + c.id;
-    }),
-  );
-  result.total = Object.values(result.collections).reduce((sum, c) => sum + c.count, 0);
-  for (const key of Object.keys(result.hero || {})) {
-    const ref = result.hero[key];
-    const item = await d.collection('media').findOne({
-      id: ref.id,
-      ...(ref.collectionId ? { collectionId: ref.collectionId } : {}),
-      published: true,
-    });
-    if (item) result.hero[key] = publicItem(item);
-    else delete result.hero[key];
-  }
-  return result;
-}
 app.get('/api/health', async (req, res) => {
   if (!process.env.MONGODB_URI) return res.status(503).json({ database: 'not configured' });
   await (await db()).command({ ping: 1 });
@@ -104,7 +58,7 @@ app.get('/api/health', async (req, res) => {
 app.get(['/api/portfolio', '/portfolio.json'], async (req, res) => {
   if (!process.env.MONGODB_URI && process.env.NODE_ENV !== 'production')
     return res.sendFile(path.join(root, 'seed/manifest.json'), { dotfiles: 'allow' });
-  res.json(await manifest());
+  res.json(await readPortfolio(await db()));
 });
 app.get(['/api/collections/:id', '/collections/:id.json'], async (req, res) => {
   if (!process.env.MONGODB_URI && process.env.NODE_ENV !== 'production') {
@@ -467,12 +421,15 @@ app.post('/api/admin/upload-signature', (req, res) => {
   });
 });
 app.use('/admin', (_req, res, next) => {
+  res.set('X-Robots-Tag', 'noindex, nofollow');
   res.set('Cache-Control', 'no-store');
   next();
 });
 app.use('/admin', express.static(path.join(root, 'admin')));
 app.get('/blog.html', (_req, res) => res.redirect(301, '/blog'));
+app.use(seoRoutes);
 app.use(journal);
+app.use(portfolioPages);
 app.use(express.static(path.join(root, 'public'), { index: 'index.html' }));
 app.use((err, req, res, next) => {
   if (res.headersSent) return next(err);

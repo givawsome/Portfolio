@@ -151,7 +151,7 @@
       "selector": ".work-intro>p",
       "type": "textarea",
       "max": 2000,
-      "default": "Slide through a selection.See more. Look closer."
+      "default": "Freelance design, product photography and AI art direction.\nFor brands in India and worldwide."
     },
     {
       "group": "services",
@@ -474,7 +474,7 @@
       "label": "Browser / search title",
       "type": "text",
       "max": 150,
-      "default": "Rajneesh Vaishnav \u2014 Design, Photography & AI"
+      "default": "Rajneesh Vaishnav | Designer, Photographer & AI Creative"
     },
     {
       "group": "general",
@@ -482,7 +482,7 @@
       "label": "Search description",
       "type": "textarea",
       "max": 500,
-      "default": "Rajneesh Vaishnav \u2014 visual designer, photographer and AI creative in Jaipur. Design, product photography, website work and AI-assisted projects."
+      "default": "Freelance graphic design, product photography and AI art direction by Rajneesh Vaishnav. Based in Jaipur, working with brands across India and worldwide."
     },
     {
       "group": "contact",
@@ -578,6 +578,64 @@
       },
       "default": "cormorant",
       "help": "Approved pairing: Cormorant Garamond for headings, DM Sans for navigation, body, buttons and labels."
+    },
+    {
+      "key": "seoName",
+      "label": "Full professional name for search",
+      "type": "text",
+      "max": 100,
+      "default": "Rajneesh Vaishnav",
+      "group": "general"
+    },
+    {
+      "key": "publicSiteUrl",
+      "label": "Canonical public site URL",
+      "type": "url",
+      "default": "",
+      "help": "Leave blank to use APP_ORIGIN. Set only to your connected primary domain, including https://.",
+      "group": "general"
+    },
+    {
+      "key": "seoImage",
+      "label": "Default social sharing image",
+      "type": "asset",
+      "default": "media/journal-header-campaign-v2.jpg",
+      "help": "Landscape artwork used when your site is shared. Recommended 1200 \u00d7 630 px or larger.",
+      "group": "general"
+    },
+    {
+      "key": "seoImageAlt",
+      "label": "Social sharing image description",
+      "type": "text",
+      "max": 300,
+      "default": "Rajneesh Vaishnav \u2014 photography, design and AI art direction",
+      "group": "general"
+    },
+    {
+      "key": "focusKeywords",
+      "label": "Primary search terms (planning reference)",
+      "type": "textarea",
+      "max": 1500,
+      "default": "freelance graphic designer, product photographer Jaipur, AI art director, brand identity designer, Figma UI designer, social media designer",
+      "help": "Use these naturally in useful copy. A meta-keywords tag is not a Google ranking factor.",
+      "group": "general"
+    },
+    {
+      "key": "googleSiteVerification",
+      "label": "Google Search Console verification token",
+      "type": "text",
+      "max": 200,
+      "default": "",
+      "help": "Paste only the verification token from your own Search Console property, not HTML.",
+      "group": "general"
+    },
+    {
+      "key": "bingSiteVerification",
+      "label": "Bing Webmaster verification token",
+      "type": "text",
+      "max": 200,
+      "default": "",
+      "group": "general"
     }
   ],
   "lists": [

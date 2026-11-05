@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { db } from './db.js';
 import { readSettings } from './content.js';
 import { topics } from '../shared/journal-topics.js';
+import { siteOrigin, jsonForHTML } from '../shared/seo.js';
 
 export const escapeHTML = (value = '') =>
   String(value).replace(
@@ -96,15 +97,24 @@ export function journalPage({
   origin = '',
   missing = false,
 } = {}) {
-  const siteName = settings.brandName || 'Rajneesh Vaishnav';
+  const siteName = settings.seoName || settings.brandName || 'Rajneesh Vaishnav';
   const title = post
     ? `${post.title} · ${siteName}`
     : missing
       ? `Article not found · ${siteName}`
       : `${category ? topics[category] + ' · ' : ''}The Journal · ${siteName}`;
+  const topicDescriptions = {
+    photography:
+      'Product photography, lighting and retouching guides by Rajneesh Vaishnav. Practical techniques for e-commerce images and commercial visual storytelling.',
+    'graphic-design':
+      'Graphic design guides on typography, visual identity, social media layouts and Figma workflows by freelance designer Rajneesh Vaishnav.',
+    'ai-design':
+      'AI design guides on creative briefs, art direction, consistent characters and product visuals by Rajneesh Vaishnav.',
+  };
   const description =
     post?.excerpt ||
-    'Photography, graphic design and AI art direction. Original practical guides and creative notes from Rajneesh Vaishnav.';
+    topicDescriptions[category] ||
+    'Practical photography, graphic design and AI art direction guides by Rajneesh Vaishnav. Explore original ideas for brands and creatives in India and worldwide.';
   const canonicalPath = post
     ? href(post)
     : '/blog' +
@@ -118,6 +128,15 @@ export function journalPage({
     : `<span class="brand-name">${e(siteName)}</span>`;
   const headerBanner =
     assetURL(settings.journalHeaderBanner) || '/media/journal-header-campaign-v2.jpg';
+  const shareImage = new URL(
+    assetURL(post?.cover) || assetURL(settings.seoImage) || headerBanner,
+    origin,
+  ).href;
+  const shareAlt =
+    post?.coverAlt ||
+    settings.seoImageAlt ||
+    settings.journalHeaderBannerAlt ||
+    'Photography, graphic design and AI art direction by Rajneesh Vaishnav';
   let content;
   if (missing)
     content =
@@ -140,7 +159,15 @@ export function journalPage({
         '@type': 'BlogPosting',
         headline: post.title,
         description: post.excerpt,
-        author: { '@type': 'Person', name: post.author, url: origin + '/#about' },
+        author: {
+          '@type': 'Person',
+          '@id': origin + '/#person',
+          name: post.author,
+          url: origin + '/#about',
+        },
+        inLanguage: 'en',
+        keywords: post.tags || [],
+        wordCount: post.body.split(/\s+/).length,
         datePublished: post.publishedAt,
         dateModified: post.updatedAt,
         mainEntityOfPage: canonical,
@@ -154,21 +181,13 @@ export function journalPage({
         url: canonical,
         description,
       };
-  return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${e(title)}</title><meta name="description" content="${e(description)}">${missing ? '<meta name="robots" content="noindex">' : ''}<link rel="canonical" href="${e(canonical)}"><meta property="og:type" content="${post ? 'article' : 'website'}"><meta property="og:title" content="${e(title)}"><meta property="og:description" content="${e(description)}"><meta property="og:url" content="${e(canonical)}">${post && assetURL(post.cover) ? `<meta property="og:image" content="${e(new URL(assetURL(post.cover), origin).href)}"><meta name="twitter:card" content="summary_large_image">` : ''}<link rel="icon" href="/favicon.svg"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&amp;family=DM+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"><link href="/typography.css?v=20261104" rel="stylesheet"><link href="/blog.css?v=20261104-campaign-v2" rel="stylesheet"><script type="application/ld+json">${JSON.stringify(structured).replace(/</g, '\\u003c')}</script></head><body><a class="skip-link" href="#journal-main">Skip to content</a><header class="journal-header"><div class="header-inner"><a class="journal-brand" href="/" aria-label="${e(siteName)}, home">${brand}<small>VISUAL DESIGNER + PHOTOGRAPHER</small></a><span class="availability"><i></i>${e(settings.availability || 'Available for select freelance projects')}</span><nav aria-label="Main navigation"><a href="/blog" aria-current="page">Journal</a><a href="/#work">Work</a><a href="/#about">About</a><a href="/#contact">Let’s talk</a></nav></div></header><main id="journal-main" class="journal-wrap">${content}<section class="journal-cta"><p class="eyebrow">FROM READING TO MAKING</p><h2>Have an idea<br><em>worth exploring?</em></h2><a class="pill" href="/#contact">Let’s make something <span aria-hidden="true">↗</span></a></section></main>${footer(settings, siteName)}</body></html>`;
+  return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${e(title)}</title><meta name="description" content="${e(description)}"><meta name="robots" content="${missing ? 'noindex,follow' : 'index,follow,max-image-preview:large'}"><meta property="og:site_name" content="${e(siteName)}"><meta property="og:locale" content="en_IN"><link rel="canonical" href="${e(canonical)}"><meta property="og:type" content="${post ? 'article' : 'website'}"><meta property="og:title" content="${e(title)}"><meta property="og:description" content="${e(description)}"><meta property="og:url" content="${e(canonical)}"><meta property="og:image" content="${e(shareImage)}"><meta property="og:image:alt" content="${e(shareAlt)}"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="${e(title)}"><meta name="twitter:description" content="${e(description)}"><meta name="twitter:image" content="${e(shareImage)}"><link rel="icon" href="/favicon.svg"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&amp;family=DM+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"><link href="/typography.css?v=20261104" rel="stylesheet"><link href="/blog.css?v=20261104-campaign-v2" rel="stylesheet"><script type="application/ld+json">${jsonForHTML(structured)}</script></head><body><a class="skip-link" href="#journal-main">Skip to content</a><header class="journal-header"><div class="header-inner"><a class="journal-brand" href="/" aria-label="${e(siteName)}, home">${brand}<small>VISUAL DESIGNER + PHOTOGRAPHER</small></a><span class="availability"><i></i>${e(settings.availability || 'Available for select freelance projects')}</span><nav aria-label="Main navigation"><a href="/blog" aria-current="page">Journal</a><a href="/#work">Work</a><a href="/#about">About</a><a href="/#contact">Let’s talk</a></nav></div></header><main id="journal-main" class="journal-wrap">${content}<section class="journal-cta"><p class="eyebrow">FROM READING TO MAKING</p><h2>Have an idea<br><em>worth exploring?</em></h2><a class="pill" href="/#contact">Let’s make something <span aria-hidden="true">↗</span></a></section></main>${footer(settings, siteName)}</body></html>`;
 }
 export const journal = Router();
-function siteOrigin(req) {
-  const value =
-    process.env.APP_ORIGIN ||
-    (process.env.VERCEL_PROJECT_PRODUCTION_URL
-      ? 'https://' + process.env.VERCEL_PROJECT_PRODUCTION_URL
-      : 'http://localhost:3000');
-  return new URL(value).origin;
-}
 journal.get(['/blog', '/blog/:slug'], async (req, res) => {
   const database = await db();
   const settings = await readSettings(database);
-  const origin = siteOrigin(req);
+  const origin = siteOrigin(settings);
   res.set('Cache-Control', 'no-store');
   if (req.params.slug) {
     const post = await database
@@ -206,27 +225,4 @@ journal.get(['/blog', '/blog/:slug'], async (req, res) => {
     database.collection('posts').countDocuments(filter),
   ]);
   res.type('html').send(journalPage({ settings, origin, posts, total, page, category }));
-});
-journal.get('/robots.txt', (req, res) =>
-  res
-    .type('text/plain')
-    .send(
-      `User-agent: *\nAllow: /\nDisallow: /admin/\nDisallow: /api/\nSitemap: ${siteOrigin(req)}/sitemap.xml\n`,
-    ),
-);
-journal.get('/sitemap.xml', async (req, res) => {
-  const origin = siteOrigin(req);
-  const posts = await (
-    await db()
-  )
-    .collection('posts')
-    .find({ published: true }, { projection: { slug: 1, updatedAt: 1 } })
-    .sort({ updatedAt: -1 })
-    .limit(10000)
-    .toArray();
-  res
-    .type('application/xml')
-    .send(
-      `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${['/', '/blog', ...posts.map(href)].map((url) => `<url><loc>${e(origin + url)}</loc></url>`).join('')}</urlset>`,
-    );
 });

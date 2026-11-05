@@ -70,8 +70,9 @@
       } else icon?.remove();
       link.querySelectorAll('svg').forEach((svg) => (svg.style.display = src ? 'none' : ''));
     }
-    if (settings.pageTitle) document.title = settings.pageTitle;
-    if (settings.metaDescription !== undefined)
+    if (settings.pageTitle && !document.getElementById('portfolio-seo'))
+      document.title = settings.pageTitle;
+    if (settings.metaDescription !== undefined && !document.getElementById('portfolio-seo'))
       document.querySelector('meta[name=description]').content = settings.metaDescription;
     for (const link of document.querySelectorAll('[data-contact]')) {
       const key = link.dataset.contact,
@@ -150,7 +151,49 @@
     }
   }
   window.applyPortfolioContent = apply;
-  window.portfolioContentReady = fetch('/api/settings', { cache: 'no-store' })
+  const seoNode = document.getElementById('portfolio-seo');
+  if (seoNode) {
+    const seo = JSON.parse(seoNode.textContent);
+    window.applyPortfolioSEO = () => {
+      const path = location.pathname.split('/').filter(Boolean);
+      const params = new URLSearchParams(location.search);
+      const section = path[0] === 'work' ? decodeURIComponent(path[1] || '') : params.get('work');
+      const collection =
+        path[0] === 'work' ? decodeURIComponent(path[2] || '') : params.get('collection');
+      const meta = seo.pages[section + (collection ? '/' + collection : '')] || seo.home;
+      document.title = meta.title;
+      const update = (selector, value) => {
+        const node = document.querySelector(selector);
+        if (node) node.setAttribute('content', value);
+      };
+      update('meta[name=description]', meta.description);
+      update('meta[name=robots]', meta.robots);
+      for (const [key, value] of Object.entries({
+        'og:title': meta.title,
+        'og:description': meta.description,
+        'og:url': meta.url,
+        'og:image': meta.image,
+      }))
+        update('meta[property="' + key + '"]', value);
+      for (const [key, value] of Object.entries({
+        'twitter:title': meta.title,
+        'twitter:description': meta.description,
+        'twitter:image': meta.image,
+      }))
+        update('meta[name="' + key + '"]', value);
+      document.querySelector('link[rel=canonical]').href = meta.url;
+      document.getElementById('portfolio-structured-data').textContent = JSON.stringify(
+        meta.schema,
+      );
+    };
+    window.applyPortfolioSEO();
+  }
+  const bootstrap = document.getElementById('portfolio-settings');
+  window.portfolioContentReady = (
+    bootstrap
+      ? Promise.resolve({ ok: true, json: async () => JSON.parse(bootstrap.textContent) })
+      : fetch('/api/settings', { cache: 'no-store' })
+  )
     .then((r) => {
       if (!r.ok) throw Error('Content unavailable');
       return r.json();

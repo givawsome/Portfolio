@@ -64,7 +64,7 @@ test('journal filters and pagination retain the topic, and unpublished pages hav
   assert.equal(d.querySelectorAll('.post-card').length, 3);
   dom.window.close();
   const missing = new JSDOM(journalPage({ missing: true, origin: 'https://portfolio.example' }));
-  assert.equal(missing.window.document.querySelector('meta[name=robots]').content, 'noindex');
+  assert.match(missing.window.document.querySelector('meta[name=robots]').content, /noindex/);
   missing.window.close();
 });
 

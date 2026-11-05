@@ -353,6 +353,40 @@ try {
   await publicPage.locator('.character-folder-grid').getByRole('button', { name: /Aster/ }).click();
   await publicPage.locator('.gallery-grid').waitFor();
   assert(publicPage.url().includes(folder.id));
+  assert(publicPage.url().includes('/work/'));
+  const canonical = await publicPage.locator('link[rel=canonical]').getAttribute('href');
+  assert(canonical.endsWith('/work/' + section.id + '/' + folder.id));
+  await publicPage.locator('.gallery-item').first().click();
+  await publicPage.locator('.full-image').waitFor({ state: 'visible' });
+  assert((await publicPage.locator('.full-image').getAttribute('src')).startsWith('/media/'));
+  await publicPage.keyboard.press('Escape');
+  const rawCategory = await context.request.get(origin + '/work/' + section.id + '/' + folder.id);
+  assert.equal(rawCategory.status(), 200);
+  assert((await rawCategory.text()).includes('portfolio-structured-data'));
+  const oldURL = await context.request.get(origin + '/?work=' + section.id, { maxRedirects: 0 });
+  assert.equal(oldURL.status(), 301);
+  assert.equal(oldURL.headers().location, '/work/' + section.id);
+  assert.equal((await context.request.get(origin + '/work/not-a-category')).status(), 404);
+  const noJSContext = await browser.newContext({
+    javaScriptEnabled: false,
+    viewport: { width: 1440, height: 1000 },
+  });
+  const noJSPage = await noJSContext.newPage();
+  await noJSPage.goto(origin + '/work/' + section.id);
+  assert((await noJSPage.locator('.character-folder-grid a.character-folder').count()) > 0);
+  await noJSPage.screenshot({ path: '/tmp/portfolio-review/seo-no-javascript.png' });
+  await noJSContext.close();
+  const robots = await (await context.request.get(origin + '/robots.txt')).text();
+  assert(robots.includes('Disallow: /admin/'));
+  assert(!robots.includes('Disallow: /api/\n'));
+  assert(
+    (await (await context.request.get(origin + '/sitemap.xml')).text()).includes('xmlns:image='),
+  );
+  assert.equal(
+    (await context.request.get(origin + '/admin/')).headers()['x-robots-tag'],
+    'noindex, nofollow',
+  );
+
   await navigate('files');
   const file = await context.request.post(origin + '/api/admin/files', {
     headers: { Origin: origin },

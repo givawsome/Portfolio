@@ -1,0 +1,80 @@
+{
+  "audience": "Clients across India and internationally; actual base: Jaipur, Rajasthan, India",
+  "homepage": {
+    "title": "Rajneesh Vaishnav | Designer, Photographer & AI Creative",
+    "description": "Freelance graphic design, product photography and AI art direction by Rajneesh Vaishnav. Based in Jaipur, working with brands across India and worldwide."
+  },
+  "categories": [
+    {
+      "path": "/work/ai-campaigns",
+      "title": "AI Campaign Design & Advertising Concepts",
+      "description": "Explore AI-assisted advertising campaigns by Rajneesh Vaishnav: art direction, hero banners and creative brand concepts for digital campaigns.",
+      "keywords": ["AI campaign designer", "AI advertising design", "creative campaign banners"]
+    },
+    {
+      "path": "/work/imagined-worlds",
+      "title": "AI Art & Surreal Visual Storytelling",
+      "description": "Cinematic AI art, surreal environments and imagined worlds by Rajneesh Vaishnav. Explore original visual storytelling and creative concept development.",
+      "keywords": ["AI artist portfolio", "surreal AI art", "AI visual storytelling"]
+    },
+    {
+      "path": "/work/character-stories",
+      "title": "AI Character Design & Reference Sheets",
+      "description": "Explore original character concepts, reference sheets and expression studies by Rajneesh Vaishnav. Browse each character’s collection and visual story.",
+      "keywords": [
+        "AI character designer",
+        "character reference sheets",
+        "character design portfolio"
+      ]
+    },
+    {
+      "path": "/work/brand-identities",
+      "title": "Logo Design & Brand Identity Portfolio",
+      "description": "Discover logo concepts, visual identities and creative brand systems by freelance designer Rajneesh Vaishnav, available for clients in India and worldwide.",
+      "keywords": ["freelance logo designer", "brand identity designer", "logo design portfolio"]
+    },
+    {
+      "path": "/work/product-stories",
+      "title": "Product Advertising & Creative Detail Design",
+      "description": "Product advertising concepts, detail visuals and creative e-commerce artwork by Rajneesh Vaishnav. Explore carefully directed product stories and layouts.",
+      "keywords": [
+        "product advertising designer",
+        "product detail image design",
+        "e-commerce creative design"
+      ]
+    },
+    {
+      "path": "/work/photography",
+      "title": "Product Photography & Retouching Portfolio",
+      "description": "Product photography and retouching by Rajneesh Vaishnav, based in Jaipur. Explore e-commerce imagery, product lighting and carefully crafted commercial visuals.",
+      "keywords": [
+        "product photographer Jaipur",
+        "e-commerce product photography",
+        "product retouching services"
+      ]
+    },
+    {
+      "path": "/work/digital-experiences",
+      "title": "Figma UI Design & Website Design Portfolio",
+      "description": "Explore Figma UI concepts, website layouts and digital design by Rajneesh Vaishnav, a freelance visual designer working with clients in India and worldwide.",
+      "keywords": ["freelance Figma designer", "website UI designer", "Figma portfolio"]
+    },
+    {
+      "path": "/work/art-studies",
+      "title": "Paintings, Illustration & Art Studies",
+      "description": "Explore paintings, illustrations and personal art studies in Rajneesh Vaishnav’s visual portfolio, alongside photography, graphic design and AI-assisted concepts.",
+      "keywords": ["painting portfolio", "illustration portfolio", "visual artist Jaipur"]
+    },
+    {
+      "path": "/work/sns-photoshop",
+      "title": "Social Media Design & Photoshop Portfolio",
+      "description": "Handcrafted social media posts, Photoshop compositions and digital creatives by Rajneesh Vaishnav. Explore design work curated separately from AI-generated concepts.",
+      "keywords": [
+        "social media post designer",
+        "Photoshop designer",
+        "freelance social media design"
+      ]
+    }
+  ],
+  "note": "These are relevant search-intent targets, not measured search volumes or ranking guarantees. No meta-keywords tag or keyword stuffing is used."
+}

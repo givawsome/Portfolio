@@ -55,6 +55,9 @@ export const collection = z.object({
   note: z.string().max(2000),
 });
 export const section = z.object({
+  seoTitle: z.string().max(150).optional(),
+  seoDescription: z.string().max(350).optional(),
+  focusKeywords: z.array(z.string().trim().min(1).max(80)).max(15).optional(),
   id,
   title: z.string().min(1).max(100),
   subtitle: z.string().max(500),
@@ -75,6 +78,11 @@ for (const field of config.fields) {
     ]);
   if (field.type === 'boolean') rule = z.boolean();
   if (field.type === 'number') rule = z.number().int().min(field.min).max(field.max);
+  if (['googleSiteVerification', 'bingSiteVerification'].includes(field.key))
+    rule = z
+      .string()
+      .max(200)
+      .regex(/^[A-Za-z0-9_-]*$/);
   if (field.key === 'phone') rule = z.string().regex(/^\+?[0-9 ]{8,20}$/);
   contentShape[field.key] = rule.optional();
 }

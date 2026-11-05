@@ -437,6 +437,9 @@ function categoryForm(s) {
         id: values.id,
         title: values.title,
         subtitle: values.subtitle,
+        seoTitle: values.seoTitle || '',
+        seoDescription: values.seoDescription || '',
+        focusKeywords: parseTerms(values.focusKeywords),
         collections: selected,
         featured: values.featured,
       };
@@ -463,6 +466,14 @@ function categoryForm(s) {
     }
     input.required = key !== 'subtitle';
   }
+  field(form, 'seoTitle', 'Search title (optional override)', s.seoTitle || '');
+  field(form, 'seoDescription', 'Search description (optional override)', s.seoDescription || '');
+  field(
+    form,
+    'focusKeywords',
+    'Focus search terms (comma separated; planning only)',
+    (s.focusKeywords || []).join(', '),
+  );
   const group = element('fieldset');
   group.append(element('legend', 'Included collections'));
   for (const c of Object.values(manifest.collections)) {

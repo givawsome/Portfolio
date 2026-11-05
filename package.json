@@ -17,19 +17,20 @@
     "format:check": "prettier --check .",
     "migrate": "node --env-file-if-exists=.env scripts/migrate.js",
     "test:browser": "node --env-file-if-exists=.env scripts/browser-check.js",
-    "gallery:reset": "node --env-file-if-exists=.env scripts/reset-gallery.js"
+    "gallery:reset": "node --env-file-if-exists=.env scripts/reset-gallery.js",
+    "seo:audit": "node scripts/audit-seo.js"
   },
   "dependencies": {
     "cookie-parser": "^1.4.7",
     "express": "^5.1.0",
     "helmet": "^8.1.0",
     "jose": "^6.1.0",
+    "jsdom": "^30.1.3",
     "mongodb": "^6.20.0",
     "zod": "^4.1.0"
   },
   "devDependencies": {
     "@playwright/test": "1.64.1",
-    "jsdom": "30.1.3",
     "prettier": "3.9.10",
     "supertest": "^7.1.0"
   }

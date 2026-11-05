@@ -6,6 +6,8 @@
         /[&<>"']/g,
         (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c],
       );
+  const assetURL = (src) =>
+    src && !src.startsWith('https://') && !src.startsWith('/') ? '/' + src : src;
   let manifest,
     activeSection,
     activeCollection,
@@ -28,9 +30,11 @@
     PAGE_SIZE = 48,
     reduceMotion = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
   function galleryURL(section, collection) {
-    const p = new URLSearchParams({ work: section });
-    if (collection) p.set('collection', collection);
-    return './?' + p;
+    return (
+      '/work/' +
+      encodeURIComponent(section) +
+      (collection ? '/' + encodeURIComponent(collection) : '')
+    );
   }
   function imageTitle(item) {
     if (item.title) return item.title;
@@ -41,12 +45,12 @@
   function spriteStyle(item) {
     const x = item.cell % item.cols,
       y = Math.floor(item.cell / item.cols);
-    return `background-image:url('${item.sheet}');background-size:${item.cols * 100}% ${item.rows * 100}%;background-position:${item.cols === 1 ? 0 : (x / (item.cols - 1)) * 100}% ${item.rows === 1 ? 0 : (y / (item.rows - 1)) * 100}%`;
+    return `background-image:url('${assetURL(item.sheet)}');background-size:${item.cols * 100}% ${item.rows * 100}%;background-position:${item.cols === 1 ? 0 : (x / (item.cols - 1)) * 100}% ${item.rows === 1 ? 0 : (y / (item.rows - 1)) * 100}%`;
   }
   function imageMarkup(item, { full = false, eager = false } = {}) {
     if (item.type === 'archive')
       return `<div class="archive-preview" role="img" aria-label="${esc(imageTitle(item))}" style="${spriteStyle(item)}"></div>`;
-    return `<img src="${esc(full || item.hd ? item.src : item.thumb || item.src)}" alt="${esc(item.alt || imageTitle(item))}" ${eager ? 'fetchpriority="high"' : 'loading="lazy"'} decoding="async">`;
+    return `<img src="${esc(assetURL(full || item.hd ? item.src : item.thumb || item.src))}" alt="${esc(item.alt || imageTitle(item))}" ${eager ? 'fetchpriority="high"' : 'loading="lazy"'} decoding="async" width="${Number(item.width) || 1000}" height="${Number(item.height) || 1000}">`;
   }
   function frameFor(item, c) {
     if (c.frame === 'square')
@@ -100,6 +104,7 @@
   }
   function renderNavigation() {
     const nav = $('#category-nav');
+    nav.replaceChildren();
     manifest.sections.forEach((s) => {
       const a = document.createElement('a');
       a.href = galleryURL(s.id);
@@ -276,7 +281,7 @@
     applyRoute(true);
   }
   function goHome(anchor = '') {
-    history.pushState({}, '', './' + (anchor ? '#' + anchor : ''));
+    history.pushState({}, '', '/' + (anchor ? '#' + anchor : ''));
     applyRoute(true);
   }
   function scrollToElement(element, focus = false) {
@@ -293,7 +298,11 @@
   async function applyRoute(scroll = false) {
     const token = ++routeToken,
       p = new URLSearchParams(location.search),
-      s = manifest.sections.find((x) => x.id === p.get('work'));
+      route = location.pathname.split('/').filter(Boolean),
+      sectionId = route[0] === 'work' ? decodeURIComponent(route[1] || '') : p.get('work'),
+      collectionId = route[0] === 'work' ? decodeURIComponent(route[2] || '') : p.get('collection'),
+      s = manifest.sections.find((x) => x.id === sectionId);
+    window.applyPortfolioSEO?.();
     document.querySelectorAll('[data-section]').forEach((a) => {
       if (a.closest('#category-nav'))
         a.setAttribute('aria-current', a.dataset.section === s?.id ? 'page' : 'false');
@@ -303,8 +312,9 @@
       activeCollection = null;
       $('#home-view').hidden = false;
       $('#gallery-view').hidden = true;
-      document.title =
-        window.portfolioSettings?.pageTitle || 'Rajneesh Vaishnav — Design, Photography & AI';
+      if (!window.applyPortfolioSEO)
+        document.title =
+          window.portfolioSettings?.pageTitle || 'Rajneesh Vaishnav — Design, Photography & AI';
       if (scroll) {
         const anchor = location.hash.slice(1);
         if (anchor && document.getElementById(anchor))
@@ -315,7 +325,7 @@
     }
     activeSection = s;
     $('#gallery-view').dataset.section = s.id;
-    const id = s.collections.includes(p.get('collection')) ? p.get('collection') : s.featured;
+    const id = s.collections.includes(collectionId) ? collectionId : s.featured;
     activeCollection = manifest.collections[id];
     query = '';
     page = 1;
@@ -323,15 +333,17 @@
     $('#home-view').hidden = true;
     $('#gallery-view').hidden = false;
     $('#gallery-title').textContent =
-      isCharacters(s) && p.get('collection') ? activeCollection.title : s.title;
+      isCharacters(s) && collectionId ? activeCollection.title : s.title;
     $('#gallery-subtitle').textContent = s.subtitle;
-    document.title = s.title + ' — ' + (window.portfolioSettings?.brandName || 'Rajneesh Vaishnav');
+    if (!window.applyPortfolioSEO)
+      document.title =
+        s.title + ' — ' + (window.portfolioSettings?.brandName || 'Rajneesh Vaishnav');
     $('#breadcrumbs').innerHTML =
-      `<a href="./#work" data-home-anchor="work">All work</a><span aria-hidden="true">/</span><span>${esc(s.title)}</span>`;
+      `<a href="/#work" data-home-anchor="work">All work</a><span aria-hidden="true">/</span><span>${esc(s.title)}</span>`;
     renderCollectionPicker();
     $('#collection-method').textContent = activeCollection.method;
     $('#collection-note').textContent = activeCollection.note;
-    if (isCharacters(s) && !p.get('collection')) {
+    if (isCharacters(s) && !collectionId) {
       const grid = document.createElement('div');
       grid.className = 'character-folder-grid';
       characterFolders(s).forEach((c) => grid.append(folderCard(c)));
@@ -531,14 +543,14 @@
     const original = $('#viewer-original');
     original.hidden = item.type === 'archive';
     if (!original.hidden) {
-      original.href = item.original || item.src;
+      original.href = assetURL(item.original || item.src);
       original.textContent = item.original ? 'Open original PDF' : 'Open full file';
     }
     const media = $('#viewer-media');
     media.innerHTML =
       item.type === 'archive'
         ? `<div class="viewer-archive" role="img" aria-label="${esc(imageTitle(item))}" style="${spriteStyle(item)}"></div>`
-        : `<img class="full-image" src="${esc(item.src)}" alt="${esc(item.alt || imageTitle(item))}">`;
+        : `<img class="full-image" src="${esc(assetURL(item.src))}" alt="${esc(item.alt || imageTitle(item))}">`;
     $('#viewer-caption').textContent =
       (item.type === 'archive' ? 'Optimized archive preview · ' : '') +
       item.name +
@@ -611,7 +623,11 @@
   });
   $('#gallery-search').addEventListener('input', (e) => {
     query = e.target.value;
-    if (isCharacters(activeSection) && !new URLSearchParams(location.search).get('collection')) {
+    if (
+      isCharacters(activeSection) &&
+      location.pathname.split('/').filter(Boolean).length < 3 &&
+      !new URLSearchParams(location.search).get('collection')
+    ) {
       document
         .querySelectorAll('.character-folder-grid .character-folder')
         .forEach(
@@ -656,17 +672,22 @@
   window.addEventListener('popstate', () => {
     if (manifest) applyRoute(true);
   });
-  fetch('/api/portfolio')
+  const bootstrap = document.getElementById('portfolio-bootstrap');
+  window.portfolioReady = (
+    bootstrap
+      ? Promise.resolve({ ok: true, json: async () => JSON.parse(bootstrap.textContent) })
+      : fetch('/api/portfolio')
+  )
     .then((r) => {
       if (!r.ok) throw Error('Portfolio unavailable');
       return r.json();
     })
-    .then((data) => {
+    .then(async (data) => {
       manifest = data;
       renderNavigation();
       renderHero();
       renderHome();
-      applyRoute(false);
+      await applyRoute(false);
       if (location.hash && !location.search)
         setTimeout(() => {
           const el = document.getElementById(location.hash.slice(1));

@@ -243,3 +243,7 @@ The launch article covers now use a second set of bold, text-led campaign artwor
 Admin → General → Journal header banner manages the landscape introduction image (recommended 2400 × 1350 px). The Journal footer uses the existing header/footer logo, email, phone, social links and custom social icon settings. It appears on the Journal index and article pages.
 
 To apply only the revised covers to an existing database after deploying the new files, run `node --env-file=.env.production scripts/refresh-journal-covers.js --apply` (choose the intended environment file). The script creates a private recovery copy, updates cover/alt/credit fields for the nine launch articles, and preserves their text and publication state.
+
+### SEO and crawlable portfolio pages
+
+The homepage and `/work/<category>` galleries now render content and metadata on the server while retaining the existing frontend. Legacy query-string gallery links redirect to their matching clean URLs. SEO controls are in Brand & SEO and the category editor. See `content/seo/README.md` and `content/seo/keyword-map.json` for the India/international targeting, migration, auditing and Search Console workflow. Run `npm run seo:audit -- https://your-connected-domain` after publishing.
