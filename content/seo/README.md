@@ -21,7 +21,7 @@ Keep the canonical public origin on the currently connected Vercel domain until 
 
 ## Search Console and ongoing work
 
-The requested reporting owner is `soultouch92@gmail.com`. Sign-in and site-ownership verification are required before submitting `/sitemap.xml`, requesting indexing or reading private search performance. These steps are separate from deploying the site's SEO. Do not use the work Google account for ownership. Verification token controls are available once the owner obtains the token.
+On 5 November 2026, Google verified `soultouch92@gmail.com` as the owner of the current Vercel URL-prefix property using the managed HTML verification tag. The sitemap was submitted and Google reported “Sitemap processed successfully”, with 36 discovered pages. Keep the verification tag in the homepage settings. Search performance reports are still processing for this new property. The work Google account was not used for ownership. The live audit verified 36 URLs and 240 image entries without errors; see `live-audit.json`.
 
 After verification, submit the sitemap and inspect the homepage, the three most important commercial categories and a Journal article. Monitor clicks, impressions, queries, indexed pages and any security/manual-action reports. Improve the pages using actual query and enquiry data rather than adding repeated keywords.
 

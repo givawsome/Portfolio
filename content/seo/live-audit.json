@@ -1,0 +1,297 @@
+{
+  "site": "https://portfolio-six-nu-9ix8y8mx1c.vercel.app",
+  "checkedAt": "2026-11-05T06:30:28.696Z",
+  "pages": [
+    {
+      "path": "/blog?category=photography",
+      "title": "Photography · The Journal · Rajneesh Vaishnav",
+      "description": "Product photography, lighting and retouching guides by Rajneesh Vaishnav. Practical techniques for e-commerce images and commercial visual storytelling.",
+      "canonical": "https://portfolio-six-nu-9ix8y8mx1c.vercel.app/blog?category=photography",
+      "images": 5,
+      "robots": "index,follow,max-image-preview:large"
+    },
+    {
+      "path": "/",
+      "title": "Rajneesh Vaishnav | Designer, Photographer & AI Creative",
+      "description": "Freelance graphic design, product photography and AI art direction by Rajneesh Vaishnav. Based in Jaipur, working with brands across India and worldwide.",
+      "canonical": "https://portfolio-six-nu-9ix8y8mx1c.vercel.app/",
+      "images": 80,
+      "robots": "index,follow,max-image-preview:large"
+    },
+    {
+      "path": "/blog",
+      "title": "The Journal · Rajneesh Vaishnav",
+      "description": "Practical photography, graphic design and AI art direction guides by Rajneesh Vaishnav. Explore original ideas for brands and creatives in India and worldwide.",
+      "canonical": "https://portfolio-six-nu-9ix8y8mx1c.vercel.app/blog",
+      "images": 11,
+      "robots": "index,follow,max-image-preview:large"
+    },
+    {
+      "path": "/blog?category=graphic-design",
+      "title": "Graphic design · The Journal · Rajneesh Vaishnav",
+      "description": "Graphic design guides on typography, visual identity, social media layouts and Figma workflows by freelance designer Rajneesh Vaishnav.",
+      "canonical": "https://portfolio-six-nu-9ix8y8mx1c.vercel.app/blog?category=graphic-design",
+      "images": 5,
+      "robots": "index,follow,max-image-preview:large"
+    },
+    {
+      "path": "/blog?category=ai-design",
+      "title": "AI design · The Journal · Rajneesh Vaishnav",
+      "description": "AI design guides on creative briefs, art direction, consistent characters and product visuals by Rajneesh Vaishnav.",
+      "canonical": "https://portfolio-six-nu-9ix8y8mx1c.vercel.app/blog?category=ai-design",
+      "images": 5,
+      "robots": "index,follow,max-image-preview:large"
+    },
+    {
+      "path": "/work/ai-campaigns",
+      "title": "AI Campaign Design & Advertising Concepts | Rajneesh Vaishnav",
+      "description": "Explore AI-assisted advertising campaigns by Rajneesh Vaishnav: art direction, hero banners and creative brand concepts for digital campaigns.",
+      "canonical": "https://portfolio-six-nu-9ix8y8mx1c.vercel.app/work/ai-campaigns",
+      "images": 95,
+      "robots": "index,follow,max-image-preview:large"
+    },
+    {
+      "path": "/work/imagined-worlds",
+      "title": "AI Art & Surreal Visual Storytelling | Rajneesh Vaishnav",
+      "description": "Cinematic AI art, surreal environments and imagined worlds by Rajneesh Vaishnav. Explore original visual storytelling and creative concept development.",
+      "canonical": "https://portfolio-six-nu-9ix8y8mx1c.vercel.app/work/imagined-worlds",
+      "images": 119,
+      "robots": "index,follow,max-image-preview:large"
+    },
+    {
+      "path": "/work/character-stories/character-87fcb792-f6fe-435a-b5d1-b4776f93fb4a",
+      "title": "Hiroshi Ishikawa | Character Design by Rajneesh Vaishnav",
+      "description": "Explore Hiroshi Ishikawa: character artwork and visual studies by Rajneesh Vaishnav. Character studies and story images.",
+      "canonical": "https://portfolio-six-nu-9ix8y8mx1c.vercel.app/work/character-stories/character-87fcb792-f6fe-435a-b5d1-b4776f93fb4a",
+      "images": 83,
+      "robots": "index,follow,max-image-preview:large"
+    },
+    {
+      "path": "/work/character-stories",
+      "title": "AI Character Design & Reference Sheets | Rajneesh Vaishnav",
+      "description": "Explore original character concepts, reference sheets and expression studies by Rajneesh Vaishnav. Browse each character’s collection and visual story.",
+      "canonical": "https://portfolio-six-nu-9ix8y8mx1c.vercel.app/work/character-stories",
+      "images": 93,
+      "robots": "index,follow,max-image-preview:large"
+    },
+    {
+      "path": "/work/character-stories/character-1a57f09d-1dd9-4b25-8b07-4c30b5c2b83a",
+      "title": "Keiko Ishikawa | Character Design by Rajneesh Vaishnav",
+      "description": "Explore Keiko Ishikawa: character artwork and visual studies by Rajneesh Vaishnav. Character studies and story images.",
+      "canonical": "https://portfolio-six-nu-9ix8y8mx1c.vercel.app/work/character-stories/character-1a57f09d-1dd9-4b25-8b07-4c30b5c2b83a",
+      "images": 84,
+      "robots": "index,follow,max-image-preview:large"
+    },
+    {
+      "path": "/work/character-stories/character-8098924c-acfb-41aa-97f0-a11e5fe89ceb",
+      "title": "Aoi Takamura | Character Design by Rajneesh Vaishnav",
+      "description": "Explore Aoi Takamura: character artwork and visual studies by Rajneesh Vaishnav. Character studies and story images.",
+      "canonical": "https://portfolio-six-nu-9ix8y8mx1c.vercel.app/work/character-stories/character-8098924c-acfb-41aa-97f0-a11e5fe89ceb",
+      "images": 84,
+      "robots": "index,follow,max-image-preview:large"
+    },
+    {
+      "path": "/work/character-stories/character-e69c6a03-6818-4418-8f23-2a422a5699ad",
+      "title": "Kaito Nakamura | Character Design by Rajneesh Vaishnav",
+      "description": "Explore Kaito Nakamura: character artwork and visual studies by Rajneesh Vaishnav. Character studies and story images.",
+      "canonical": "https://portfolio-six-nu-9ix8y8mx1c.vercel.app/work/character-stories/character-e69c6a03-6818-4418-8f23-2a422a5699ad",
+      "images": 83,
+      "robots": "index,follow,max-image-preview:large"
+    },
+    {
+      "path": "/work/character-stories/character-025340e5-dbe4-445a-b0b9-5574e5b3f652",
+      "title": "Reina Kurose | Character Design by Rajneesh Vaishnav",
+      "description": "Explore Reina Kurose: character artwork and visual studies by Rajneesh Vaishnav. Character studies and story images.",
+      "canonical": "https://portfolio-six-nu-9ix8y8mx1c.vercel.app/work/character-stories/character-025340e5-dbe4-445a-b0b9-5574e5b3f652",
+      "images": 83,
+      "robots": "index,follow,max-image-preview:large"
+    },
+    {
+      "path": "/work/character-stories/character-1425f13f-e3d6-4106-ae00-43917d624004",
+      "title": "Noriko Sakamoto | Character Design by Rajneesh Vaishnav",
+      "description": "Explore Noriko Sakamoto: character artwork and visual studies by Rajneesh Vaishnav. Character studies and story images.",
+      "canonical": "https://portfolio-six-nu-9ix8y8mx1c.vercel.app/work/character-stories/character-1425f13f-e3d6-4106-ae00-43917d624004",
+      "images": 83,
+      "robots": "index,follow,max-image-preview:large"
+    },
+    {
+      "path": "/work/character-stories/character-0843178b-548e-4f2f-b258-377e1b711bab",
+      "title": "Mika Shindo | Character Design by Rajneesh Vaishnav",
+      "description": "Explore Mika Shindo: character artwork and visual studies by Rajneesh Vaishnav. Character studies and story images.",
+      "canonical": "https://portfolio-six-nu-9ix8y8mx1c.vercel.app/work/character-stories/character-0843178b-548e-4f2f-b258-377e1b711bab",
+      "images": 83,
+      "robots": "index,follow,max-image-preview:large"
+    },
+    {
+      "path": "/work/character-stories/character-73fa72b8-8016-42bc-9418-601d2b226ef6",
+      "title": "Shin Arakawa | Character Design by Rajneesh Vaishnav",
+      "description": "Explore Shin Arakawa: character artwork and visual studies by Rajneesh Vaishnav. Character studies and story images.",
+      "canonical": "https://portfolio-six-nu-9ix8y8mx1c.vercel.app/work/character-stories/character-73fa72b8-8016-42bc-9418-601d2b226ef6",
+      "images": 83,
+      "robots": "index,follow,max-image-preview:large"
+    },
+    {
+      "path": "/work/character-stories/character-e3594c2f-fd81-4cdf-bbf3-b7c4ff0de7ec",
+      "title": "Ren Ishikawa | Character Design by Rajneesh Vaishnav",
+      "description": "Explore Ren Ishikawa: character artwork and visual studies by Rajneesh Vaishnav. Character studies and story images.",
+      "canonical": "https://portfolio-six-nu-9ix8y8mx1c.vercel.app/work/character-stories/character-e3594c2f-fd81-4cdf-bbf3-b7c4ff0de7ec",
+      "images": 84,
+      "robots": "index,follow,max-image-preview:large"
+    },
+    {
+      "path": "/work/character-stories/character-a02d890d-f3dc-4918-be28-14453b4b09d5",
+      "title": "Sakura Endo | Character Design by Rajneesh Vaishnav",
+      "description": "Explore Sakura Endo: character artwork and visual studies by Rajneesh Vaishnav. Character studies and story images.",
+      "canonical": "https://portfolio-six-nu-9ix8y8mx1c.vercel.app/work/character-stories/character-a02d890d-f3dc-4918-be28-14453b4b09d5",
+      "images": 83,
+      "robots": "index,follow,max-image-preview:large"
+    },
+    {
+      "path": "/work/character-stories/character-dc623f38-5808-4989-8999-d373771f2b5f",
+      "title": "Takeshi Takamura | Character Design by Rajneesh Vaishnav",
+      "description": "Explore Takeshi Takamura: character artwork and visual studies by Rajneesh Vaishnav. Character studies and story images.",
+      "canonical": "https://portfolio-six-nu-9ix8y8mx1c.vercel.app/work/character-stories/character-dc623f38-5808-4989-8999-d373771f2b5f",
+      "images": 83,
+      "robots": "index,follow,max-image-preview:large"
+    },
+    {
+      "path": "/work/character-stories/character-830b11d7-2cef-43e7-ad05-119915691d3f",
+      "title": "Yuna Fujisaki | Character Design by Rajneesh Vaishnav",
+      "description": "Explore Yuna Fujisaki: character artwork and visual studies by Rajneesh Vaishnav. Character studies and story images.",
+      "canonical": "https://portfolio-six-nu-9ix8y8mx1c.vercel.app/work/character-stories/character-830b11d7-2cef-43e7-ad05-119915691d3f",
+      "images": 83,
+      "robots": "index,follow,max-image-preview:large"
+    },
+    {
+      "path": "/work/character-stories/character-773d2388-0241-4aa4-b580-2e872874d682",
+      "title": "Yukari Takamura | Character Design by Rajneesh Vaishnav",
+      "description": "Explore Yukari Takamura: character artwork and visual studies by Rajneesh Vaishnav. Character studies and story images.",
+      "canonical": "https://portfolio-six-nu-9ix8y8mx1c.vercel.app/work/character-stories/character-773d2388-0241-4aa4-b580-2e872874d682",
+      "images": 84,
+      "robots": "index,follow,max-image-preview:large"
+    },
+    {
+      "path": "/work/product-stories",
+      "title": "Product Advertising & Creative Detail Design | Rajneesh Vaishnav",
+      "description": "Product advertising concepts, detail visuals and creative e-commerce artwork by Rajneesh Vaishnav. Explore carefully directed product stories and layouts.",
+      "canonical": "https://portfolio-six-nu-9ix8y8mx1c.vercel.app/work/product-stories",
+      "images": 95,
+      "robots": "index,follow,max-image-preview:large"
+    },
+    {
+      "path": "/work/photography",
+      "title": "Product Photography & Retouching Portfolio | Rajneesh Vaishnav",
+      "description": "Product photography and retouching by Rajneesh Vaishnav, based in Jaipur. Explore e-commerce imagery, product lighting and carefully crafted commercial visuals.",
+      "canonical": "https://portfolio-six-nu-9ix8y8mx1c.vercel.app/work/photography",
+      "images": 95,
+      "robots": "index,follow,max-image-preview:large"
+    },
+    {
+      "path": "/work/brand-identities",
+      "title": "Logo Design & Brand Identity Portfolio | Rajneesh Vaishnav",
+      "description": "Discover logo concepts, visual identities and creative brand systems by freelance designer Rajneesh Vaishnav, available for clients in India and worldwide.",
+      "canonical": "https://portfolio-six-nu-9ix8y8mx1c.vercel.app/work/brand-identities",
+      "images": 104,
+      "robots": "index,follow,max-image-preview:large"
+    },
+    {
+      "path": "/work/digital-experiences",
+      "title": "Figma UI Design & Website Design Portfolio | Rajneesh Vaishnav",
+      "description": "Explore Figma UI concepts, website layouts and digital design by Rajneesh Vaishnav, a freelance visual designer working with clients in India and worldwide.",
+      "canonical": "https://portfolio-six-nu-9ix8y8mx1c.vercel.app/work/digital-experiences",
+      "images": 87,
+      "robots": "index,follow,max-image-preview:large"
+    },
+    {
+      "path": "/work/sns-photoshop",
+      "title": "Social Media Design & Photoshop Portfolio | Rajneesh Vaishnav",
+      "description": "Handcrafted social media posts, Photoshop compositions and digital creatives by Rajneesh Vaishnav. Explore design work curated separately from AI-generated concepts.",
+      "canonical": "https://portfolio-six-nu-9ix8y8mx1c.vercel.app/work/sns-photoshop",
+      "images": 98,
+      "robots": "index,follow,max-image-preview:large"
+    },
+    {
+      "path": "/work/art-studies",
+      "title": "Paintings, Illustration & Art Studies | Rajneesh Vaishnav",
+      "description": "Explore paintings, illustrations and personal art studies in Rajneesh Vaishnav’s visual portfolio, alongside photography, graphic design and AI-assisted concepts.",
+      "canonical": "https://portfolio-six-nu-9ix8y8mx1c.vercel.app/work/art-studies",
+      "images": 92,
+      "robots": "index,follow,max-image-preview:large"
+    },
+    {
+      "path": "/blog/one-window-three-product-photography-moods",
+      "title": "One window. Three moods. A product photography exercise. · Rajneesh Vaishnav",
+      "description": "A bottle, a window and two pieces of card: a practical way to change the feeling of a product photograph before reaching for a preset.",
+      "canonical": "https://portfolio-six-nu-9ix8y8mx1c.vercel.app/blog/one-window-three-product-photography-moods",
+      "images": 3,
+      "robots": "index,follow,max-image-preview:large"
+    },
+    {
+      "path": "/blog/nine-frame-product-photography-shot-list",
+      "title": "The nine-frame product story: plan a shoot beyond the hero image. · Rajneesh Vaishnav",
+      "description": "Build a small, purposeful image sequence that answers a buyer’s questions instead of delivering nine near-identical angles.",
+      "canonical": "https://portfolio-six-nu-9ix8y8mx1c.vercel.app/blog/nine-frame-product-photography-shot-list",
+      "images": 3,
+      "robots": "index,follow,max-image-preview:large"
+    },
+    {
+      "path": "/blog/photograph-glass-without-losing-its-edges",
+      "title": "Photographing glass: make the edges do the talking. · Rajneesh Vaishnav",
+      "description": "Transparent objects need something to reflect. Build cleaner glass photographs by shaping the surroundings instead of simply adding more brightness.",
+      "canonical": "https://portfolio-six-nu-9ix8y8mx1c.vercel.app/blog/photograph-glass-without-losing-its-edges",
+      "images": 3,
+      "robots": "index,follow,max-image-preview:large"
+    },
+    {
+      "path": "/blog/logo-beyond-the-first-impression",
+      "title": "A logo is only the beginning: give a visual identity somewhere to live. · Rajneesh Vaishnav",
+      "description": "Test a brand idea on real applications before calling the identity finished. A practical route from a memorable mark to a usable visual system.",
+      "canonical": "https://portfolio-six-nu-9ix8y8mx1c.vercel.app/blog/logo-beyond-the-first-impression",
+      "images": 3,
+      "robots": "index,follow,max-image-preview:large"
+    },
+    {
+      "path": "/blog/typography-hierarchy-before-decoration",
+      "title": "Before you add another effect, fix the hierarchy. · Rajneesh Vaishnav",
+      "description": "A practical poster audit using one message, three levels of type and a deliberate path through the page.",
+      "canonical": "https://portfolio-six-nu-9ix8y8mx1c.vercel.app/blog/typography-hierarchy-before-decoration",
+      "images": 3,
+      "robots": "index,follow,max-image-preview:large"
+    },
+    {
+      "path": "/blog/one-campaign-three-formats",
+      "title": "One campaign, three formats: redesign the crop, not the idea. · Rajneesh Vaishnav",
+      "description": "How to carry one visual idea across a poster, square social post and wide banner without shrinking the entire design.",
+      "canonical": "https://portfolio-six-nu-9ix8y8mx1c.vercel.app/blog/one-campaign-three-formats",
+      "images": 3,
+      "robots": "index,follow,max-image-preview:large"
+    },
+    {
+      "path": "/blog/ai-art-direction-starts-before-the-prompt",
+      "title": "AI art direction starts before the prompt. · Rajneesh Vaishnav",
+      "description": "Turn a vague request into a specific visual brief before generating images. A practical framework for more intentional campaign concepts.",
+      "canonical": "https://portfolio-six-nu-9ix8y8mx1c.vercel.app/blog/ai-art-direction-starts-before-the-prompt",
+      "images": 3,
+      "robots": "index,follow,max-image-preview:large"
+    },
+    {
+      "path": "/blog/ai-product-images-credibility-checklist",
+      "title": "Beautiful is not enough: a credibility check for AI product visuals. · Rajneesh Vaishnav",
+      "description": "A close inspection of structure, materials, copy and claims before a generated concept enters a product layout.",
+      "canonical": "https://portfolio-six-nu-9ix8y8mx1c.vercel.app/blog/ai-product-images-credibility-checklist",
+      "images": 3,
+      "robots": "index,follow,max-image-preview:large"
+    },
+    {
+      "path": "/blog/consistent-ai-characters-with-a-reference-sheet",
+      "title": "Build a character system, not thirteen unrelated portraits. · Rajneesh Vaishnav",
+      "description": "Use a clear reference sheet, a controlled wardrobe and a review checklist to make character variations feel like one person.",
+      "canonical": "https://portfolio-six-nu-9ix8y8mx1c.vercel.app/blog/consistent-ai-characters-with-a-reference-sheet",
+      "images": 3,
+      "robots": "index,follow,max-image-preview:large"
+    }
+  ],
+  "errors": [],
+  "sitemapURLs": 36,
+  "sitemapImages": 240
+}
